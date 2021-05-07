@@ -1,0 +1,3 @@
+[submodule "extlibs/EnggeFramework"]
+	path = extlibs/EnggeFramework
+	url = https://github.com/scemino/EnggeFramework.git
