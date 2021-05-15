@@ -7,45 +7,9 @@ add_subdirectory(extlibs/EnggeFramework)
 include_directories(include)
 
 # Sources
-set(LUA_SOURCE_FILES
-        extlibs/lua-5.4.1/src/lapi.c
-        extlibs/lua-5.4.1/src/lauxlib.c
-        extlibs/lua-5.4.1/src/lbaselib.c
-        extlibs/lua-5.4.1/src/lcode.c
-        extlibs/lua-5.4.1/src/lcorolib.c
-        extlibs/lua-5.4.1/src/lctype.c
-        extlibs/lua-5.4.1/src/ldblib.c
-        extlibs/lua-5.4.1/src/ldebug.c
-        extlibs/lua-5.4.1/src/ldo.c
-        extlibs/lua-5.4.1/src/ldump.c
-        extlibs/lua-5.4.1/src/lfunc.c
-        extlibs/lua-5.4.1/src/lgc.c
-        extlibs/lua-5.4.1/src/linit.c
-        extlibs/lua-5.4.1/src/liolib.c
-        extlibs/lua-5.4.1/src/llex.c
-        extlibs/lua-5.4.1/src/lmathlib.c
-        extlibs/lua-5.4.1/src/lmem.c
-        extlibs/lua-5.4.1/src/loadlib.c
-        extlibs/lua-5.4.1/src/lobject.c
-        extlibs/lua-5.4.1/src/lopcodes.c
-        extlibs/lua-5.4.1/src/loslib.c
-        extlibs/lua-5.4.1/src/lparser.c
-        extlibs/lua-5.4.1/src/lstate.c
-        extlibs/lua-5.4.1/src/lstring.c
-        extlibs/lua-5.4.1/src/lstrlib.c
-        extlibs/lua-5.4.1/src/ltable.c
-        extlibs/lua-5.4.1/src/ltablib.c
-        extlibs/lua-5.4.1/src/ltm.c
-        extlibs/lua-5.4.1/src/lundump.c
-        extlibs/lua-5.4.1/src/lutf8lib.c
-        extlibs/lua-5.4.1/src/lvm.c
-        extlibs/lua-5.4.1/src/lzio.c)
-
 add_executable(R-Type
-        ${LUA_SOURCE_FILES}
-        src/SpaceshipShot.cpp
-        src/Spaceship.cpp src/Level.cpp src/Level1.cpp
-        src/Engine.cpp src/Entity.cpp
+        src/Level.cpp
+        src/Engine.cpp
         src/System/CollisionSystem.cpp
         src/System/RenderSystem.cpp
         src/System/InputSystem.cpp

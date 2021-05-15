@@ -46,12 +46,10 @@ void drawSpaceship(entt::registry &registry, ngf::RenderTarget &target, ngf::Ren
         continue;
     }
 
-    // draw ship
-    ngf::irect frame;
-    const auto &p = view.get<PositionComponent>(e);
-    const auto texture = engine->loadTexture("resources/images/r-typesheet1.png");
-    ngf::Sprite s(*texture);
     if (sc.state == SpaceshipState::Alive) {
+      ngf::irect frame;
+      const auto &p = view.get<PositionComponent>(e);
+
       switch (sc.direction) {
       case ShipDirection::Upper:frame = toRect(mov[4]);
         break;
@@ -63,49 +61,56 @@ void drawSpaceship(entt::registry &registry, ngf::RenderTarget &target, ngf::Ren
         break;
       case ShipDirection::MoreDown:frame = toRect(mov[0]);
         break;
+      default:assert(false);
       }
 
-      s.setTextureRect(frame);
+      // draw ship
+      const auto texture = engine->loadTexture("resources/images/r-typesheet1.png");
+      ngf::Sprite s(*texture);s.setTextureRect(frame);
       s.getTransform().setPosition(p.pos + glm::vec2{0, -7});
       s.draw(target, states);
-    }
 
-    // draw beam load
-    if (sc.power >= 4) {
-      const int seqShot = (sc.power / 4) % 8;
-      const auto xTexShot = beamLoad[seqShot][0];
-      const auto yTexShot = beamLoad[seqShot][1];
-      const auto hTexShot = beamLoad[seqShot][3];
-      const auto wPixShot = beamLoad[seqShot][2];
-      const auto yPixOffsetShot = shotMid - beamLoad[seqShot][1];
-      const auto yPixShot = -yPixOffsetShot;
+      // draw beam load
+      if (sc.power >= 4) {
+        const int seqShot = (sc.power / 4) % 8;
+        assert(seqShot >= 0);
+        assert(seqShot < 8);
+        const auto xTexShot = beamLoad[seqShot][0];
+        const auto yTexShot = beamLoad[seqShot][1];
+        const auto hTexShot = beamLoad[seqShot][3];
+        const auto wPixShot = beamLoad[seqShot][2];
+        const auto yPixOffsetShot = shotMid - beamLoad[seqShot][1];
+        const auto yPixShot = -yPixOffsetShot;
 
-      const auto offset = glm::vec2(frame.getWidth(), yPixShot);
-      const auto beamFrame = ngf::irect::fromPositionSize({xTexShot, yTexShot},
-                                                      {wPixShot, hTexShot});
+        const auto offset = glm::vec2(frame.getWidth(), yPixShot);
+        const auto beamFrame = ngf::irect::fromPositionSize({xTexShot, yTexShot},
+                                                            {wPixShot, hTexShot});
 
-      s.setTextureRect(beamFrame);
-      s.getTransform().setPosition(p.pos + offset);
-      s.draw(target, states);
-    }
+        s.setTextureRect(beamFrame);
+        s.getTransform().setPosition(p.pos + offset);
+        s.draw(target, states);
+      }
 
-    // draw shot flash
-    auto interval = sc.aliveTime - sc.lastShotTime;
-    if (interval < 2 * 4) {
-      const int seqFlash = static_cast<int>(interval) / 4;
-      const auto xTexFlash = flash[seqFlash][0];
-      const auto yTexFlash = flash[seqFlash][1];
-      const auto wPixFlash = flash[seqFlash][2];
-      const auto hTexFlash = flash[seqFlash][3];
-      const auto yPixOffsetFlash = flashMid - flash[seqFlash][1];
+      // draw shot flash
+      const auto interval = sc.aliveTime - sc.lastShotTime;
+      if (interval < 2 * 4) {
+        const int seqFlash = static_cast<int>(interval) / 4;
+        assert(seqFlash >= 0);
+        assert(seqFlash < 2);
+        const auto xTexFlash = flash[seqFlash][0];
+        const auto yTexFlash = flash[seqFlash][1];
+        const auto wPixFlash = flash[seqFlash][2];
+        const auto hTexFlash = flash[seqFlash][3];
+        const auto yPixOffsetFlash = flashMid - flash[seqFlash][1];
 
-      const auto yPixFlash = -yPixOffsetFlash;
+        const auto yPixFlash = -yPixOffsetFlash;
 
-      auto flashFrame = ngf::irect::fromPositionSize({xTexFlash, yTexFlash},
-                                                     {wPixFlash, hTexFlash});
-      s.setTextureRect(flashFrame);
-      s.getTransform().setPosition(p.pos + glm::vec2{frame.getWidth(), yPixFlash});
-      s.draw(target, states);
+        auto flashFrame = ngf::irect::fromPositionSize({xTexFlash, yTexFlash},
+                                                       {wPixFlash, hTexFlash});
+        s.setTextureRect(flashFrame);
+        s.getTransform().setPosition(p.pos + glm::vec2{frame.getWidth(), yPixFlash});
+        s.draw(target, states);
+      }
     }
   }
 }
@@ -150,4 +155,3 @@ void draw(entt::registry &registry, ngf::RenderTarget &target, ngf::RenderStates
 }
 
 }
-

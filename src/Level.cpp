@@ -1,18 +1,13 @@
 #include "Engine.h"
 #include "Keys.h"
 #include "Level.h"
-#include "Shot.h"
-#include "Spaceship.h"
 #include "CollisionResult.h"
 #include <ngf/Graphics/RectangleShape.h>
 #include <ngf/Graphics/Sprite.h>
 #include <ngf/IO/Json/JsonParser.h>
 #include "Component/Components.h"
 #include "System/CollisionSystem.h"
-#include "System/InvincibleSystem.h"
-#include "System/MotionSystem.h"
 #include "System/RenderSystem.h"
-#include "System/StateSystem.h"
 
 namespace {
 constexpr int MapNumTilesWidth = 48;
@@ -22,36 +17,23 @@ constexpr int HudHeight = 2;
 constexpr int HudHpix = 32;
 
 constexpr int LevelFade = 500;
-constexpr int LevelGameOverFade = 300;
-
-constexpr int LevelMagicDelay = 60;
 }
 
-Level::Level(Engine *engine, Spaceship *spaceship, const char *mapPath,
-             const char *texturePath)
-    : Entity(engine), m_spaceship(spaceship) {
-
+Level::Level(Engine *engine, const char *mapPath, const char *texturePath)
+: m_engine(engine)
+{
   m_tex = engine->loadTexture(texturePath);
   m_tilesWidthTex = m_tex->getSize().x / TileWidth;
 
   load(mapPath);
 
   m_positionFinal = m_numTilesWidth * TileWidth - MapNumTilesWidth * TileWidth;
-  m_delay = LevelDelay;
 
   m_state = LevelState::Start;
   m_maxFade = LevelFade;
-
-  m_timeMagic = LevelMagicDelay;
 }
 
-Level::~Level() {
-  for (auto it = m_shots.begin(); it != m_shots.end();) {
-    Shot *shot = *it;
-    it = m_shots.erase(it);
-    delete shot;
-  }
-}
+Level::~Level() = default;
 
 bool Level::load(const char *path) {
   const auto jMap = ngf::Json::load(path);
@@ -68,68 +50,18 @@ bool Level::load(const char *path) {
   return true;
 }
 
-void Level::shootMagic() {
-  for (auto shot : m_shots) {
-    if (shot->isBad() && shot->isAlive())
-      shot->explode();
-  }
-  m_timeMagic = 0;
-}
-
-int Level::getScrollPosition() const { return m_position; }
-
-const std::vector<Shot *> &Level::shots() const { return m_shots; }
-
-void Level::addShot(Shot *shot) {
-  m_shots.push_back(shot);
-  if (m_timeMagic < LevelMagicDelay && shot->isBad() && shot->isAlive())
-    shot->explode();
-}
-
-void Level::updateKeys(const Keys &keys) {
-  m_spaceship->processKeys(keys);
-}
-
 void Level::applyScroll() {
   // it's the end of the stage: stop scrolling
   if (m_position >= m_positionFinal)
     return;
 
-  auto offset = updatePosition();
-  if (offset) {
-    m_position += offset;
-    for (auto &shot : m_shots)
-      shot->offset(offset, 0);
-    m_spaceship->offset(offset, 0);
+  auto offset = 1;
+  m_position += offset;
 
-    const auto posView = m_engine->registry().view<ShipComponent, PositionComponent>();
-    for (const entt::entity e : posView) {
-      auto &pc = posView.get<PositionComponent>(e);
-      pc.pos.x += static_cast<float>(offset);
-    }
-  }
-}
-
-void Level::updateEntities() {
-  for (auto &shot : m_shots)
-    shot->update();
-
-  m_spaceship->update();
-
-  InvincibleSystem::update(m_engine->registry());
-  MotionSystem::update(m_engine->registry());
-  CollisionSystem::collide(m_engine->registry());
-  StateSystem::update(m_engine->registry());
-}
-
-void Level::removeDeads() {
-  for (auto it = m_shots.begin(); it != m_shots.end();) {
-    Shot *shot = *it;
-    if (shot->isDead()) {
-      it = m_shots.erase(it);
-      delete shot;
-    } else
-      ++it;
+  const auto posView = m_engine->registry().view<ShipComponent, PositionComponent>();
+  for (const entt::entity e : posView) {
+    auto &pc = posView.get<PositionComponent>(e);
+    pc.pos.x += static_cast<float>(offset);
   }
 }
 
@@ -295,12 +227,7 @@ ngf::irect Level::getRect() const {
 }
 
 void Level::update() {
-  ++m_time;
-  ++m_timeMagic;
-
   applyScroll();
-  updateEntities();
-  removeDeads();
 
   if (m_state == LevelState::Start) {
     // fade in
@@ -310,8 +237,6 @@ void Level::update() {
   } else if (m_state == LevelState::Dead) {
     // fade out
     --m_seq;
-    if (!m_seq)
-      m_engine->advanceLevel();
   } else if (m_state == LevelState::Abort) {
     --m_seq;
   }
@@ -324,26 +249,11 @@ void Level::end() {
   }
 }
 
-void Level::gameOver() {
-  if (m_state != LevelState::Dead) {
-    m_seq = LevelGameOverFade;
-    m_maxFade = LevelGameOverFade;
-  }
-  m_state = LevelState::Abort;
-}
-
 void Level::draw(ngf::RenderTarget &target, ngf::RenderStates states) const {
   // move camera position
   ngf::Transform t;
   t.setPosition({-m_position, 0});
   states.transform = t.getTransform() * states.transform;
-
-  // draw the stage background
-  if (m_timeMagic < LevelMagicDelay && !(m_timeMagic % 4)) {
-    ngf::RectangleShape r({GAME_WIDTH, GAME_HEIGHT});
-    r.getTransform().setPosition({m_position, 0});
-    r.draw(target, states);
-  }
 
   // draw tiles
   int colIni = m_position / TileWidth;
@@ -379,14 +289,6 @@ void Level::draw(ngf::RenderTarget &target, ngf::RenderStates states) const {
 
   RenderSystem::draw(m_engine->registry(), target, states);
 
-  // draw spaceship
-  if (m_state == LevelState::Alive)
-    m_spaceship->draw(target, states);
-
-  // draw shots
-  for (auto shot : m_shots)
-    shot->draw(target, states);
-
   if (m_state == LevelState::Start || m_state == LevelState::Dead || m_state == LevelState::Abort) {
     float alpha = (m_maxFade - m_seq) / static_cast<float>(m_maxFade);
     //  fade in/out
@@ -394,7 +296,5 @@ void Level::draw(ngf::RenderTarget &target, ngf::RenderStates states) const {
     fadeShape.setColor(ngf::Color(0.f, 0.f, 0.f, alpha));
     fadeShape.getTransform().setPosition({m_position, 0});
     fadeShape.draw(target, states);
-
-    m_spaceship->draw(target, states);
   }
 }

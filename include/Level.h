@@ -1,6 +1,5 @@
 #pragma once
 
-#include "Entity.h"
 #include "CollisionResult.h"
 #include <entt/entt.hpp>
 #include <optional>
@@ -18,61 +17,36 @@ enum class LevelState {
   Abort
 };
 
-constexpr int LevelDelay = 1;
-constexpr int LevelSpeed = 2;
-
 constexpr int TileWidth = 8;
 constexpr int TileHeight = 8;
 
 class Engine;
 class Keys;
-class Shot;
-class Spaceship;
 
-class Level : public Entity {
+class Level {
 public:
-  Level(Engine *engine, Spaceship *spaceship, const char *mapPath, const char *texturePath);
-  ~Level() override;
-
-  [[nodiscard]] int getScrollPosition() const;
-
-  [[nodiscard]] const std::vector<Shot *> &shots() const;
-
-  void addShot(Shot *shot);
-
-  [[nodiscard]] virtual glm::ivec2 getRespawnPosition() const { return {0, 0}; }
+  Level(Engine *engine, const char *mapPath, const char *texturePath);
+  ~Level();
 
   // for the level the box is the rectangle that represents the coordinates of the screen
-  [[nodiscard]] ngf::irect getRect() const override;
+  [[nodiscard]] ngf::irect getRect() const;
 
   [[nodiscard]] std::optional<CollisionResult> collideLevel(const ngf::irect &rect) const;
-  [[nodiscard]] bool collide(const ngf::irect &rect) const override;
+  [[nodiscard]] bool collide(const ngf::irect &rect) const;
 
-  void update() override;
-  void updateKeys(const Keys &keys);
-  void draw(ngf::RenderTarget &target, ngf::RenderStates states) const override;
+  void update();
+  void draw(ngf::RenderTarget &target, ngf::RenderStates states) const;
 
-  void gameOver();
   void end();
 
-  void shootMagic();
-
-  virtual int updatePosition() = 0;        // takes care of the scroll
-
-protected:
+private:
   bool load(const char *path);
-
   void applyScroll();
-  void updateEntities();        // makes everyone run their update
-  void removeDeads();           // handle dead sprites
 
-protected:
+private:
   LevelState m_state{LevelState::Start};
   int m_position{0};      // scroll position
   int m_positionFinal{0}; // scroll end
-
-  Spaceship *m_spaceship{nullptr};
-  std::vector<Shot *> m_shots;
 
   int m_numTilesWidth{0};
   int m_numTilesHeight{0};
@@ -81,10 +55,7 @@ protected:
 
   std::vector<int> m_tilesMap;
 
+  Engine* m_engine{nullptr};
   int m_maxFade{0};
-
-  int64_t m_timeMagic{0};
-  int64_t m_time{0};
   int m_seq{0};
-  int64_t m_score{0};
 };

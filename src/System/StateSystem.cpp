@@ -21,6 +21,7 @@ void updateSpaceship(entt::registry &registry) {
         sc.aliveTime++;
       } else {
         sc.aliveTime = 0;
+        sc.lastShotTime = 0;
         sc.state = SpaceshipState::Explode;
         sc.delay = 8 * 6;
         registry.remove<CollideComponent>(e);
