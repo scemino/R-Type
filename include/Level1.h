@@ -10,4 +10,5 @@ public:
 
 private:
   int updatePosition() final;
+//  void generateEnemies() final;
 };

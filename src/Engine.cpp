@@ -2,8 +2,13 @@
 #include "Spaceship.h"
 #include "Level.h"
 #include "Level1.h"
+#include "System/InputSystem.h"
+#include "EntityFactory.h"
 
-Engine::Engine() = default;
+Engine::Engine() {
+  m_reg.set<Engine *>(this);
+}
+
 Engine::~Engine() = default;
 
 std::shared_ptr<ngf::Texture> Engine::loadTexture(const std::string &path) {
@@ -23,6 +28,7 @@ Level *Engine::level() const { return m_level.get(); }
 void Engine::processKeys(const Keys &keys) {
   if (m_level)
     m_level->updateKeys(keys);
+  InputSystem::update(m_reg, keys);
 }
 
 void Engine::updateLevel() {
@@ -40,12 +46,14 @@ void Engine::advanceLevel() {
 void Engine::startGame() {
   // create a ship and level
   m_spaceship = std::make_unique<Spaceship>(this);
-
+  EntityFactory::createPlayer(m_reg);
   loadLevel();
 }
 
 void Engine::loadLevel() {
-  m_level = std::make_unique<Level1>(this, m_spaceship.get(), "resources/levels/rtype.json", "resources/levels/rtype.png");
+  m_level =
+      std::make_unique<Level1>(this, m_spaceship.get(), "resources/levels/rtype.json", "resources/levels/rtype.png");
+  m_reg.set<Level *>(m_level.get());
   auto pos = m_spaceship->getPosition();
   m_spaceship->spawn(pos);
 }
@@ -63,3 +71,4 @@ void Engine::drawLevel(ngf::RenderTarget &target, ngf::RenderStates states) {
 void Engine::draw(ngf::RenderTarget &target, ngf::RenderStates states) {
   drawLevel(target, states);
 }
+

@@ -2,6 +2,7 @@
 
 #include "Entity.h"
 #include "CollisionResult.h"
+#include <entt/entt.hpp>
 #include <optional>
 #include <vector>
 #include <glm/vec2.hpp>
@@ -19,6 +20,9 @@ enum class LevelState {
 
 constexpr int LevelDelay = 1;
 constexpr int LevelSpeed = 2;
+
+constexpr int TileWidth = 8;
+constexpr int TileHeight = 8;
 
 class Engine;
 class Keys;
@@ -53,10 +57,10 @@ public:
 
   void shootMagic();
 
+  virtual int updatePosition() = 0;        // takes care of the scroll
+
 protected:
   bool load(const char *path);
-
-  virtual int updatePosition() = 0;        // takes care of the scroll
 
   void applyScroll();
   void updateEntities();        // makes everyone run their update
@@ -82,4 +86,5 @@ protected:
   int64_t m_timeMagic{0};
   int64_t m_time{0};
   int m_seq{0};
+  int64_t m_score{0};
 };

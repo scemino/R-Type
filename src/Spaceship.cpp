@@ -48,9 +48,9 @@ constexpr int explo[8][4] = {{1, 343, 32, 28}, {35, 343, 32, 28}, {73, 348, 21, 
                              {202, 344, 28, 26}, {233, 343, 32, 28}};
 constexpr int exploMid = 356;
 
-constexpr int shot[8][4] = {{2, 51, 31, 32}, {35, 52, 28, 28}, {68, 54, 29, 28},
-                            {103, 55, 25, 25}, {135, 56, 29, 22}, {168, 58, 26, 18},
-                            {200, 59, 23, 15}, {233, 60, 20, 12}};
+constexpr int beamLoad[8][4] = {{2, 51, 31, 32}, {35, 52, 28, 28}, {68, 54, 29, 28},
+                                {103, 55, 25, 25}, {135, 56, 29, 22}, {168, 58, 26, 18},
+                                {200, 59, 23, 15}, {233, 60, 20, 12}};
 constexpr int disMid = 66;
 
 constexpr int flash[2][4] = {{215, 85, 14, 12}, {233, 87, 11, 9}};
@@ -326,12 +326,12 @@ void Spaceship::update() {
       }
 
       // Have you hit a bad shot?
-      auto shots = level->shots();
+      const auto& shots = level->shots();
       for (auto shot : shots) {
         if (shot->isBad()) {
           if (shot->collide(rect)) {
             if (!invincible)
-              m_power -= shot->getPower();
+              m_power -= shot->getDamage();
             shot->die();
           }
         }
@@ -425,12 +425,12 @@ void Spaceship::draw(ngf::RenderTarget &target, ngf::RenderStates states) const 
       int xShot = m_pos.x + (wPixShip >> 1);
       int yShot = m_pos.y;
       int seqShot = (m_shotLoad / SpaceshipShotDelay) % 8;
-      xTexShot = shot[seqShot][0];
-      yTexShot = shot[seqShot][1];
-      hTexShot = shot[seqShot][3];
-      wPixShot = shot[seqShot][2];
+      xTexShot = beamLoad[seqShot][0];
+      yTexShot = beamLoad[seqShot][1];
+      hTexShot = beamLoad[seqShot][3];
+      wPixShot = beamLoad[seqShot][2];
       xPixShot = xShot;
-      yPixOffsetShot = disMid - shot[seqShot][1];
+      yPixOffsetShot = disMid - beamLoad[seqShot][1];
       yPixShot = (yShot - yPixOffsetShot);
 
       s.setTextureRect(ngf::irect::fromPositionSize({xTexShot, yTexShot},
@@ -463,3 +463,5 @@ void Spaceship::draw(ngf::RenderTarget &target, ngf::RenderStates states) const 
     }
   }
 }
+
+std::vector<Shield *> &Spaceship::shields() { return m_shields; }

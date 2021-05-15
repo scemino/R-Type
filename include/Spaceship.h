@@ -2,12 +2,7 @@
 
 #include "Entity.h"
 #include <vector>
-
-enum class SpaceshipState {
-  Alive,
-  Explode,
-  Dead
-};
+#include "Component/Components.h"
 
 class Engine;
 class Keys;
@@ -23,7 +18,9 @@ public:
   [[nodiscard]] bool canShootMagic() const;
   [[nodiscard]] int loadShot() const;
 
-  void spawn(const glm::ivec2& pos);
+  std::vector<Shield *> &shields();
+
+  void spawn(const glm::ivec2 &pos);
   void die() override;
   [[nodiscard]] ngf::irect getRect() const override;
   void offset(int x, int y) override;
@@ -51,6 +48,8 @@ private:
   int m_power;                // how many power the ship has left
   int m_magic;                // how many magic are left
   int64_t m_aliveTime;        // how long the ship has been alive
+  int64_t m_score{0};
+  std::vector<Shield *> m_shields;
 
   int64_t m_shotDelay;
   bool m_pulsedShot;
@@ -62,7 +61,7 @@ private:
 
   float m_xF, m_yF;
   glm::ivec2 m_lastPos;
+  int m_seq{0};
 
   std::shared_ptr<ngf::Texture> m_texSpaceship;
-  int m_seq{0};
 };

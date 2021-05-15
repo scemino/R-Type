@@ -1,5 +1,6 @@
 #pragma once
 
+#include <entt/entity/registry.hpp>
 #include <map>
 #include <memory>
 #include <string>
@@ -25,6 +26,8 @@ public:
   [[nodiscard]] Spaceship *spaceship() const;
   [[nodiscard]] Level *level() const;
 
+  entt::registry &registry() { return m_reg; }
+
   void advanceLevel();
   void startGame();
 
@@ -42,4 +45,5 @@ private:
   std::unique_ptr<Spaceship> m_spaceship;
   std::unique_ptr<Level> m_level;
   int64_t m_time{0};
+  entt::registry m_reg;
 };

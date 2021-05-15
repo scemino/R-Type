@@ -7,11 +7,14 @@
 #include <ngf/Graphics/RectangleShape.h>
 #include <ngf/Graphics/Sprite.h>
 #include <ngf/IO/Json/JsonParser.h>
+#include "Component/Components.h"
+#include "System/CollisionSystem.h"
+#include "System/InvincibleSystem.h"
+#include "System/MotionSystem.h"
+#include "System/RenderSystem.h"
+#include "System/StateSystem.h"
 
 namespace {
-constexpr int TileWidth = 8;
-constexpr int TileHeight = 8;
-
 constexpr int MapNumTilesWidth = 48;
 constexpr int MapNumTilesHeight = 32;
 
@@ -20,23 +23,8 @@ constexpr int HudHpix = 32;
 
 constexpr int LevelFade = 500;
 constexpr int LevelGameOverFade = 300;
+
 constexpr int LevelMagicDelay = 60;
-}
-
-bool Level::load(const char *path) {
-  const auto jMap = ngf::Json::load(path);
-  const auto jData = jMap["layers"][0]["data"];
-  m_numTilesWidth = jMap["width"].getInt();
-  m_numTilesHeight = jMap["height"].getInt();
-
-  int mapSize = m_numTilesWidth * m_numTilesHeight;
-  m_tilesMap.resize(mapSize);
-  int i = 0;
-  for (const auto &jTile : jData) {
-    m_tilesMap[i++] = jTile.getInt() - 1;
-  }
-
-  return true;
 }
 
 Level::Level(Engine *engine, Spaceship *spaceship, const char *mapPath,
@@ -65,6 +53,21 @@ Level::~Level() {
   }
 }
 
+bool Level::load(const char *path) {
+  const auto jMap = ngf::Json::load(path);
+  const auto jData = jMap["layers"][0]["data"];
+  m_numTilesWidth = jMap["width"].getInt();
+  m_numTilesHeight = jMap["height"].getInt();
+
+  int mapSize = m_numTilesWidth * m_numTilesHeight;
+  m_tilesMap.resize(mapSize);
+  int i = 0;
+  for (const auto &jTile : jData) {
+    m_tilesMap[i++] = jTile.getInt() - 1;
+  }
+  return true;
+}
+
 void Level::shootMagic() {
   for (auto shot : m_shots) {
     if (shot->isBad() && shot->isAlive())
@@ -84,7 +87,7 @@ void Level::addShot(Shot *shot) {
 }
 
 void Level::updateKeys(const Keys &keys) {
-    m_spaceship->processKeys(keys);
+  m_spaceship->processKeys(keys);
 }
 
 void Level::applyScroll() {
@@ -98,6 +101,12 @@ void Level::applyScroll() {
     for (auto &shot : m_shots)
       shot->offset(offset, 0);
     m_spaceship->offset(offset, 0);
+
+    const auto posView = m_engine->registry().view<ShipComponent, PositionComponent>();
+    for (const entt::entity e : posView) {
+      auto &pc = posView.get<PositionComponent>(e);
+      pc.pos.x += static_cast<float>(offset);
+    }
   }
 }
 
@@ -106,6 +115,11 @@ void Level::updateEntities() {
     shot->update();
 
   m_spaceship->update();
+
+  InvincibleSystem::update(m_engine->registry());
+  MotionSystem::update(m_engine->registry());
+  CollisionSystem::collide(m_engine->registry());
+  StateSystem::update(m_engine->registry());
 }
 
 void Level::removeDeads() {
@@ -191,7 +205,8 @@ std::optional<CollisionResult> Level::collideLevel(const ngf::irect &rect) const
     }
 
     if (collisionMask)
-      return std::make_optional(CollisionResult{static_cast<CollisionMask>(collisionMask), {x, y}, CollisionObject::Tile});
+      return std::make_optional(CollisionResult{static_cast<CollisionMask>(collisionMask), {x, y},
+                                                CollisionObject::Tile});
   }
 
   // see if it is out of the screen
@@ -213,7 +228,8 @@ std::optional<CollisionResult> Level::collideLevel(const ngf::irect &rect) const
   }
 
   if (collisionMask)
-    return std::make_optional(CollisionResult{static_cast<CollisionMask>(collisionMask), {x, y}, CollisionObject::Screen});
+    return std::make_optional(CollisionResult{static_cast<CollisionMask>(collisionMask), {x, y},
+                                              CollisionObject::Screen});
 
   return std::nullopt;
 }
@@ -360,6 +376,8 @@ void Level::draw(ngf::RenderTarget &target, ngf::RenderStates states) const {
       s.draw(target, states);
     }
   }
+
+  RenderSystem::draw(m_engine->registry(), target, states);
 
   // draw spaceship
   if (m_state == LevelState::Alive)

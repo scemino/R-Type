@@ -14,11 +14,11 @@ class Engine;
 class Shot : public Entity {
 public:
   explicit Shot(Engine *engine) : Entity(engine) {}
-  Shot(Engine *engine, glm::ivec2 pos) : Entity(engine, pos) {}
+  Shot(Engine *engine, const glm::ivec2 &pos) : Entity(engine, pos) {}
   ~Shot() override = default;
 
   [[nodiscard]] bool isBad() const { return m_isBad; }
-  [[nodiscard]] int getPower() const { return m_power; }
+  [[nodiscard]] int getDamage() const { return m_damage; }
 
   [[nodiscard]] bool isAlive() const { return m_state == ShotState::Alive; }
 
@@ -27,5 +27,5 @@ public:
 protected:
   ShotState m_state{ShotState::Alive};
   bool m_isBad{true}; // true if it has been shot by an enemy
-  int m_power{0};     // how much life takes away
+  int m_damage{0};     // how much life takes away
 };

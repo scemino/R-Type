@@ -8,6 +8,7 @@ class RTypeApplication : public ngf::Application {
 private:
   void onInit() override {
     m_window.init({"R-Type", glm::ivec2{640, 480}, true, false, true});
+    m_window.setVerticalSyncEnabled();
     m_pEngine = std::make_unique<Engine>();
     m_pEngine->startGame();
   }

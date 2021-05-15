@@ -38,7 +38,7 @@ SpaceshipShot::SpaceshipShot(Engine *engine, glm::ivec2 pos, SpaceshipShotType t
   m_texNave1 = engine->loadTexture("resources/images/r-typesheet1.png");
   m_texNave2 = engine->loadTexture("resources/images/r-typesheet2.png");
 
-  m_power = 20 + m_size * 100;
+  m_damage = 20 + m_size * 100;
   m_isBad = false;
 
   m_pixelsAdvance = shipShot[0][2] - m_size - (m_size >> 1);
