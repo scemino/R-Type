@@ -79,8 +79,13 @@ void collide(entt::registry &registry) {
         if (hc) {
           hc->health = 0;
         }
-        if (!isShip) {
-          registry.destroy(e);
+        auto shot = registry.try_get<ShotComponent>(e);
+        if (shot) {
+          registry.remove<CollideComponent>(e);
+          registry.remove<MotionComponent>(e);
+          shot->state = EntityState::Explode;
+          shot->frameDelay = 6;
+          shot->frameIndex = 0;
         }
       }
     }

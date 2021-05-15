@@ -31,29 +31,28 @@ enum class ShipDirection {
   MoreDown
 };
 
-enum class SpaceshipState {
+enum class EntityState {
   Alive,
-  Explode,
-  Dead
+  Explode
 };
 
 struct ShipComponent {
   ShipDirection direction{ShipDirection::None};
-  SpaceshipState state{SpaceshipState::Alive};
-  int delay{0};
+  EntityState state{EntityState::Alive};
+  int frameDelay{0};
+  int frameIndex{0};
   int64_t aliveTime{0};
   bool pulsedShot{false};
   int power{0};
   int64_t shotDelay{0};
   int64_t lastShotTime{0};
-  int64_t lastMagicTime{0};
 };
 
 struct ShotComponent {
   int size{0};
-  SpaceshipState state{SpaceshipState::Alive};
-  int seq{0};
-  int delay{6};
+  EntityState state{EntityState::Alive};
+  int frameIndex{0};
+  int frameDelay{6};
 };
 
 struct InvincibleComponent {

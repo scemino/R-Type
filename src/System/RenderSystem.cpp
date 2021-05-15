@@ -28,6 +28,19 @@ constexpr int shipShot[14][4] = {
     {104, 171, 80, 14}, {185, 170, 80, 16}};
 constexpr int shipShotMid[6] = {91, 108, 125, 142, 160, 177};
 
+constexpr int explo[8][4] = {{1, 343, 32, 28}, {35, 343, 32, 28}, {73, 348, 21, 18},
+                   {106, 347, 22, 20}, {138, 346, 24, 22}, {170, 345, 26, 24},
+                   {202, 344, 28, 26}, {233, 343, 32, 28}};
+constexpr int exploMid = 356;
+
+constexpr int shotImpact[14][4] = {
+    {303, 85, 14, 12}, {288, 87, 11, 9}, {249, 90, 16, 4},
+    {249, 90, 16, 4}, {249, 105, 16, 8}, {232, 103, 16, 12},
+    {200, 121, 32, 10}, {233, 120, 32, 12}, {168, 137, 48, 12},
+    {217, 136, 48, 14}, {136, 154, 64, 14}, {201, 154, 64, 14},
+    {104, 171, 80, 14}, {185, 170, 80, 16}};
+constexpr int shipImpactMid[6] = {91, 108, 125, 142, 160, 177};
+
 ngf::irect toRect(const int *frame) {
   return ngf::irect::fromPositionSize({frame[0], frame[1]}, {frame[2], frame[3]});
 }
@@ -37,19 +50,18 @@ void drawSpaceship(entt::registry &registry, ngf::RenderTarget &target, ngf::Ren
   const auto view = registry.view<ShipComponent, PositionComponent>();
   for (const entt::entity e : view) {
     const auto &sc = view.get<ShipComponent>(e);
+    const auto &p = view.get<PositionComponent>(e);
 
-    // blink if invincible
-    const auto invincible = registry.try_get<InvincibleComponent>(e);
-    if (invincible) {
-      auto t = invincible->delay / 3;
-      if (t % 2)
-        continue;
-    }
+    if (sc.state == EntityState::Alive) {
+      // blink if invincible
+      const auto invincible = registry.try_get<InvincibleComponent>(e);
+      if (invincible) {
+        auto t = invincible->delay / 3;
+        if (t % 2)
+          continue;
+      }
 
-    if (sc.state == SpaceshipState::Alive) {
       ngf::irect frame;
-      const auto &p = view.get<PositionComponent>(e);
-
       switch (sc.direction) {
       case ShipDirection::Upper:frame = toRect(mov[4]);
         break;
@@ -66,7 +78,8 @@ void drawSpaceship(entt::registry &registry, ngf::RenderTarget &target, ngf::Ren
 
       // draw ship
       const auto texture = engine->loadTexture("resources/images/r-typesheet1.png");
-      ngf::Sprite s(*texture);s.setTextureRect(frame);
+      ngf::Sprite s(*texture);
+      s.setTextureRect(frame);
       s.getTransform().setPosition(p.pos + glm::vec2{0, -7});
       s.draw(target, states);
 
@@ -105,12 +118,29 @@ void drawSpaceship(entt::registry &registry, ngf::RenderTarget &target, ngf::Ren
 
         const auto yPixFlash = -yPixOffsetFlash;
 
-        auto flashFrame = ngf::irect::fromPositionSize({xTexFlash, yTexFlash},
-                                                       {wPixFlash, hTexFlash});
+        const auto flashFrame = ngf::irect::fromPositionSize({xTexFlash, yTexFlash},
+                                                             {wPixFlash, hTexFlash});
         s.setTextureRect(flashFrame);
         s.getTransform().setPosition(p.pos + glm::vec2{frame.getWidth(), yPixFlash});
         s.draw(target, states);
       }
+    } else if (sc.state == EntityState::Explode) {
+      const auto xTexExplo = explo[sc.frameIndex][0];
+      const auto yTexExplo = explo[sc.frameIndex][1];
+      const auto wTexExplo = explo[sc.frameIndex][2];
+      const auto hTexExplo = explo[sc.frameIndex][3];
+      const auto wPixExplo = explo[sc.frameIndex][2];
+      const auto xPixExplo = p.pos.x - (wPixExplo >> 1);
+      const auto yPixOffset = exploMid - explo[sc.frameIndex][1];
+      const auto yPixExplo = (p.pos.y - yPixOffset);
+
+      const auto exploFrame = ngf::irect::fromPositionSize({xTexExplo, yTexExplo},
+                                                           {wTexExplo, hTexExplo});
+      const auto texture = engine->loadTexture("resources/images/r-typesheet1.png");
+      ngf::Sprite s(*texture);
+      s.setTextureRect(exploFrame);
+      s.getTransform().setPosition({xPixExplo, yPixExplo});
+      s.draw(target, states);
     }
   }
 }
@@ -122,10 +152,9 @@ void drawShot(entt::registry &registry, ngf::RenderTarget &target, ngf::RenderSt
     const auto &p = view.get<PositionComponent>(e);
     const auto &sc = view.get<ShotComponent>(e);
 
-    if (sc.state == SpaceshipState::Alive) {
-      const auto texture = engine->loadTexture("resources/images/r-typesheet1.png");
+    if (sc.state == EntityState::Alive) {
 
-      const int seqShot = 2 + (2 * sc.size) + sc.seq;
+      const int seqShot = 2 + (2 * sc.size) + sc.frameIndex;
       const auto *shot = shipShot[seqShot];
       const int mid = shipShotMid[sc.size];
 
@@ -138,8 +167,25 @@ void drawShot(entt::registry &registry, ngf::RenderTarget &target, ngf::RenderSt
       const auto yPixShot = (p.pos.y - static_cast<float>(yPixOffsetShot));
       const auto frame = ngf::irect::fromPositionSize({xTexShot, yTexShot}, {wPixShot, hTexShot});
 
+      const auto texture = engine->loadTexture("resources/images/r-typesheet1.png");
       ngf::Sprite s(*texture, frame);
       s.getTransform().setPosition({xPixShot, yPixShot});
+      s.draw(target, states);
+    } else if (sc.state == EntityState::Explode) {
+      const auto texture = engine->loadTexture("resources/images/r-typesheet1.png");
+
+      const auto xTexExplo = shotImpact[sc.frameIndex][0];
+      const auto yTexExplo = shotImpact[sc.frameIndex][1];
+      const auto hTexExplo = shotImpact[sc.frameIndex][3];
+      const auto wPixExplo = shotImpact[sc.frameIndex][2];
+      const auto xPixExplo = p.pos.x + shotImpact[2 + (2 * sc.size)][2] - shotImpact[sc.frameIndex][2];
+
+      const auto yPixOffsetExplo = shipImpactMid[0] - shotImpact[sc.frameIndex][1];
+      const auto yPixExplo = (p.pos.y - yPixOffsetExplo);
+      const auto frame = ngf::irect::fromPositionSize({xTexExplo, yTexExplo}, {wPixExplo, hTexExplo});
+
+      ngf::Sprite s(*texture, frame);
+      s.getTransform().setPosition({xPixExplo, yPixExplo});
       s.draw(target, states);
     }
 
