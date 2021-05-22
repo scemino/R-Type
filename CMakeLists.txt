@@ -10,12 +10,16 @@ include_directories(include)
 add_executable(R-Type
         src/Level.cpp
         src/Engine.cpp
+        src/System/AnimationSystem.cpp
         src/System/CollisionSystem.cpp
+        src/System/ExplodeSystem.cpp
+        src/System/HealthSystem.cpp
         src/System/RenderSystem.cpp
+        src/System/InitSystem.cpp
         src/System/InputSystem.cpp
         src/System/MotionSystem.cpp
         src/System/InvincibleSystem.cpp
-        src/System/StateSystem.cpp src/EntityFactory.cpp
+        src/EntityFactory.cpp
         src/main.cpp)
 
 target_compile_features(R-Type PRIVATE cxx_std_17)

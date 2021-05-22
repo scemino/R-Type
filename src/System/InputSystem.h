@@ -3,6 +3,6 @@
 #include <entt/entt.hpp>
 
 class Keys;
-namespace InputSystem {
+namespace Systems::InputSystem {
   void update(entt::registry &registry, const Keys &keys);
 };

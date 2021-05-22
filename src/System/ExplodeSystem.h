@@ -2,8 +2,6 @@
 
 #include <entt/entt.hpp>
 
-namespace StateSystem {
-
+namespace Systems::ExplodeSystem {
 void update(entt::registry &registry);
-
 }

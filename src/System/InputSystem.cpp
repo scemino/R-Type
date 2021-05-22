@@ -5,72 +5,60 @@
 #include "Component/Components.h"
 
 namespace {
-constexpr int SpaceshipShotDelay = 4;
 constexpr int SpaceshipLoadShotFactor = 4;
+constexpr int SpaceshipShotDelay = 4;
 constexpr int SpaceshipMaxLoadShot = 5;
 
-void moveUp(entt::registry &registry, entt::entity e) {
-  auto sc = registry.try_get<ShipComponent>(e);
-  auto mc = registry.try_get<MotionComponent>(e);
-  if (sc->direction == ShipDirection::Up) {
-    if (sc->frameDelay) {
-      --sc->frameDelay;
-    } else {
-      sc->direction = ShipDirection::Upper;
-    }
-  } else if (sc->direction == ShipDirection::None) {
-    mc->velocity.y = -3.f;
-    sc->direction = ShipDirection::Up;
-    sc->frameDelay = 6;
-  } else if (sc->direction >= ShipDirection::Down) {
-    mc->velocity.y = 0.f;
-    sc->direction = ShipDirection::None;
+void moveUp(AnimationComponent &ac, InputStateComponent &ic, MotionComponent &mc) {
+  if (!ic.up) {
+    ic.up = true;
+    mc.velocity.y = -3.f;
+    ic.delay = 0;
+    ac.current = "up";
+    ac.delay = 0;
+  } else if (ic.delay < 6) {
+    ++ic.delay;
+  } else {
+    ac.current = "upper";
+    ac.delay = 0;
   }
 }
 
-void moveDown(entt::registry &registry, entt::entity e) {
-  auto sc = registry.try_get<ShipComponent>(e);
-  auto mc = registry.try_get<MotionComponent>(e);
-  if (sc->direction == ShipDirection::Down) {
-    if (sc->frameDelay) {
-      --sc->frameDelay;
-    } else {
-      sc->direction = ShipDirection::MoreDown;
-    }
-  } else if (sc->direction == ShipDirection::None) {
-    mc->velocity.y = 3.f;
-    sc->direction = ShipDirection::Down;
-    sc->frameDelay = 6;
-  } else if (sc->direction <= ShipDirection::Up) {
-    mc->velocity.y = 0.f;
-    sc->direction = ShipDirection::None;
+void moveDown(AnimationComponent &ac, InputStateComponent &ic, MotionComponent &mc) {
+  if (!ic.down) {
+    ic.down = true;
+    mc.velocity.y = 3.f;
+    ac.current = "down";
+    ac.delay = 0;
+  } else if (ic.delay < 6) {
+    ++ic.delay;
+  } else {
+    ac.current = "moreDown";
+    ac.delay = 0;
   }
 }
 
-void moveLeft(entt::registry &registry, entt::entity e) {
-  auto mc = registry.try_get<MotionComponent>(e);
-  mc->velocity.x = -3.f;
+void moveLeft(MotionComponent &mc) {
+  mc.velocity.x = -3.f;
 }
 
-void moveRight(entt::registry &registry, entt::entity e) {
-  auto mc = registry.try_get<MotionComponent>(e);
-  mc->velocity.x = 3.f;
+void moveRight(MotionComponent &mc) {
+  mc.velocity.x = 3.f;
 }
 
-void still(entt::registry &registry, entt::entity e) {
-  auto sc = registry.try_get<ShipComponent>(e);
-  auto mc = registry.try_get<MotionComponent>(e);
-  mc->velocity.y = 0.f;
-  sc->direction = ShipDirection::None;
+void still(AnimationComponent &ac, InputStateComponent &ic, MotionComponent &mc) {
+  mc.velocity.y = 0.f;
+  ic.up = false;
+  ic.down = false;
+  ac.current = "idle";
+  ac.delay = 0;
 }
 
-void stillRL(entt::registry &registry, entt::entity e) {
-  auto mc = registry.try_get<MotionComponent>(e);
-  mc->velocity.x = 0.f;
+void stillRL(MotionComponent &mc) {
+  mc.velocity.x = 0.f;
 }
 
-void shoot(entt::registry &registry, entt::entity e) {
-  auto &sc = registry.get<ShipComponent>(e);
+void shoot(ShipComponent &sc) {
   if (sc.pulsedShot) {
     ++sc.power;
   } else {
@@ -79,11 +67,7 @@ void shoot(entt::registry &registry, entt::entity e) {
   }
 }
 
-void noShoot(entt::registry &registry, entt::entity e) {
-  auto &sc = registry.get<ShipComponent>(e);
-  const auto &pc = registry.get<PositionComponent>(e);
-
-  // shoot when player releases key
+void noShoot(entt::registry &registry, ShipComponent &sc, const PositionComponent &pc) {
   if (sc.pulsedShot) {
     sc.pulsedShot = false;
 
@@ -103,31 +87,30 @@ void noShoot(entt::registry &registry, entt::entity e) {
   }
   sc.power = 0;
 }
+
 } // namespace
 
-namespace InputSystem {
+namespace Systems::InputSystem {
 void update(entt::registry &registry, const Keys &keys) {
-  const auto view = registry.view<ShipComponent>();
-  for (const entt::entity e : view) {
-    auto &sc = view.get<ShipComponent>(e);
-    if (sc.state != EntityState::Alive)
-      continue;
+  const auto view =
+      registry.view<ShipComponent, AnimationComponent, InputStateComponent, MotionComponent, PositionComponent>();
+  view.each([&](auto &sc, auto &ac, auto &ic, auto &mc, auto &pc) {
     if (keys[ngf::Scancode::Up])
-      moveUp(registry, e);
+      moveUp(ac, ic, mc);
     if (keys[ngf::Scancode::Down])
-      moveDown(registry, e);
+      moveDown(ac, ic, mc);
     if (keys[ngf::Scancode::Left])
-      moveLeft(registry, e);
+      moveLeft(mc);
     if (keys[ngf::Scancode::Right])
-      moveRight(registry, e);
+      moveRight(mc);
     if (!keys[ngf::Scancode::Up] && !keys[ngf::Scancode::Down])
-      still(registry, e);
+      still(ac, ic, mc);
     if (!keys[ngf::Scancode::Left] && !keys[ngf::Scancode::Right])
-      stillRL(registry, e);
+      stillRL(mc);
     if (keys[ngf::Scancode::Space])
-      shoot(registry, e);
+      shoot(sc);
     else
-      noShoot(registry, e);
-  }
+      noShoot(registry, sc, pc);
+  });
 }
 }

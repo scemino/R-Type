@@ -2,8 +2,6 @@
 
 #include <entt/entt.hpp>
 
-namespace Systems::CollisionSystem {
+namespace Systems::HitSystem {
 void update(entt::registry &registry);
-};
-
-
+}

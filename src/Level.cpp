@@ -6,7 +6,6 @@
 #include <ngf/Graphics/Sprite.h>
 #include <ngf/IO/Json/JsonParser.h>
 #include "Component/Components.h"
-#include "System/CollisionSystem.h"
 #include "System/RenderSystem.h"
 
 namespace {
@@ -20,8 +19,7 @@ constexpr int LevelFade = 500;
 }
 
 Level::Level(Engine *engine, const char *mapPath, const char *texturePath)
-: m_engine(engine)
-{
+    : m_engine(engine) {
   m_tex = engine->loadTexture(texturePath);
   m_tilesWidthTex = m_tex->getSize().x / TileWidth;
 
@@ -58,11 +56,9 @@ void Level::applyScroll() {
   auto offset = 1;
   m_position += offset;
 
-  const auto posView = m_engine->registry().view<ShipComponent, PositionComponent>();
-  for (const entt::entity e : posView) {
-    auto &pc = posView.get<PositionComponent>(e);
+  m_engine->registry().view<PositionComponent>().each([&](auto &pc) {
     pc.pos.x += static_cast<float>(offset);
-  }
+  });
 }
 
 std::optional<CollisionResult> Level::collideLevel(const ngf::irect &rect) const {
@@ -287,7 +283,7 @@ void Level::draw(ngf::RenderTarget &target, ngf::RenderStates states) const {
     }
   }
 
-  RenderSystem::draw(m_engine->registry(), target, states);
+  Systems::RenderSystem::draw(m_engine->registry(), target, states);
 
   if (m_state == LevelState::Start || m_state == LevelState::Dead || m_state == LevelState::Abort) {
     float alpha = (m_maxFade - m_seq) / static_cast<float>(m_maxFade);

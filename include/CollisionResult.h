@@ -17,7 +17,7 @@ enum CollisionMask {
 
 class CollisionResult final {
 public:
-  CollisionResult(CollisionMask collisionMask, glm::ivec2 pos, CollisionObject object)
+  CollisionResult(CollisionMask collisionMask, const glm::ivec2& pos, CollisionObject object)
       : m_collisionMask(collisionMask), m_pos(pos), m_object(object) {}
 
   [[nodiscard]] bool tile() const { return m_object == CollisionObject::Tile; }

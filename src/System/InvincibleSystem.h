@@ -2,6 +2,6 @@
 
 #include <entt/entt.hpp>
 
-namespace InvincibleSystem {
+namespace Systems::InvincibleSystem {
 void update(entt::registry &registry);
 }

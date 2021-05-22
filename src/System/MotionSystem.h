@@ -2,7 +2,7 @@
 
 #include <entt/entt.hpp>
 
-namespace MotionSystem {
+namespace Systems::MotionSystem {
 
 void update(entt::registry &registry);
 

@@ -5,7 +5,7 @@
 #include <ngf/Graphics/RenderTarget.h>
 
 class Engine;
-namespace RenderSystem {
+namespace Systems::RenderSystem {
 
 void draw(entt::registry &registry, ngf::RenderTarget &target, ngf::RenderStates states);
 
