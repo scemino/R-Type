@@ -10,6 +10,7 @@ include_directories("src")
 add_executable(R-Type
         src/Level.cpp
         src/Engine.cpp
+        src/AnimationLoader.cpp
         src/System/AnimationSystem.cpp
         src/System/CollisionSystem.cpp
         src/System/ExplodeSystem.cpp
@@ -19,6 +20,7 @@ add_executable(R-Type
         src/System/InputSystem.cpp
         src/System/MotionSystem.cpp
         src/System/InvincibleSystem.cpp
+        src/System/SpawnSystem.cpp
         src/EntityFactory.cpp
         src/main.cpp)
 

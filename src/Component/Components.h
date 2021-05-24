@@ -49,6 +49,7 @@ struct ShipComponent {
 };
 
 struct GraphicComponent {
+  std::string name;
   std::shared_ptr<ngf::Texture> texture;
   ngf::irect frame;
   glm::vec2 offset;

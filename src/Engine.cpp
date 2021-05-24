@@ -5,6 +5,7 @@
 #include "System/InvincibleSystem.h"
 #include "System/MotionSystem.h"
 #include "System/CollisionSystem.h"
+#include "System/SpawnSystem.h"
 #include "Engine.h"
 #include "Level.h"
 #include "System/InputSystem.h"
@@ -34,13 +35,13 @@ void Engine::startGame() {
   // create a ship and level
   EntityFactory::createPlayer(m_reg);
   Systems::InitSystem::update(m_reg);
-  update();
   loadLevel();
+  update();
 }
 
 void Engine::loadLevel() {
   m_level = std::make_unique<Level>(this, "resources/levels/rtype.json", "resources/levels/rtype.png");
-  m_reg.set<const Level*>(m_level.get());
+  m_reg.set<Level *>(m_level.get());
 }
 
 void Engine::update() {
@@ -52,6 +53,7 @@ void Engine::update() {
   Systems::HitSystem::update(m_reg);
   Systems::ExplodeSystem::update(m_reg);
   Systems::AnimationSystem::update(m_reg);
+  Systems::SpawnSystem::update(m_reg);
 }
 
 void Engine::draw(ngf::RenderTarget &target, ngf::RenderStates states) {

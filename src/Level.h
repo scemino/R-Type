@@ -39,6 +39,8 @@ public:
 
   void end();
 
+  [[nodiscard]] int getScrollPosition() const { return m_position; }
+
 private:
   bool load(const char *path);
   void applyScroll();
@@ -55,7 +57,7 @@ private:
 
   std::vector<int> m_tilesMap;
 
-  Engine* m_engine{nullptr};
+  Engine *m_engine{nullptr};
   int m_maxFade{0};
   int m_seq{0};
 };

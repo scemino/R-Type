@@ -7,6 +7,8 @@ namespace Systems::RenderSystem {
 void draw(entt::registry &registry, ngf::RenderTarget &target, ngf::RenderStates states) {
   registry.view<GraphicComponent, PositionComponent>()
       .each([&](const auto &gc, const auto &pc) {
+        if(!gc.texture)
+          return;
         if (!gc.visible)
           return;
         ngf::Sprite s(*gc.texture, gc.frame);
