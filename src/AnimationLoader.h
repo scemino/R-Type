@@ -3,4 +3,9 @@
 #include "Component/Components.h"
 #include "Engine.h"
 
-std::unordered_map<std::string, Animation> loadAnimations(Engine &engine, const std::filesystem::path& path);
+struct AnimationsInfo {
+  std::unordered_map<std::string, Animation> animations;
+  std::string initialAnim;
+};
+
+AnimationsInfo loadAnimations(Engine &engine, const std::filesystem::path &path);

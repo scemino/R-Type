@@ -31,8 +31,9 @@ void Entity::emplace(sol::variadic_args va) {
   if (name == "Animation") {
     auto &ac = m_registry.emplace<AnimationComponent>(m_entity);
     auto pEngine = m_registry.ctx<Engine *>();
-    ac.animations = loadAnimations(*pEngine, va.get<std::string>(1));
-    ac.current = "move";
+    auto animsInfo = loadAnimations(*pEngine, va.get<std::string>(1));
+    ac.animations = animsInfo.animations;
+    ac.current = animsInfo.initialAnim;
     return;
   }
 }

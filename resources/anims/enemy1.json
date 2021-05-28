@@ -14,5 +14,6 @@
       "delay": 6,
       "texture":  "resources/images/r-typesheet5.png"
     }
-  }
+  },
+  "initialAnim": "move"
 }

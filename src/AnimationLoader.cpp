@@ -1,7 +1,7 @@
 #include <ngf/IO/Json/JsonParser.h>
 #include "AnimationLoader.h"
 
-std::unordered_map<std::string, Animation> loadAnimations(Engine &engine, const std::filesystem::path &path) {
+AnimationsInfo loadAnimations(Engine &engine, const std::filesystem::path &path) {
   std::unordered_map<std::string, Animation> anims;
   const auto jAnims = ngf::Json::load(path);
   for (const auto &jAnimItem : jAnims["animations"].items()) {
@@ -21,5 +21,5 @@ std::unordered_map<std::string, Animation> loadAnimations(Engine &engine, const 
     auto texture = engine.loadTexture(sTexture);
     anims[name] = Animation{frames, texture, delay};
   }
-  return anims;
+  return AnimationsInfo{anims, jAnims["initialAnim"].getString()};
 }

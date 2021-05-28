@@ -23,8 +23,9 @@ entt::entity createPlayer(entt::registry &registry) {
   const entt::entity e = registry.create();
   auto &ac = registry.emplace<AnimationComponent>(e);
   auto pEngine = registry.ctx<Engine *>();
-  ac.animations = loadAnimations(*pEngine, "resources/anims/spaceship.json");
-  ac.current = "idle";
+  auto animsInfo = loadAnimations(*pEngine, "resources/anims/spaceship.json");;
+  ac.animations = animsInfo.animations;
+  ac.current = animsInfo.initialAnim;
 
   registry.emplace<NameComponent>(e, "fighter");
   registry.emplace<PositionComponent>(e, glm::vec2(32, 60));
@@ -76,8 +77,9 @@ entt::entity createEnemy1(entt::registry &registry, const glm::vec2 &pos) {
 
   auto engine = registry.ctx<Engine *>();
   auto &ac = registry.emplace<AnimationComponent>(e);
-  ac.animations = loadAnimations(*engine, "resources/anims/enemy1.json");
-  ac.current = "move";
+  auto animsInfo = loadAnimations(*engine, "resources/anims/enemy1.json");
+  ac.animations = animsInfo.animations;
+  ac.current = animsInfo.initialAnim;
 
   registry.emplace<MotionComponent>(e, glm::vec2(-3, 0));
   registry.emplace<CollideComponent>(e);
