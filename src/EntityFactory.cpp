@@ -19,28 +19,32 @@ ngf::irect toRect(const int *v) {
 namespace EntityFactory {
 
 entt::entity createPlayer(entt::registry &registry) {
+
   const entt::entity e = registry.create();
-  auto &ec = registry.emplace<EntityComponent>(e, "resources/anims/spaceship.json");
+  auto &ac = registry.emplace<AnimationComponent>(e);
+  auto pEngine = registry.ctx<Engine *>();
+  ac.animations = loadAnimations(*pEngine, "resources/anims/spaceship.json");
+  ac.current = "idle";
+
+  registry.emplace<NameComponent>(e, "fighter");
   registry.emplace<PositionComponent>(e, glm::vec2(32, 60));
   registry.emplace<HealthComponent>(e, 100, 3);
-  registry.emplace<GraphicComponent>(e, "spaceship");
+  registry.emplace<GraphicComponent>(e);
   registry.emplace<InputStateComponent>(e);
   registry.emplace<MotionComponent>(e);
   registry.emplace<ShipComponent>(e);
   registry.emplace<CollideComponent>(e, glm::vec2(32, 14));
   registry.emplace<InvincibleComponent>(e, 240);
-  registry.emplace<AnimationComponent>(e);
 
   return e;
 }
 
 entt::entity createSpaceshipShot(entt::registry &registry, const glm::vec2 &pos, int size) {
   const entt::entity e = registry.create();
-  registry.emplace<GraphicComponent>(e, "spaceship shot");
+  registry.emplace<NameComponent>(e, "fighter shot");
+  registry.emplace<GraphicComponent>(e);
 
   auto engine = registry.ctx<Engine *>();
-  auto &ac = registry.emplace<AnimationComponent>(e);
-  ac.texture = engine->loadTexture("resources/images/r-typesheet1.png");
 
   int numSeq = 2 + (2 * size);
   std::vector<AnimationFrame> frames{
@@ -50,7 +54,10 @@ entt::entity createSpaceshipShot(entt::registry &registry, const glm::vec2 &pos,
           ngf::irect::fromPositionSize({shipShot[numSeq + 1][0], shipShot[numSeq + 1][1]},
                                        {shipShot[numSeq + 1][2], shipShot[numSeq + 1][3]})
       }};
-  ac.animations["idle"] = Animation{frames, 6};
+
+  auto texture = engine->loadTexture("resources/images/r-typesheet1.png");
+  auto &ac = registry.emplace<AnimationComponent>(e);
+  ac.animations["idle"] = Animation{frames, texture, 6};
   ac.current = "idle";
 
   registry.emplace<PositionComponent>(e, glm::vec2{pos.x + 32.f, pos.y});
@@ -65,12 +72,11 @@ entt::entity createSpaceshipShot(entt::registry &registry, const glm::vec2 &pos,
 entt::entity createEnemy1(entt::registry &registry, const glm::vec2 &pos) {
   const entt::entity e = registry.create();
   registry.emplace<PositionComponent>(e, pos);
-  registry.emplace<GraphicComponent>(e, "enemy");
+  registry.emplace<GraphicComponent>(e);
 
   auto engine = registry.ctx<Engine *>();
   auto &ac = registry.emplace<AnimationComponent>(e);
-  ac.texture = engine->loadTexture("resources/images/r-typesheet5.png");
-  ac.animations = loadAnimations("resources/anims/enemy1.json");
+  ac.animations = loadAnimations(*engine, "resources/anims/enemy1.json");
   ac.current = "move";
 
   registry.emplace<MotionComponent>(e, glm::vec2(-3, 0));

@@ -17,7 +17,7 @@ void update(entt::registry &registry) {
         }
         gc.frame = anim.frames[ac.frameIndex].rect;
         gc.offset = anim.frames[ac.frameIndex].offset;
-        gc.texture = ac.texture;
+        gc.texture = anim.texture;
       });
 }
 

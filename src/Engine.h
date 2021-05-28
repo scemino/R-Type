@@ -1,5 +1,6 @@
 #pragma once
 
+#include <sol/sol.hpp>
 #include <map>
 #include <memory>
 #include <string>
@@ -36,4 +37,5 @@ private:
   std::map<std::string, std::shared_ptr<ngf::Texture>> m_textures;
   std::unique_ptr<Level> m_level;
   entt::registry m_reg;
+  sol::state m_lua;
 };

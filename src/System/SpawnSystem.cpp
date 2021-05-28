@@ -6,6 +6,7 @@
 namespace Systems::SpawnSystem {
 
 void update(entt::registry &registry) {
+  return;
   auto level = registry.ctx<Level *>();
   const auto pos = level->getScrollPosition();
   if (pos % 60 == 0) {

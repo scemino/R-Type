@@ -1,20 +1,24 @@
 {
-  "texture": "resources/images/r-typesheet1.png",
   "animations": {
     "idle": {
-      "frames": [[167, 3, 32, 12]]
+      "frames": [[167, 3, 32, 12]],
+      "texture": "resources/images/r-typesheet1.png"
     },
     "moreDown": {
-      "frames": [[101, 3, 32, 14]]
+      "frames": [[101, 3, 32, 14]],
+      "texture": "resources/images/r-typesheet1.png"
     },
     "down": {
-      "frames": [[134, 3, 32, 13]]
+      "frames": [[134, 3, 32, 13]],
+      "texture": "resources/images/r-typesheet1.png"
     },
     "up": {
-      "frames": [[200, 3, 32, 13]]
+      "frames": [[200, 3, 32, 13]],
+      "texture": "resources/images/r-typesheet1.png"
     },
     "upper": {
-      "frames": [[233, 2, 32, 14]]
+      "frames": [[233, 2, 32, 14]],
+      "texture": "resources/images/r-typesheet1.png"
     },
     "explode":
     {
@@ -28,7 +32,8 @@
         [202, 344, 28, 26],
         [233, 343, 32, 28]
       ],
-      "delay": 6
+      "delay": 6,
+      "texture": "resources/images/r-typesheet1.png"
     }
   }
 }

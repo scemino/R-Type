@@ -33,11 +33,6 @@ struct InputStateComponent {
   int delay;
 };
 
-struct EntityComponent {
-  std::string filename;
-  std::string state;
-};
-
 struct ShipComponent {
   int frameDelay{0};
   int frameIndex{0};
@@ -49,7 +44,6 @@ struct ShipComponent {
 };
 
 struct GraphicComponent {
-  std::string name;
   std::shared_ptr<ngf::Texture> texture;
   ngf::irect frame;
   glm::vec2 offset;
@@ -63,13 +57,13 @@ struct AnimationFrame {
 
 struct Animation {
   std::vector<AnimationFrame> frames;
+  std::shared_ptr<ngf::Texture> texture;
   int frameDelay{0};
 };
 
 struct AnimationComponent {
   std::string current;
   std::unordered_map<std::string, Animation> animations;
-  std::shared_ptr<ngf::Texture> texture;
   std::size_t frameIndex{0};
   int delay{0};
 };
@@ -90,4 +84,8 @@ struct HitTileComponent {
 struct HitScreenComponent {
   explicit HitScreenComponent(const CollisionResult &c) : collision(c) {}
   CollisionResult collision;
+};
+
+struct NameComponent {
+  std::string name;
 };
