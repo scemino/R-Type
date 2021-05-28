@@ -7,7 +7,7 @@
 namespace Systems::CollisionSystem {
 
 void update(entt::registry &registry) {
-  const auto **level = registry.try_ctx<const Level *>();
+  const auto level = registry.ctx<Level *>();
   if (!level)
     return;
 
@@ -16,7 +16,7 @@ void update(entt::registry &registry) {
     // look for collisions with the level
     const auto &[cc, pc] = registry.get<CollideComponent, PositionComponent>(e);
     auto rect = ngf::irect::fromPositionSize(pc.pos, cc.size);
-    auto collision = (*level)->collideLevel(rect);
+    auto collision = level->collideLevel(rect);
 
     if (!collision.has_value())
       continue;
