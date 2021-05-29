@@ -15,15 +15,13 @@ add_executable(R-Type
         src/Engine.cpp
         src/AnimationLoader.cpp
         src/Scripting/Entity.cpp
+        src/Scripting/EntityManager.cpp
         src/System/AnimationSystem.cpp
         src/System/CollisionSystem.cpp
-        src/System/ExplodeSystem.cpp
-        src/System/HealthSystem.cpp
         src/System/RenderSystem.cpp
         src/System/InputSystem.cpp
         src/System/MotionSystem.cpp
         src/System/InvincibleSystem.cpp
-        src/System/SpawnSystem.cpp
         src/EntityFactory.cpp
         src/main.cpp)
 

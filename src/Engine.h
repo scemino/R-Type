@@ -8,6 +8,8 @@
 #include <ngf/Graphics/RenderTarget.h>
 #include <ngf/Graphics/RenderStates.h>
 #include <ngf/Graphics/Texture.h>
+#include <Scripting/EntityManager.h>
+#include <Scripting/EventManager.h>
 
 #define GAME_WIDTH  384
 #define GAME_HEIGHT 272
@@ -22,7 +24,10 @@ public:
 
   std::shared_ptr<ngf::Texture> loadTexture(const std::string &path);
 
+  sol::state &lua() { return m_lua; }
   entt::registry &registry() { return m_reg; }
+  EntityManager &entityManager() { return *m_entityManager; }
+  EventManager &eventManager() { return *m_eventManager; }
 
   void startGame();
 
@@ -36,6 +41,8 @@ private:
 private:
   std::map<std::string, std::shared_ptr<ngf::Texture>> m_textures;
   std::unique_ptr<Level> m_level;
+  std::unique_ptr<EntityManager> m_entityManager;
+  std::unique_ptr<EventManager> m_eventManager;
   entt::registry m_reg;
   sol::state m_lua;
 };

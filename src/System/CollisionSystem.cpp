@@ -23,11 +23,14 @@ void update(entt::registry &registry) {
 
     // hit a tile or screen?
     auto collisionValue = collision.value();
-    if (collisionValue.tile()) {
-      registry.emplace<HitTileComponent>(e, collisionValue);
-    } else {
-      registry.emplace<HitScreenComponent>(e, collisionValue);
-    }
+    auto pEngine = registry.ctx<Engine *>();
+    auto pEntity = pEngine->entityManager().getEntity(e);
+    pEngine->eventManager().publish(pEntity,
+                                    "hit",
+                                    "collisionType",
+                                    collisionValue.tile() ? "tile" : "screen",
+                                    "pos",
+                                    collisionValue.pos());
   }
 }
 }

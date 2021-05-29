@@ -1,24 +1,48 @@
 #include "AnimationSystem.h"
+#include "Engine.h"
 #include "Component/Components.h"
 
 namespace Systems::AnimationSystem {
 
 void update(entt::registry &registry) {
-  registry.view<GraphicComponent, AnimationComponent>()
-      .each([&](auto &gc, auto &ac) {
-        if (ac.current.empty())
-          return;
-        const auto &anim = ac.animations.at(ac.current);
-        if (ac.delay >= anim.frameDelay) {
-          ac.delay = 0;
-          ac.frameIndex = (ac.frameIndex + 1) % anim.frames.size();
-        } else {
-          ++ac.delay;
+  const auto view = registry.view<GraphicComponent, AnimationComponent>();
+  for (const entt::entity e : view) {
+    auto &gc = registry.get<GraphicComponent>(e);
+    auto &ac = registry.get<AnimationComponent>(e);
+    if (ac.current.empty())
+      return;
+    auto it = ac.animations.find(ac.current);
+    if (it == ac.animations.end()) {
+      std::cerr << "Animation not found: " << ac.current;
+      continue;
+    }
+    // skip if animation is not playing
+    if (!ac.playing)
+      continue;
+    // check if frame is elapsed
+    if (ac.delay >= it->second.frameDelay) {
+      ac.delay = 0;
+      ac.frameIndex++;
+      if (ac.frameIndex >= it->second.frames.size()) {
+        if (ac.loop > 0) {
+          ac.loop--;
         }
-        gc.frame = anim.frames[ac.frameIndex].rect;
-        gc.offset = anim.frames[ac.frameIndex].offset;
-        gc.texture = anim.texture;
-      });
+        // end of animation ?
+        if (ac.loop == 0) {
+          ac.playing = false;
+          auto pEngine = registry.ctx<Engine *>();
+          auto pEntity = pEngine->entityManager().getEntity(e);
+          pEngine->eventManager().publish(pEntity, "anim", "name", ac.current, "eventType", "finished");
+          continue;
+        }
+        ac.frameIndex = 0;
+      }
+    } else {
+      ++ac.delay;
+    }
+    gc.frame = it->second.frames[ac.frameIndex].rect;
+    gc.offset = it->second.frames[ac.frameIndex].offset;
+    gc.texture = it->second.texture;
+  }
 }
-
 }

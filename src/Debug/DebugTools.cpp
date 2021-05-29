@@ -17,11 +17,6 @@ void show(entt::registry &registry) {
       if (mc) {
         ImGui::DragFloat2("Velocity", &mc->velocity.x);
       }
-      auto hc = registry.try_get<HealthComponent>(e);
-      if (hc) {
-        ImGui::DragInt("Health", &hc->health);
-        ImGui::DragInt("Lives", &hc->lives);
-      }
       auto cc = registry.try_get<CollideComponent>(e);
       if (cc) {
         ImGui::DragFloat2("Hit box", &cc->size.x);

@@ -13,6 +13,21 @@
       ],
       "delay": 6,
       "texture":  "resources/images/r-typesheet5.png"
+    },
+    "explode":
+    {
+      "frames": [
+        [1, 343, 32, 28],
+        [35, 343, 32, 28],
+        [73, 348, 21, 18],
+        [106, 347, 22, 20],
+        [138, 346, 24, 22],
+        [170, 345, 26, 24],
+        [202, 344, 28, 26],
+        [233, 343, 32, 28]
+      ],
+      "delay": 6,
+      "texture": "resources/images/r-typesheet1.png"
     }
   },
   "initialAnim": "move"

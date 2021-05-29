@@ -18,11 +18,6 @@ struct MotionComponent {
   glm::vec2 velocity;
 };
 
-struct HealthComponent {
-  int health{0};
-  int lives{0};
-};
-
 struct CollideComponent {
   glm::vec2 size;
 };
@@ -65,25 +60,13 @@ struct AnimationComponent {
   std::string current;
   std::unordered_map<std::string, Animation> animations;
   std::size_t frameIndex{0};
+  int loop{1};
   int delay{0};
+  bool playing{false};
 };
 
 struct InvincibleComponent {
   int delay{0};
-};
-
-struct ExplodeComponent {
-  int delay{0};
-};
-
-struct HitTileComponent {
-  explicit HitTileComponent(const CollisionResult &c) : collision(c) {}
-  CollisionResult collision;
-};
-
-struct HitScreenComponent {
-  explicit HitScreenComponent(const CollisionResult &c) : collision(c) {}
-  CollisionResult collision;
 };
 
 struct NameComponent {

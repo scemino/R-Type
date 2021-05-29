@@ -3,8 +3,7 @@
 #include "Engine.h"
 #include <AnimationLoader.h>
 
-Entity::Entity(entt::registry &registry) : m_registry(registry) {
-  m_entity = m_registry.create();
+Entity::Entity(entt::registry &registry, entt::entity e) : m_registry(registry), m_entity(e) {
 }
 
 void Entity::emplace(sol::variadic_args va) {
@@ -27,13 +26,20 @@ void Entity::emplace(sol::variadic_args va) {
     const auto
         rect = ngf::irect::fromPositionSize({r[0], r[1]}, {r[2], r[3]});
     gc.frame = rect;
+    return;
   }
   if (name == "Animation") {
     auto &ac = m_registry.emplace<AnimationComponent>(m_entity);
     auto pEngine = m_registry.ctx<Engine *>();
     auto animsInfo = loadAnimations(*pEngine, va.get<std::string>(1));
     ac.animations = animsInfo.animations;
-    ac.current = animsInfo.initialAnim;
+    setAnim(animsInfo.initialAnim, -1);
+    return;
+  }
+  if (name == "Collide") {
+    auto &cc = m_registry.emplace<CollideComponent>(m_entity);
+    auto r = va[1].as<std::array<int, 2>>();
+    cc.size = glm::vec2({r[0], r[1]});
     return;
   }
 }
@@ -50,4 +56,21 @@ glm::ivec2 Entity::getPos() const {
   if (!pc)
     return {};
   return pc->pos;
+}
+
+void Entity::setAnim(const std::string& anim, int loop) {
+  auto ac = m_registry.try_get<AnimationComponent>(m_entity);
+  if (!ac)
+    return;
+  ac->current = anim;
+  ac->frameIndex = 0;
+  ac->loop = loop;
+  ac->playing = true;
+}
+
+[[nodiscard]] std::string Entity::getAnim() const {
+  const auto ac = m_registry.try_get<AnimationComponent>(m_entity);
+  if (!ac)
+    return {};
+  return ac->current;
 }

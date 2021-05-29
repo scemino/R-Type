@@ -1,37 +1,41 @@
 #include <Scripting/Entity.h>
 #include "Component/Components.h"
-#include "System/ExplodeSystem.h"
 #include "System/AnimationSystem.h"
-#include "System/HealthSystem.h"
 #include "System/InvincibleSystem.h"
 #include "System/MotionSystem.h"
 #include "System/CollisionSystem.h"
-#include "System/SpawnSystem.h"
 #include "Engine.h"
 #include "Level.h"
 #include "System/InputSystem.h"
 #include "EntityFactory.h"
 
 Engine::Engine() {
+  m_entityManager = std::make_unique<EntityManager>(m_reg, m_lua);
+  m_eventManager = std::make_unique<EventManager>(m_lua);
   m_reg.set<Engine *>(this);
   m_reg.set<sol::state *>(&m_lua);
 
   m_lua.open_libraries();
   m_lua.new_usertype<Entity>("Entity", sol::call_constructor,
-                             sol::factories([&]() { return std::make_shared<Entity>(m_reg); }),
+                             sol::factories([&]() { return m_entityManager->createEntity(); }),
                              "emplace", sol::as_function(&Entity::emplace),
+                             "remove", [&](Entity *pEntity) { return m_entityManager->removeEntity(pEntity->getId()); },
+                             "getId", &Entity::getId,
                              "getPos", &Entity::getPos,
-                             "setPos", &Entity::setPos);
+                             "setPos", &Entity::setPos,
+                             "setAnim", &Entity::setAnim,
+                             "getAnim", &Entity::getAnim);
 
   m_lua.new_usertype<glm::ivec2>("vec",
-                                 sol::call_constructor, sol::factories([]() {
-                                                                         return glm::ivec2{};
-                                                                       }, [](const glm::ivec2 &v) {
-                                                                         return glm::ivec2{v};
-                                                                       },
-                                                                       [](int x, int y) {
-                                                                         return glm::ivec2{x, y};
-                                                                       }),
+                                 sol::call_constructor,
+                                 sol::factories([]() {
+                                                  return glm::ivec2{};
+                                                }, [](const glm::ivec2 &v) {
+                                                  return glm::ivec2{v};
+                                                },
+                                                [](int x, int y) {
+                                                  return glm::ivec2{x, y};
+                                                }),
                                  "x",
                                  &glm::ivec2::x,
                                  "y",
@@ -75,7 +79,7 @@ template<> struct sol::is_container<glm::ivec2> : std::false_type {};
 
 void Engine::startGame() {
   // create a ship and level
-  EntityFactory::createPlayer(m_reg);
+  EntityFactory::createPlayer(*m_entityManager);
   loadLevel();
   update();
 
@@ -93,10 +97,7 @@ void Engine::update() {
   Systems::InvincibleSystem::update(m_reg);
   Systems::MotionSystem::update(m_reg);
   Systems::CollisionSystem::update(m_reg);
-  Systems::HitSystem::update(m_reg);
-  Systems::ExplodeSystem::update(m_reg);
   Systems::AnimationSystem::update(m_reg);
-  Systems::SpawnSystem::update(m_reg);
 
   m_lua["update"].call();
 }

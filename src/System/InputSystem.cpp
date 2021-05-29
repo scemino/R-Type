@@ -83,7 +83,8 @@ void noShoot(entt::registry &registry, ShipComponent &sc, const PositionComponen
     // put the new shot in the level
     int size = std::max(0, sc.power / SpaceshipShotDelay);
     size = std::min(SpaceshipMaxLoadShot, size / SpaceshipLoadShotFactor);
-    EntityFactory::createSpaceshipShot(registry, pc.pos, size);
+    // TODO:
+//    EntityFactory::createSpaceshipShot(registry, pc.pos, size);
   }
   sc.power = 0;
 }
