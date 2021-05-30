@@ -48,19 +48,6 @@ bool Level::load(const char *path) {
   return true;
 }
 
-void Level::applyScroll() {
-  // it's the end of the stage: stop scrolling
-  if (m_position >= m_positionFinal)
-    return;
-
-  auto offset = 1;
-  m_position += offset;
-
-  m_engine->registry().view<PositionComponent>().each([&](auto &pc) {
-    pc.pos.x += static_cast<float>(offset);
-  });
-}
-
 std::optional<CollisionResult> Level::collideLevel(const ngf::irect &rect) const {
   int x, y;
   int collisionMask = 0;
@@ -222,9 +209,11 @@ ngf::irect Level::getRect() const {
   return ngf::irect::fromPositionSize({x, y}, {w, h});
 }
 
-void Level::update() {
-  applyScroll();
+void Level::setPosition(float pos) {
+  m_position = std::clamp(pos, 0.f, static_cast<float>(m_positionFinal));
+}
 
+void Level::update() {
   if (m_state == LevelState::Start) {
     // fade in
     ++m_seq;
@@ -290,7 +279,6 @@ void Level::draw(ngf::RenderTarget &target, ngf::RenderStates states) const {
     //  fade in/out
     ngf::RectangleShape fadeShape({GAME_WIDTH, GAME_HEIGHT});
     fadeShape.setColor(ngf::Color(0.f, 0.f, 0.f, alpha));
-    fadeShape.getTransform().setPosition({m_position, 0});
-    fadeShape.draw(target, states);
+    fadeShape.draw(target, {});
   }
 }

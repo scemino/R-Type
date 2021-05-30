@@ -14,6 +14,11 @@ void Entity::emplace(sol::variadic_args va) {
     m_registry.emplace<PositionComponent>(m_entity);
     return;
   }
+  if (name == "Motion") {
+    const auto v = va[1].as<std::array<int, 2>>();
+    m_registry.emplace<MotionComponent>(m_entity, glm::vec2({v[0], v[1]}));
+    return;
+  }
   if (name == "Name") {
     const auto n = va.get<std::string>(1);
     m_registry.emplace<NameComponent>(m_entity, n);

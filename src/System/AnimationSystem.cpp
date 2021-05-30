@@ -30,6 +30,7 @@ void update(entt::registry &registry) {
         // end of animation ?
         if (ac.loop == 0) {
           ac.playing = false;
+          // notify end of animation
           auto pEngine = registry.ctx<Engine *>();
           auto pEntity = pEngine->entityManager().getEntity(e);
           pEngine->eventManager().publish(pEntity, "anim", "name", ac.current, "eventType", "finished");

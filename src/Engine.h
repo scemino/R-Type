@@ -36,6 +36,7 @@ public:
   void draw(ngf::RenderTarget &target, ngf::RenderStates states);
 
 private:
+  void createVm();
   void loadLevel();
 
 private:

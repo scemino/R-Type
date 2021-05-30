@@ -72,3 +72,5 @@ struct InvincibleComponent {
 struct NameComponent {
   std::string name;
 };
+
+struct CameraComponent {};

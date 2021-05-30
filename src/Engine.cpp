@@ -1,13 +1,15 @@
+#include <entt/entt.hpp>
 #include <Scripting/Entity.h>
-#include "Component/Components.h"
-#include "System/AnimationSystem.h"
-#include "System/InvincibleSystem.h"
-#include "System/MotionSystem.h"
-#include "System/CollisionSystem.h"
-#include "Engine.h"
-#include "Level.h"
-#include "System/InputSystem.h"
-#include "EntityFactory.h"
+#include <Component/Components.h>
+#include <System/AnimationSystem.h>
+#include <System/InvincibleSystem.h>
+#include <System/MotionSystem.h>
+#include <System/CollisionSystem.h>
+#include <System/CameraSystem.h>
+#include <Engine.h>
+#include <Level.h>
+#include <System/InputSystem.h>
+#include <EntityFactory.h>
 
 Engine::Engine() {
   m_entityManager = std::make_unique<EntityManager>(m_reg, m_lua);
@@ -15,6 +17,12 @@ Engine::Engine() {
   m_reg.set<Engine *>(this);
   m_reg.set<sol::state *>(&m_lua);
 
+  createVm();
+}
+
+Engine::~Engine() = default;
+
+void Engine::createVm() {
   m_lua.open_libraries();
   m_lua.new_usertype<Entity>("Entity", sol::call_constructor,
                              sol::factories([&]() { return m_entityManager->createEntity(); }),
@@ -59,8 +67,6 @@ Engine::Engine() {
   );
 }
 
-Engine::~Engine() = default;
-
 std::shared_ptr<ngf::Texture> Engine::loadTexture(const std::string &path) {
   auto it = m_textures.find(path);
   if (it == m_textures.end()) {
@@ -80,6 +86,11 @@ template<> struct sol::is_container<glm::ivec2> : std::false_type {};
 void Engine::startGame() {
   // create a ship and level
   EntityFactory::createPlayer(*m_entityManager);
+  auto e = m_entityManager->createEntity().getId();
+  m_reg.emplace<NameComponent>(e, "camera");
+  m_reg.emplace<CameraComponent>(e);
+  m_reg.emplace<PositionComponent>(e);
+  m_reg.emplace<MotionComponent>(e, glm::vec2{1, 0});
   loadLevel();
   update();
 
@@ -98,6 +109,7 @@ void Engine::update() {
   Systems::MotionSystem::update(m_reg);
   Systems::CollisionSystem::update(m_reg);
   Systems::AnimationSystem::update(m_reg);
+  Systems::CameraSystem::update(m_reg);
 
   m_lua["update"].call();
 }

@@ -34,16 +34,15 @@ public:
   [[nodiscard]] std::optional<CollisionResult> collideLevel(const ngf::irect &rect) const;
   [[nodiscard]] bool collide(const ngf::irect &rect) const;
 
+  void setPosition(float pos);
+
   void update();
   void draw(ngf::RenderTarget &target, ngf::RenderStates states) const;
 
   void end();
 
-  [[nodiscard]] int getScrollPosition() const { return m_position; }
-
 private:
   bool load(const char *path);
-  void applyScroll();
 
 private:
   LevelState m_state{LevelState::Start};

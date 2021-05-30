@@ -17,6 +17,7 @@ add_executable(R-Type
         src/Scripting/Entity.cpp
         src/Scripting/EntityManager.cpp
         src/System/AnimationSystem.cpp
+        src/System/CameraSystem.cpp
         src/System/CollisionSystem.cpp
         src/System/RenderSystem.cpp
         src/System/InputSystem.cpp

@@ -21,7 +21,7 @@ void update(entt::registry &registry) {
     if (!collision.has_value())
       continue;
 
-    // hit a tile or screen?
+    // notify entity collision with tile or screen
     auto collisionValue = collision.value();
     auto pEngine = registry.ctx<Engine *>();
     auto pEntity = pEngine->entityManager().getEntity(e);
