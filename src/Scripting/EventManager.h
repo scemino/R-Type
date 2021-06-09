@@ -1,6 +1,7 @@
 #pragma once
 
 #include <sol/sol.hpp>
+#include <Log.h>
 
 class EventManager {
 public:
@@ -13,8 +14,7 @@ public:
     auto r = m_lua["onEvent"](pEntity, event);
     if (!r.valid()) {
       sol::error e = r;
-      // TODO: create a logging system
-      std::cerr << "[lua] failed to call onEvent:\n" << e.what();
+      RTYPE_LOG_ERROR("[lua] failed to call onEvent:\n{}", e.what());
     }
   }
 

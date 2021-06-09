@@ -156,7 +156,7 @@ function createEnemy(name)
     e:emplace("Motion")
     e:emplace("Graphics")
     e:emplace("Collide", {size = vec(32, 12)})
-    e:emplace("Animation", {name ="resources/anims/enemy1.json"})
+    e:emplace("Animation", {name = "resources/anims/enemy1.json"})
     setComponent(e, "StateMachine", {
         states = {
             MoveState = {

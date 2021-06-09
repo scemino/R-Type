@@ -1,6 +1,8 @@
 cmake_minimum_required(VERSION 3.5)
 project(R-Type LANGUAGES C CXX)
 
+find_package(spdlog)
+
 add_subdirectory(extlibs/EnggeFramework)
 
 # Headers
@@ -72,6 +74,6 @@ add_library(lua ${LUA_SOURCE_FILES})
 target_compile_features(R-Type PRIVATE cxx_std_17)
 set_target_properties(R-Type PROPERTIES CXX_EXTENSIONS OFF)
 
-target_link_libraries(R-Type ngf lua)
+target_link_libraries(R-Type PUBLIC spdlog::spdlog PRIVATE ngf lua)
 install(TARGETS R-Type DESTINATION "bin")
 

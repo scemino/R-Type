@@ -5,14 +5,21 @@
 #include <Component/Components.h>
 #include <Keys.h>
 #include <Debug/DebugTools.h>
+#include <spdlog/spdlog.h>
 
 class RTypeApplication final : public ngf::Application {
 private:
   void onInit() override {
+    SPDLOG_INFO("onInit");
     m_window.init({"R-Type", glm::ivec2{640, 480}, true, false, true});
     m_window.setVerticalSyncEnabled();
     locator::engine::set<Engine>();
     locator::engine::ref().startGame();
+  }
+
+  void onQuit() override {
+    SPDLOG_INFO("onQuit");
+    ngf::Application::onQuit();
   }
 
   void onRender(ngf::RenderTarget &target) override {

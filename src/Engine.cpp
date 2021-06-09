@@ -8,6 +8,7 @@
 #include <System/CameraSystem.h>
 #include <Engine.h>
 #include <Level.h>
+#include <Log.h>
 #include <System/InputSystem.h>
 #include <EntityFactory.h>
 #include <ComponentFactory.h>
@@ -74,8 +75,7 @@ void Engine::startGame() {
   auto r = m_lua.script_file("resources/scripts/boot.lua");
   if (!r.valid()) {
     sol::error e = r;
-    // TODO: create a logging system
-    std::cerr << "[lua] failed to load boot.lua:\n" << e.what();
+    RTYPE_LOG_ERROR("[lua] failed to load boot.lua:\n {}", e.what());
   }
 }
 
@@ -96,8 +96,7 @@ void Engine::update() {
   auto r = m_lua["update"].call();
   if (!r.valid()) {
     sol::error e = r;
-    // TODO: create a logging system
-    std::cerr << "[lua] failed to call update:\n" << e.what();
+    RTYPE_LOG_ERROR("[lua] failed to call update:\n{}", e.what());
   }
 }
 
