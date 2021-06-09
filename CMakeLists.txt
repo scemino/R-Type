@@ -16,6 +16,12 @@ add_executable(R-Type
         src/AnimationLoader.cpp
         src/Scripting/Entity.cpp
         src/Scripting/EntityManager.cpp
+        src/Scripting/Bindings/Bindings.cpp
+        src/Scripting/Bindings/EntityBindings.cpp
+        src/Scripting/Bindings/MathBindings.cpp
+        src/Scripting/Bindings/PositionComponentBindings.cpp
+        src/Scripting/Bindings/MotionComponentBindings.cpp
+        src/Scripting/Bindings/AnimationComponentBindings.cpp
         src/System/AnimationSystem.cpp
         src/System/CameraSystem.cpp
         src/System/CollisionSystem.cpp

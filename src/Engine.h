@@ -32,6 +32,9 @@ public:
   void startGame();
 
   void processKeys(const Keys &keys);
+  void onKeyDown(ngf::Scancode code);
+  void onKeyUp(ngf::Scancode code);
+
   void update();
   void draw(ngf::RenderTarget &target, ngf::RenderStates states);
 

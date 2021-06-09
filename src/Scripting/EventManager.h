@@ -10,7 +10,12 @@ public:
   void publish(Entity *pEntity, std::string_view type, Args &&... args) {
     auto data = m_lua.create_table_with(std::forward<Args>(args)...);
     auto event = m_lua.create_table_with("type", type, "data", data);
-    m_lua["onEvent"](pEntity, event);
+    auto r = m_lua["onEvent"](pEntity, event);
+    if (!r.valid()) {
+      sol::error e = r;
+      // TODO: create a logging system
+      std::cerr << "[lua] failed to call onEvent:\n" << e.what();
+    }
   }
 
 private:

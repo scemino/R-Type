@@ -1,39 +1,39 @@
-#define SOL_ALL_SAFETIES_ON 1
-#include <sol/sol.hpp>
 #include <cstdlib>
-#include <set>
 #include <ngf/Application.h>
-#include "Engine.h"
-#include "Component/Components.h"
-#include "Keys.h"
-#include "Debug/DebugTools.h"
+#include <Engine.h>
+#include <Locator.h>
+#include <Component/Components.h>
+#include <Keys.h>
+#include <Debug/DebugTools.h>
 
-class RTypeApplication : public ngf::Application {
+class RTypeApplication final : public ngf::Application {
 private:
   void onInit() override {
     m_window.init({"R-Type", glm::ivec2{640, 480}, true, false, true});
     m_window.setVerticalSyncEnabled();
-    m_pEngine = std::make_unique<Engine>();
-    m_pEngine->startGame();
+    locator::engine::set<Engine>();
+    locator::engine::ref().startGame();
   }
 
   void onRender(ngf::RenderTarget &target) override {
     target.setView(ngf::View(ngf::frect::fromMinMax({0, 0}, {384, 272})));
     target.clear();
-    m_pEngine->draw(target, {});
+    locator::engine::ref().draw(target, {});
     Application::onRender(target);
   }
 
   void onImGuiRender() override {
-    auto &registry = m_pEngine->registry();
+    auto &registry = locator::engine::ref().registry();
     DebugTools::show(registry);
   }
 
   void onEvent(ngf::Event &event) override {
     switch (event.type) {
     case ngf::EventType::KeyPressed:m_keys.add(event.key.scancode);
+      locator::engine::ref().onKeyDown(event.key.scancode);
       break;
     case ngf::EventType::KeyReleased:m_keys.remove(event.key.scancode);
+      locator::engine::ref().onKeyUp(event.key.scancode);
       break;
     default:break;
     }
@@ -41,19 +41,18 @@ private:
       m_restart = true;
     } else if (m_restart) {
       m_restart = false;
-      m_pEngine.reset();
-      m_pEngine = std::make_unique<Engine>();
-      m_pEngine->startGame();
+      locator::engine::reset();
+      locator::engine::set<Engine>();
+      locator::engine::ref().startGame();
     }
   }
 
   void onUpdate(const ngf::TimeSpan &elapsed) override {
-    m_pEngine->processKeys(m_keys);
-    m_pEngine->update();
+    locator::engine::ref().processKeys(m_keys);
+    locator::engine::ref().update();
   }
 
 private:
-  std::unique_ptr<Engine> m_pEngine;
   bool m_restart{false};
   Keys m_keys;
 };

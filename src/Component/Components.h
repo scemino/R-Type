@@ -19,7 +19,7 @@ struct MotionComponent {
 };
 
 struct CollideComponent {
-  glm::vec2 size;
+  glm::ivec2 size;
 };
 
 struct InputStateComponent {
@@ -63,6 +63,13 @@ struct AnimationComponent {
   int loop{1};
   int delay{0};
   bool playing{false};
+
+  void setAnim(const std::string &anim, int loop) {
+    this->current = anim;
+    this->frameIndex = 0;
+    this->loop = loop;
+    this->playing = true;
+  }
 };
 
 struct InvincibleComponent {

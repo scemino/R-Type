@@ -31,11 +31,12 @@ end
 function createHandle(cppRef)
     local handle = {
         cppRef = cppRef,
-        isValid = true
+        isValid = true,
+        components = {}
     }
 
     -- speedy access without __index call
-    --handle.getName = getWrappedSafeFunction(Entity.getName)
+    handle.getName = getWrappedSafeFunction(Entity.getName)
 
     local id = cppRef:getId()
     setmetatable(handle, mt)
@@ -50,85 +51,272 @@ function onEntityRemoved(cppRef)
     Handles[cppRef:getId()] = nil
 end
 
--- factory
-function createEnemy(name)
-    print("Create ", name)
-    local e  = Entity()
-    e:emplace("Name", name)
-    e:emplace("Position")
-    e:emplace("Motion", {0,0})
-    e:emplace("Graphics", "resources/images/r-typesheet1.png", {167, 3, 32, 12})
-    e:emplace("Collide", {32, 12})
-    e:emplace("Animation", "resources/anims/enemy1.json")
-    return e
+-- components functions
+function setComponent(e, name, data)
+    Handles[e:getId()].components[name]=data
 end
 
+function getComponent(e, name)
+    local handle = Handles[e:getId()]
+    if handle then
+        return handle.components[name]
+    end
+end
+
+-- Keys constants
+Keys = {
+    Right = 79,
+    Left = 80,
+    Down = 81,
+    Up = 82,
+}
+
 -- state manager
-stateManager = {
+StateManager = {
     currentState = nil,
 
     changeState = function(entity, state)
-        if currentState==state then
+        local sm = getComponent(entity, "StateMachine")
+        if sm.currentState==state then
             return
         end
-        if currentState then
-            currentState.exit(entity)
+        if sm.currentState then
+            local state = sm.states[sm.currentState]
+            if state.exit then
+                state.exit(entity)
+            end
         end
-        currentState = state
-        currentState.init(entity)
-    end
-}
-
--- define enemy states
-MoveState = {
-    a = 0,
-
-    init = function(entity)
-        print("MoveState init ", MoveState.a)
+        sm.currentState = state
+        local state = sm.states[sm.currentState]
+        if state.init then
+            state.init(entity)
+        end
     end,
 
-    update = function(e)
-        MoveState.a=MoveState.a+5
-        --e:setPos(vec(e:getPos().x, math.floor(100+10*math.sin(math.rad(MoveState.a)))))
-        -- if (MoveState.a>=2000) then
-        --     stateManager.changeState(e, ExplodingState)
-        -- end
-    end,
-
-    exit = function(entity)
-        print("MoveState exit")
-    end
-}
-
-ExplodingState = {
-    init = function(entity)
-        print("BOOM", entity)
-        entity:setAnim("explode", 1)
+    initState = function(entity)
+        local sm = getComponent(entity, "StateMachine")
+        StateManager.changeState(entity, sm.initialState)
+        sm.currentState = sm.initialState
     end,
 
     update = function(entity)
+        local sm = getComponent(entity, "StateMachine")
+        local state = sm.states[sm.currentState]
+        if state.update then
+            local nextState = state.update(entity)
+            if nextState then
+                StateManager.changeState(entity, nextState)
+            end
+        end
     end,
 
-    exit = function(entity)
-        print("ExplodingState exit")
-    end
+    onEvent = function(entity, event)
+        local sm = getComponent(entity, "StateMachine")
+        if not sm then
+            return nil
+        end
+        local callback = sm.states[sm.currentState][event.type]
+        if callback then
+            local nextState = callback(entity, event)
+            if nextState then
+                StateManager.changeState(entity, nextState)
+            end
+        end
+    end,
+
+    onKeyUp = function(entity, code)
+        local sm = getComponent(entity, "StateMachine")
+        local callback = sm.states[sm.currentState]["onKeyUp"]
+        if callback then
+            local nextState = callback(entity, code)
+            if nextState then
+                StateManager.changeState(entity, nextState)
+            end
+        end
+    end,
+
+    onKeyDown = function(entity, code)
+        local sm = getComponent(entity, "StateMachine")
+        local callback = sm.states[sm.currentState]["onKeyDown"]
+        if callback then
+            local nextState = callback(entity, code)
+            if nextState then
+                StateManager.changeState(entity, nextState)
+            end
+        end
+    end,
 }
 
+-- define enemy states
+function createEnemy(name)
+    print("Create", name)
+    local e  = Entity()
+    e:emplace("Name", name)
+    e:emplace("Position")
+    e:emplace("Motion")
+    e:emplace("Graphics")
+    e:emplace("Collide", {32, 12})
+    e:emplace("Animation", "resources/anims/enemy1.json")
+    setComponent(e, "StateMachine", {
+        states = {
+            MoveState = {
+                update = function(entity)
+                    local angle = getComponent(entity,"angle")
+                    local x = e:getPosition().x
+                    local y = math.floor(100+10*math.sin(math.rad(angle)))
+                    local p = vec(x,y)
+                    e:setPosition(p)
+                    setComponent(entity, "angle", angle+5)
+                end,
+                exit = function(entity)
+                    print("MoveState exit")
+                end,
+                hit = function(entity, event)
+                    if event.data.collisionType == "tile" then
+                        return "ExplodingState"
+                    end
+                end
+            },
+            ExplodingState = {
+                init = function(entity)
+                    print("BOOM", entity)
+                    entity:setAnim("explode", 1)
+                end,
+                anim = function(entity, event)
+                    if event.data.name == "explode" then
+                        e:remove()
+                    end
+                end
+            }
+        },
+        initialState = "MoveState"
+    })
+    setComponent(e, "angle", 0)
+    StateManager.initState(e)
+    return e
+end
+
+-- create player
+function createPlayer()
+    print("Create player")
+    local e  = Entity()
+    e:emplace("Name", "player")
+    e:emplace("Position")
+    e:emplace("Motion")
+    e:emplace("Graphics")
+    e:emplace("Collide", {32, 12})
+    e:emplace("Animation", "resources/anims/spaceship.json")
+    setComponent(e, "StateMachine", {
+        states = {
+            UpState = {
+                init = function(entity)
+                    setComponent(entity, "timer", 0)
+                    entity:setAnim("up", 1)
+                    local vel = entity:getVelocity()
+                    vel.y = -3
+                    entity:setVelocity(vel)
+                end,
+                update = function(entity)
+                    local timer = getComponent(entity,"timer")
+                    if timer==12 then
+                        entity:setAnim("upper", 1)
+                    else
+                        setComponent(entity, "timer", timer+1)
+                    end
+                end,
+                onKeyUp = function(entity, code)
+                    if code==Keys.Up then
+                        return "MoveState"
+                    end
+                end
+            },
+            DownState = {
+                init = function(entity)
+                    setComponent(entity, "timer", 0)
+                    entity:setAnim("down", 1)
+                    local vel = entity:getVelocity()
+                    vel.y = 3
+                    entity:setVelocity(vel)
+                end,
+                update = function(entity)
+                    local timer = getComponent(entity,"timer")
+                    if timer==12 then
+                        entity:setAnim("moreDown", 1)
+                    else
+                        setComponent(entity, "timer", timer+1)
+                    end
+                end,
+                onKeyUp = function(entity, code)
+                    if code==Keys.Down then
+                        return "MoveState"
+                    end
+                end
+            },
+            MoveState = {
+                init= function(entity)
+                    entity:setAnim("move", 1)
+                    local vel = entity:getVelocity()
+                    vel.y = 0
+                    entity:setVelocity(vel)
+                end,
+                onKeyDown = function(entity, code)
+                    if code==Keys.Up then
+                        return "UpState"                        
+                    end
+                    if code==Keys.Down then
+                        return "DownState"
+                    end
+                end,
+                hit = function(entity, event)
+                    if event.data.collisionType == "tile" then
+                        return "ExplodingState"
+                    end
+                end
+            },
+            ExplodingState = {
+                init = function(entity)
+                    entity:setAnim("explode", 1)
+                end,
+                anim = function(entity, event)
+                    if event.data.name == "explode" then
+                        e:remove()
+                    end
+                end
+            }
+        },
+        initialState = "MoveState"
+    })
+    setComponent(e, "timer", 0)
+    StateManager.initState(e)
+    return e
+end
+
 -- main
-enemy1 = createEnemy("enemy1")
-stateManager.changeState(enemy1, MoveState)
+createPlayer()
+createEnemy("enemy1")
+createEnemy("enemy2")
 
 function update()
-    currentState.update(enemy1)
-    currentState.update(enemy2)
+    for key,value in pairs(Handles)
+    do
+        StateManager.update(value.cppRef)
+    end
 end
 
 function onEvent(e, event)
-    if event.type == "hit" and event.data.collisionType == "tile" then
-        stateManager.changeState(e, ExplodingState)
+    StateManager.onEvent(e, event)
+end
+
+function onKeyUp(code)
+    for key,value in pairs(Handles)
+    do
+        StateManager.onKeyUp(value.cppRef, code)
     end
-    if event.type == "anim" and event.data.name=="explode" then
-        print("Anim ended:", event.data.name)
-        e:remove()
+end
+
+function onKeyDown(code)
+    for key,value in pairs(Handles)
+    do
+        StateManager.onKeyDown(value.cppRef, code)
     end
 end

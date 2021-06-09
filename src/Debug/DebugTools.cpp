@@ -19,11 +19,11 @@ void show(entt::registry &registry) {
       }
       auto cc = registry.try_get<CollideComponent>(e);
       if (cc) {
-        ImGui::DragFloat2("Hit box", &cc->size.x);
+        ImGui::DragInt2("Hit box", &cc->size.x);
       }
       auto ic = registry.try_get<InvincibleComponent>(e);
       if (ic) {
-        ImGui::DragInt("Invicible delay", &ic->delay);
+        ImGui::DragInt("Invincible delay", &ic->delay);
       }
       ImGui::TreePop();
     }

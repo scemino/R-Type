@@ -15,8 +15,12 @@ void Entity::emplace(sol::variadic_args va) {
     return;
   }
   if (name == "Motion") {
-    const auto v = va[1].as<std::array<int, 2>>();
-    m_registry.emplace<MotionComponent>(m_entity, glm::vec2({v[0], v[1]}));
+    if (va.size() == 2) {
+      const auto v = va[1].as<std::array<int, 2>>();
+      m_registry.emplace<MotionComponent>(m_entity, glm::vec2({v[0], v[1]}));
+    } else {
+      m_registry.emplace<MotionComponent>(m_entity);
+    }
     return;
   }
   if (name == "Name") {
@@ -25,12 +29,15 @@ void Entity::emplace(sol::variadic_args va) {
     return;
   }
   if (name == "Graphics") {
-    auto &gc = m_registry.emplace<GraphicComponent>(m_entity);
-    gc.texture = m_registry.ctx<Engine *>()->loadTexture(va[1]);
-    auto r = va[2].as<std::array<int, 4>>();
-    const auto
-        rect = ngf::irect::fromPositionSize({r[0], r[1]}, {r[2], r[3]});
-    gc.frame = rect;
+    if (va.size() == 3) {
+      auto texture = m_registry.ctx<Engine *>()->loadTexture(va[1]);
+      auto r = va[2].as<std::array<int, 4>>();
+      const auto
+          frame = ngf::irect::fromPositionSize({r[0], r[1]}, {r[2], r[3]});
+      m_registry.emplace<GraphicComponent>(m_entity, texture, frame);
+    } else {
+      m_registry.emplace<GraphicComponent>(m_entity);
+    }
     return;
   }
   if (name == "Animation") {
@@ -38,44 +45,12 @@ void Entity::emplace(sol::variadic_args va) {
     auto pEngine = m_registry.ctx<Engine *>();
     auto animsInfo = loadAnimations(*pEngine, va.get<std::string>(1));
     ac.animations = animsInfo.animations;
-    setAnim(animsInfo.initialAnim, -1);
+    ac.setAnim(animsInfo.initialAnim, -1);
     return;
   }
   if (name == "Collide") {
-    auto &cc = m_registry.emplace<CollideComponent>(m_entity);
-    auto r = va[1].as<std::array<int, 2>>();
-    cc.size = glm::vec2({r[0], r[1]});
+    auto size = va[1].as<std::array<int, 2>>();
+    m_registry.emplace<CollideComponent>(m_entity, glm::vec2({size[0], size[1]}));
     return;
   }
-}
-
-void Entity::setPos(const glm::ivec2 &pos) {
-  auto pc = m_registry.try_get<PositionComponent>(m_entity);
-  if (!pc)
-    return;
-  pc->pos = pos;
-}
-
-glm::ivec2 Entity::getPos() const {
-  const auto pc = m_registry.try_get<PositionComponent>(m_entity);
-  if (!pc)
-    return {};
-  return pc->pos;
-}
-
-void Entity::setAnim(const std::string& anim, int loop) {
-  auto ac = m_registry.try_get<AnimationComponent>(m_entity);
-  if (!ac)
-    return;
-  ac->current = anim;
-  ac->frameIndex = 0;
-  ac->loop = loop;
-  ac->playing = true;
-}
-
-[[nodiscard]] std::string Entity::getAnim() const {
-  const auto ac = m_registry.try_get<AnimationComponent>(m_entity);
-  if (!ac)
-    return {};
-  return ac->current;
 }

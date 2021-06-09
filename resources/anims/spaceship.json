@@ -1,6 +1,6 @@
 {
   "animations": {
-    "idle": {
+    "move": {
       "frames": [[167, 3, 32, 12]],
       "texture": "resources/images/r-typesheet1.png"
     },
@@ -36,5 +36,5 @@
       "texture": "resources/images/r-typesheet1.png"
     }
   },
-  "initialAnim": "idle"
+  "initialAnim": "move"
 }

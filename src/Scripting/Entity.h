@@ -12,11 +12,11 @@ struct Entity {
 
   void emplace(sol::variadic_args va);
 
-  void setPos(const glm::ivec2 &pos);
-  [[nodiscard]] glm::ivec2 getPos() const;
+  template<typename T>
+  const T& component() const;
 
-  void setAnim(const std::string& anim, int loop = 1);
-  [[nodiscard]] std::string getAnim() const;
+  template<typename T>
+  T& component();
 
   entt::registry &registry() { return m_registry; }
 
@@ -24,3 +24,23 @@ private:
   entt::registry &m_registry;
   entt::entity m_entity;
 };
+
+template<typename T>
+const T& Entity::component() const
+{
+  const T* component = m_registry.try_get<T>(m_entity);
+  if (!component) {
+    throw std::runtime_error("Component not found!");
+  }
+  return *component;
+}
+
+template<typename T>
+T& Entity::component()
+{
+  auto component = m_registry.try_get<T>(m_entity);
+  if (!component) {
+    throw std::runtime_error("Component not found!");
+  }
+  return *component;
+}

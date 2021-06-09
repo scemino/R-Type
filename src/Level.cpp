@@ -1,4 +1,5 @@
 #include "Engine.h"
+#include "Locator.h"
 #include "Keys.h"
 #include "Level.h"
 #include "CollisionResult.h"
@@ -18,9 +19,8 @@ constexpr int HudHpix = 32;
 constexpr int LevelFade = 500;
 }
 
-Level::Level(Engine *engine, const char *mapPath, const char *texturePath)
-    : m_engine(engine) {
-  m_tex = engine->loadTexture(texturePath);
+Level::Level(const char *mapPath, const char *texturePath) {
+  m_tex = locator::engine::ref().loadTexture(texturePath);
   m_tilesWidthTex = m_tex->getSize().x / TileWidth;
 
   load(mapPath);
@@ -272,7 +272,7 @@ void Level::draw(ngf::RenderTarget &target, ngf::RenderStates states) const {
     }
   }
 
-  Systems::RenderSystem::draw(m_engine->registry(), target, states);
+  Systems::RenderSystem::draw(locator::engine::ref().registry(), target, states);
 
   if (m_state == LevelState::Start || m_state == LevelState::Dead || m_state == LevelState::Abort) {
     float alpha = (m_maxFade - m_seq) / static_cast<float>(m_maxFade);

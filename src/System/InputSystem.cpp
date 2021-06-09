@@ -50,7 +50,7 @@ void still(AnimationComponent &ac, InputStateComponent &ic, MotionComponent &mc)
   mc.velocity.y = 0.f;
   ic.up = false;
   ic.down = false;
-  ac.current = "idle";
+  ac.current = "move";
   ac.delay = 0;
 }
 

@@ -25,7 +25,7 @@ class Keys;
 
 class Level {
 public:
-  Level(Engine *engine, const char *mapPath, const char *texturePath);
+  Level(const char *mapPath, const char *texturePath);
   ~Level();
 
   // for the level the box is the rectangle that represents the coordinates of the screen
@@ -56,7 +56,6 @@ private:
 
   std::vector<int> m_tilesMap;
 
-  Engine *m_engine{nullptr};
   int m_maxFade{0};
   int m_seq{0};
 };
