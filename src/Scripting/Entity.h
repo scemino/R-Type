@@ -10,8 +10,6 @@ struct Entity {
 
   [[nodiscard]] entt::entity getId() const { return m_entity; }
 
-  void emplace(sol::variadic_args va);
-
   template<typename T>
   const T& component() const;
 

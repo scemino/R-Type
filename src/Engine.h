@@ -16,6 +16,7 @@
 
 class Keys;
 class Level;
+class ComponentFactory;
 
 class Engine {
 public:
@@ -28,6 +29,7 @@ public:
   entt::registry &registry() { return m_reg; }
   EntityManager &entityManager() { return *m_entityManager; }
   EventManager &eventManager() { return *m_eventManager; }
+  ComponentFactory &componentFactory() { return *m_componentFactory; }
 
   void startGame();
 
@@ -47,6 +49,7 @@ private:
   std::unique_ptr<Level> m_level;
   std::unique_ptr<EntityManager> m_entityManager;
   std::unique_ptr<EventManager> m_eventManager;
+  std::unique_ptr<ComponentFactory> m_componentFactory;
   entt::registry m_reg;
   sol::state m_lua;
 };

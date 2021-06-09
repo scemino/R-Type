@@ -14,6 +14,8 @@ add_executable(R-Type
         src/Debug/DebugTools.cpp
         src/Engine.cpp
         src/AnimationLoader.cpp
+        src/ComponentFactory.cpp
+        src/Component/Components.cpp
         src/Scripting/Entity.cpp
         src/Scripting/EntityManager.cpp
         src/Scripting/Bindings/Bindings.cpp

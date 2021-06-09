@@ -151,12 +151,12 @@ StateManager = {
 function createEnemy(name)
     print("Create", name)
     local e  = Entity()
-    e:emplace("Name", name)
+    e:emplace("Name", {name=name})
     e:emplace("Position")
     e:emplace("Motion")
     e:emplace("Graphics")
-    e:emplace("Collide", {32, 12})
-    e:emplace("Animation", "resources/anims/enemy1.json")
+    e:emplace("Collide", {size = vec(32, 12)})
+    e:emplace("Animation", {name ="resources/anims/enemy1.json"})
     setComponent(e, "StateMachine", {
         states = {
             MoveState = {
@@ -200,12 +200,12 @@ end
 function createPlayer()
     print("Create player")
     local e  = Entity()
-    e:emplace("Name", "player")
+    e:emplace("Name", {name="player"})
     e:emplace("Position")
     e:emplace("Motion")
     e:emplace("Graphics")
-    e:emplace("Collide", {32, 12})
-    e:emplace("Animation", "resources/anims/spaceship.json")
+    e:emplace("Collide", {size=vec(32, 12)})
+    e:emplace("Animation", {name="resources/anims/spaceship.json"})
     setComponent(e, "StateMachine", {
         states = {
             UpState = {

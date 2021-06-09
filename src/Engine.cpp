@@ -10,11 +10,13 @@
 #include <Level.h>
 #include <System/InputSystem.h>
 #include <EntityFactory.h>
+#include <ComponentFactory.h>
 #include <Scripting/Bindings/Bindings.h>
 
 Engine::Engine() {
   m_entityManager = std::make_unique<EntityManager>(m_reg, m_lua);
   m_eventManager = std::make_unique<EventManager>(m_lua);
+  m_componentFactory = std::make_unique<ComponentFactory>();
   m_reg.set<Engine *>(this);
   m_reg.set<sol::state *>(&m_lua);
 
@@ -26,6 +28,12 @@ Engine::~Engine() = default;
 void Engine::createVm() {
   m_lua.open_libraries();
   Bindings::bindAll(m_lua);
+  m_componentFactory->registerComponentType<AnimationComponent>("Animation");
+  m_componentFactory->registerComponentType<PositionComponent>("Position");
+  m_componentFactory->registerComponentType<MotionComponent>("Motion");
+  m_componentFactory->registerComponentType<GraphicComponent>("Graphics");
+  m_componentFactory->registerComponentType<NameComponent>("Name");
+  m_componentFactory->registerComponentType<CollideComponent>("Collide");
 }
 
 std::shared_ptr<ngf::Texture> Engine::loadTexture(const std::string &path) {

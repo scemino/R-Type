@@ -8,18 +8,31 @@
 #include <ngf/Graphics/Rect.h>
 #include <ngf/Graphics/Texture.h>
 #include <entt/entt.hpp>
+#include <sol/sol.hpp>
 #include <CollisionResult.h>
 
 struct PositionComponent {
   glm::vec2 pos;
+
+  PositionComponent() {}
+  PositionComponent(const glm::vec2 &p) : pos(p) {}
+  PositionComponent(const sol::table &t);
 };
 
 struct MotionComponent {
   glm::vec2 velocity;
+
+  MotionComponent() {}
+  MotionComponent(const glm::vec2 &v) : velocity(v) {}
+  MotionComponent(const sol::table &t);
 };
 
 struct CollideComponent {
   glm::ivec2 size;
+
+  CollideComponent() {}
+  CollideComponent(const glm::vec2 &s) : size(s) {}
+  CollideComponent(const sol::table &t);
 };
 
 struct InputStateComponent {
@@ -43,6 +56,9 @@ struct GraphicComponent {
   ngf::irect frame;
   glm::vec2 offset;
   bool visible{true};
+
+  GraphicComponent() {}
+  GraphicComponent(const sol::table &t);
 };
 
 struct AnimationFrame {
@@ -64,12 +80,10 @@ struct AnimationComponent {
   int delay{0};
   bool playing{false};
 
-  void setAnim(const std::string &anim, int loop) {
-    this->current = anim;
-    this->frameIndex = 0;
-    this->loop = loop;
-    this->playing = true;
-  }
+  AnimationComponent() {}
+  AnimationComponent(const sol::table &t);
+
+  void setAnim(const std::string &anim, int loop);
 };
 
 struct InvincibleComponent {
@@ -78,6 +92,10 @@ struct InvincibleComponent {
 
 struct NameComponent {
   std::string name;
+
+  NameComponent() {}
+  NameComponent(const std::string& n) : name(n) {}
+  NameComponent(const sol::table &t);
 };
 
 struct CameraComponent {};
