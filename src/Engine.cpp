@@ -2,23 +2,20 @@
 #include <Scripting/Entity.h>
 #include <Component/Components.h>
 #include <System/AnimationSystem.h>
-#include <System/InvincibleSystem.h>
 #include <System/MotionSystem.h>
 #include <System/CollisionSystem.h>
 #include <System/CameraSystem.h>
 #include <Engine.h>
 #include <Level.h>
 #include <Log.h>
-#include <System/InputSystem.h>
 #include <ComponentFactory.h>
 #include <Scripting/Bindings/Bindings.h>
+#include <ngf/Audio/AudioSystem.h>
 
-Engine::Engine() {
+Engine::Engine(ngf::AudioSystem &audio) : m_audio(audio) {
   m_entityManager = std::make_unique<EntityManager>(m_reg, m_lua);
   m_eventManager = std::make_unique<EventManager>(m_lua);
   m_componentFactory = std::make_unique<ComponentFactory>();
-  m_reg.set<Engine *>(this);
-  m_reg.set<sol::state *>(&m_lua);
 
   createVm();
 }
@@ -47,7 +44,6 @@ std::shared_ptr<ngf::Texture> Engine::loadTexture(const std::string &path) {
 }
 
 void Engine::processKeys(const Keys &keys) {
-  Systems::InputSystem::update(m_reg, keys);
 }
 
 void Engine::onKeyDown(ngf::Scancode code) {
@@ -58,10 +54,7 @@ void Engine::onKeyUp(ngf::Scancode code) {
   m_lua["onKeyUp"].call(code);
 }
 
-template<> struct sol::is_container<glm::ivec2> : std::false_type {};
-
 void Engine::startGame() {
-  // create a ship and level
   auto e = m_entityManager->createEntity().getId();
   m_reg.emplace<NameComponent>(e, "camera");
   m_reg.emplace<CameraComponent>(e);
@@ -72,8 +65,8 @@ void Engine::startGame() {
 
   auto r = m_lua.script_file("resources/scripts/boot.lua");
   if (!r.valid()) {
-    sol::error e = r;
-    RTYPE_LOG_ERROR("[lua] failed to load boot.lua:\n {}", e.what());
+    sol::error err = r;
+    RTYPE_LOG_ERROR("[lua] failed to load boot.lua:\n {}", err.what());
   }
 }
 
@@ -85,7 +78,6 @@ void Engine::loadLevel() {
 void Engine::update() {
   if (m_level)
     m_level->update();
-  Systems::InvincibleSystem::update(m_reg);
   Systems::MotionSystem::update(m_reg);
   Systems::CollisionSystem::update(m_reg);
   Systems::AnimationSystem::update(m_reg);

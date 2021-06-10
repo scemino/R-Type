@@ -21,10 +21,6 @@ void show(entt::registry &registry) {
       if (cc) {
         ImGui::DragInt2("Hit box", &cc->size.x);
       }
-      auto ic = registry.try_get<InvincibleComponent>(e);
-      if (ic) {
-        ImGui::DragInt("Invincible delay", &ic->delay);
-      }
       ImGui::TreePop();
     }
   });

@@ -1,6 +1,6 @@
 #include "AnimationSystem.h"
-#include "Engine.h"
-#include "Component/Components.h"
+#include <Component/Components.h>
+#include <Locator.h>
 
 namespace Systems::AnimationSystem {
 
@@ -31,9 +31,9 @@ void update(entt::registry &registry) {
         if (ac.loop == 0) {
           ac.playing = false;
           // notify end of animation
-          auto pEngine = registry.ctx<Engine *>();
-          auto pEntity = pEngine->entityManager().getEntity(e);
-          pEngine->eventManager().publish(pEntity, "anim", "name", ac.current, "eventType", "finished");
+          auto& engine = locator::engine::ref();
+          auto pEntity = engine.entityManager().getEntity(e);
+          engine.eventManager().publish(pEntity, "anim", "name", ac.current, "eventType", "finished");
           continue;
         }
         ac.frameIndex = 0;

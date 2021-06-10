@@ -1,8 +1,8 @@
 #include "Component/Components.h"
 #include "CollisionSystem.h"
-#include "Engine.h"
 #include "Level.h"
 #include <entt/entt.hpp>
+#include <Locator.h>
 
 namespace Systems::CollisionSystem {
 
@@ -23,9 +23,9 @@ void update(entt::registry &registry) {
 
     // notify entity collision with tile or screen
     auto collisionValue = collision.value();
-    auto pEngine = registry.ctx<Engine *>();
-    auto pEntity = pEngine->entityManager().getEntity(e);
-    pEngine->eventManager().publish(pEntity,
+    auto& engine = locator::engine::ref();
+    auto pEntity = engine.entityManager().getEntity(e);
+    engine.eventManager().publish(pEntity,
                                     "hit",
                                     "collisionType",
                                     collisionValue.tile() ? "tile" : "screen",

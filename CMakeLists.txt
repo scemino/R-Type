@@ -31,9 +31,7 @@ add_executable(R-Type
         src/System/CameraSystem.cpp
         src/System/CollisionSystem.cpp
         src/System/RenderSystem.cpp
-        src/System/InputSystem.cpp
         src/System/MotionSystem.cpp
-        src/System/InvincibleSystem.cpp
         src/main.cpp)
 
 set(LUA_SOURCE_FILES

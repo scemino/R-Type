@@ -13,7 +13,7 @@ private:
     SPDLOG_INFO("onInit");
     m_window.init({"R-Type", glm::ivec2{640, 480}, true, false, true});
     m_window.setVerticalSyncEnabled();
-    locator::engine::set<Engine>();
+    locator::engine::set<Engine>(m_audioSystem);
     locator::engine::ref().startGame();
   }
 
@@ -49,7 +49,7 @@ private:
     } else if (m_restart) {
       m_restart = false;
       locator::engine::reset();
-      locator::engine::set<Engine>();
+      locator::engine::set<Engine>(m_audioSystem);
       locator::engine::ref().startGame();
     }
   }

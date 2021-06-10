@@ -61,13 +61,13 @@ end
 function onKeyUp(code)
     for key,value in pairs(Handles)
     do
-        StateManager.onKeyUp(value.cppRef, code)
+        if isHandleValid(value) then StateManager.onKeyUp(value.cppRef, code) end
     end
 end
 
 function onKeyDown(code)
     for key,value in pairs(Handles)
     do
-        StateManager.onKeyDown(value.cppRef, code)
+        if isHandleValid(value) then StateManager.onKeyDown(value.cppRef, code) end
     end
 end

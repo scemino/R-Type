@@ -17,10 +17,13 @@
 class Keys;
 class Level;
 class ComponentFactory;
+namespace ngf {
+class AudioSystem;
+}
 
 class Engine {
 public:
-  Engine();
+  explicit Engine(ngf::AudioSystem& audio);
   ~Engine();
 
   std::shared_ptr<ngf::Texture> loadTexture(const std::string &path);
@@ -30,6 +33,7 @@ public:
   EntityManager &entityManager() { return *m_entityManager; }
   EventManager &eventManager() { return *m_eventManager; }
   ComponentFactory &componentFactory() { return *m_componentFactory; }
+  ngf::AudioSystem &audio() { return m_audio; }
 
   void startGame();
 
@@ -52,4 +56,5 @@ private:
   std::unique_ptr<ComponentFactory> m_componentFactory;
   entt::registry m_reg;
   sol::state m_lua;
+  ngf::AudioSystem& m_audio;
 };
