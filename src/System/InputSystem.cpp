@@ -1,5 +1,4 @@
 #include <ngf/System/Scancode.h>
-#include <EntityFactory.h>
 #include "InputSystem.h"
 #include "Keys.h"
 #include "Component/Components.h"

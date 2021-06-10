@@ -34,7 +34,6 @@ add_executable(R-Type
         src/System/InputSystem.cpp
         src/System/MotionSystem.cpp
         src/System/InvincibleSystem.cpp
-        src/EntityFactory.cpp
         src/main.cpp)
 
 set(LUA_SOURCE_FILES

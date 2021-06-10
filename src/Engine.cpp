@@ -10,7 +10,6 @@
 #include <Level.h>
 #include <Log.h>
 #include <System/InputSystem.h>
-#include <EntityFactory.h>
 #include <ComponentFactory.h>
 #include <Scripting/Bindings/Bindings.h>
 
@@ -63,7 +62,6 @@ template<> struct sol::is_container<glm::ivec2> : std::false_type {};
 
 void Engine::startGame() {
   // create a ship and level
-  EntityFactory::createPlayer(*m_entityManager);
   auto e = m_entityManager->createEntity().getId();
   m_reg.emplace<NameComponent>(e, "camera");
   m_reg.emplace<CameraComponent>(e);
