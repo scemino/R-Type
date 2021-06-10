@@ -5,7 +5,7 @@ local memoizedFuncs = {}
 -- metatable which does magic
 local mt = {}
 mt.__index = function(handle, key)
-    if not handle.isValid then
+    if not isHandleValid(handle) then
         print(debug.traceback())
         error("Error: handle is not valid!", 2)
     end
@@ -18,7 +18,7 @@ mt.__index = function(handle, key)
     return f
 end
 
-function getWrappedSafeFunction(f)
+local function getWrappedSafeFunction(f)
     return function(handle, ...)
             if not handle.isValid then
                 print(debug.traceback())
@@ -31,7 +31,6 @@ end
 function createHandle(cppRef)
     local handle = {
         cppRef = cppRef,
-        isValid = true,
         components = {}
     }
 
@@ -44,10 +43,13 @@ function createHandle(cppRef)
     return handle
 end
 
+function isHandleValid(handle)
+    return handle.cppRef ~= nil and Handles[handle.cppRef:getId()] ~= nil
+end
+
 function onEntityRemoved(cppRef)
     local handle = Handles[cppRef:getId()]
     handle.cppRef = nil
-    handle.isValid = false
     Handles[cppRef:getId()] = nil
 end
 

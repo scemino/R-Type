@@ -50,7 +50,7 @@ createEnemy('enemy2')
 function update()
     for key,value in pairs(Handles)
     do
-        StateManager.update(value.cppRef)
+        if isHandleValid(value) then StateManager.update(value.cppRef) end
     end
 end
 
