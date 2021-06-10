@@ -4,10 +4,11 @@
 #include "PositionComponentBindings.h"
 #include "MotionComponentBindings.h"
 #include "AnimationComponentBindings.h"
+#include "FileSystemBindings.h"
 
-namespace Bindings
-{
-void bindAll(sol::state& lua){
+namespace Bindings {
+void bindAll(sol::state &lua) {
+  bindFileSystem(lua);
   bindEntity(lua);
   bindMath(lua);
   bindPositionComponent(lua);

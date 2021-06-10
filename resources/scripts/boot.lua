@@ -1,67 +1,8 @@
--- Thanks to Elias Daler for these functions see it's awesome blog: https://eliasdaler.github.io/game-object-references/
-Handles = {}
-local memoizedFuncs = {}
+-- set up package.path
+package.path = package.path .. ";" .. getWorkingDirectory() .. "/resources/scripts/?.lua"
 
--- metatable which does magic
-local mt = {}
-mt.__index = function(handle, key)
-    if not handle.isValid then
-        print(debug.traceback())
-        error("Error: handle is not valid!", 2)
-    end
-
-    local f = memoizedFuncs[key]
-    if not f then
-        f = function(handle, ...) return Entity[key](handle.cppRef, ...) end
-        memoizedFuncs[key] = f
-    end
-    return f
-end
-
-function getWrappedSafeFunction(f)
-    return function(handle, ...)
-            if not handle.isValid then
-                print(debug.traceback())
-                error("Error: handle is not valid!", 2)
-            end
-            return f(handle.cppRef, ...)
-        end
-end
-
-function createHandle(cppRef)
-    local handle = {
-        cppRef = cppRef,
-        isValid = true,
-        components = {}
-    }
-
-    -- speedy access without __index call
-    handle.getName = getWrappedSafeFunction(Entity.getName)
-
-    local id = cppRef:getId()
-    setmetatable(handle, mt)
-    Handles[id] = handle
-    return handle
-end
-
-function onEntityRemoved(cppRef)
-    local handle = Handles[cppRef:getId()];
-    handle.cppRef = nil
-    handle.isValid = false
-    Handles[cppRef:getId()] = nil
-end
-
--- components functions
-function setComponent(e, name, data)
-    Handles[e:getId()].components[name]=data
-end
-
-function getComponent(e, name)
-    local handle = Handles[e:getId()]
-    if handle then
-        return handle.components[name]
-    end
-end
+require 'EntityHandles'
+require 'StateManager'
 
 -- Keys constants
 Keys = {
@@ -71,83 +12,7 @@ Keys = {
     Up = 82,
 }
 
--- state manager
-StateManager = {
-    currentState = nil,
-
-    changeState = function(entity, state)
-        local sm = getComponent(entity, "StateMachine")
-        if sm.currentState==state then
-            return
-        end
-        if sm.currentState then
-            local state = sm.states[sm.currentState]
-            if state.exit then
-                state.exit(entity)
-            end
-        end
-        sm.currentState = state
-        local state = sm.states[sm.currentState]
-        if state.init then
-            state.init(entity)
-        end
-    end,
-
-    initState = function(entity)
-        local sm = getComponent(entity, "StateMachine")
-        StateManager.changeState(entity, sm.initialState)
-        sm.currentState = sm.initialState
-    end,
-
-    update = function(entity)
-        local sm = getComponent(entity, "StateMachine")
-        local state = sm.states[sm.currentState]
-        if state.update then
-            local nextState = state.update(entity)
-            if nextState then
-                StateManager.changeState(entity, nextState)
-            end
-        end
-    end,
-
-    onEvent = function(entity, event)
-        local sm = getComponent(entity, "StateMachine")
-        if not sm then
-            return nil
-        end
-        local callback = sm.states[sm.currentState][event.type]
-        if callback then
-            local nextState = callback(entity, event)
-            if nextState then
-                StateManager.changeState(entity, nextState)
-            end
-        end
-    end,
-
-    onKeyUp = function(entity, code)
-        local sm = getComponent(entity, "StateMachine")
-        local callback = sm.states[sm.currentState]["onKeyUp"]
-        if callback then
-            local nextState = callback(entity, code)
-            if nextState then
-                StateManager.changeState(entity, nextState)
-            end
-        end
-    end,
-
-    onKeyDown = function(entity, code)
-        local sm = getComponent(entity, "StateMachine")
-        local callback = sm.states[sm.currentState]["onKeyDown"]
-        if callback then
-            local nextState = callback(entity, code)
-            if nextState then
-                StateManager.changeState(entity, nextState)
-            end
-        end
-    end,
-}
-
--- define enemy states
+-- define enemy
 function createEnemy(name)
     print("Create", name)
     local e  = Entity()
@@ -196,10 +61,10 @@ function createEnemy(name)
     return e
 end
 
--- create player
+-- define player
 function createPlayer()
     print("Create player")
-    local e  = Entity()
+    local e = Entity()
     e:emplace("Name", {name="player"})
     e:emplace("Position")
     e:emplace("Motion")
