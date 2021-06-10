@@ -45,22 +45,18 @@ function createHandle(cppRef)
 end
 
 function onEntityRemoved(cppRef)
-    local handle = Handles[cppRef:getId()];
+    local handle = Handles[cppRef:getId()]
     handle.cppRef = nil
     handle.isValid = false
     Handles[cppRef:getId()] = nil
 end
 
 -- components functions
-function setComponent(e, name, data)
-    Handles[e:getId()].components[name]=data
-end
-
-function getComponent(e, name)
-    local handle = Handles[e:getId()]
-    if handle then
-        return handle.components[name]
-    end
+function addComponent(entity, component)
+    local handle = Handles[entity:getId()]
+    component:setEntity(handle)
+    local name = component.class.static.name
+    handle.components[name] = component
 end
 
 return Handles

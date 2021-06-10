@@ -3,18 +3,20 @@ local PlayerStateMachine =
     states = {
         UpState = {
             init = function(entity)
-                setComponent(entity, "timer", 0)
+                local handle = Handles[entity:getId()]
+                handle.components.timer:reset()
                 entity:setAnim("up", 1)
                 local vel = entity:getVelocity()
                 vel.y = -3
                 entity:setVelocity(vel)
             end,
             update = function(entity)
-                local timer = getComponent(entity,"timer")
-                if timer==12 then
+                local handle = Handles[entity:getId()]
+                local timer = handle.components.timer:get()
+                if timer == 12 then
                     entity:setAnim("upper", 1)
                 else
-                    setComponent(entity, "timer", timer+1)
+                    handle.components.timer:update()
                 end
             end,
             onKeyUp = function(entity, code)
@@ -25,22 +27,24 @@ local PlayerStateMachine =
         },
         DownState = {
             init = function(entity)
-                setComponent(entity, "timer", 0)
+                local handle = Handles[entity:getId()]
+                handle.components.timer:reset()
                 entity:setAnim("down", 1)
                 local vel = entity:getVelocity()
                 vel.y = 3
                 entity:setVelocity(vel)
             end,
             update = function(entity)
-                local timer = getComponent(entity,"timer")
-                if timer==12 then
+                local handle = Handles[entity:getId()]
+                local timer = handle.components.timer:get()
+                if timer == 12 then
                     entity:setAnim("moreDown", 1)
                 else
-                    setComponent(entity, "timer", timer+1)
+                    handle.components.timer:update()
                 end
             end,
             onKeyUp = function(entity, code)
-                if code==Keys.Down then
+                if code == Keys.Down then
                     return "MoveState"
                 end
             end
@@ -53,10 +57,10 @@ local PlayerStateMachine =
                 entity:setVelocity(vel)
             end,
             onKeyDown = function(entity, code)
-                if code==Keys.Up then
+                if code == Keys.Up then
                     return "UpState"
                 end
-                if code==Keys.Down then
+                if code == Keys.Down then
                     return "DownState"
                 end
             end,

@@ -5,6 +5,10 @@ require 'EntityHandles'
 require 'StateManager'
 Keys = require 'Keys'
 
+local EnemyPositionComponent = require 'EnemyPositionComponent'
+local TimerComponent = require 'TimerComponent'
+local StateMachineComponent = require 'StateMachineComponent'
+
 -- define enemy
 local function createEnemy(name)
     print('Create', name)
@@ -15,8 +19,8 @@ local function createEnemy(name)
     e:emplace('Graphics')
     e:emplace('Collide', {size = vec(32, 12)})
     e:emplace('Animation', {name = 'resources/anims/enemy1.json'})
-    setComponent(e, 'StateMachine', require 'EnemyStateMachine')
-    setComponent(e, 'angle', 0)
+    addComponent(e, StateMachineComponent('EnemyStateMachine'))
+    addComponent(e, EnemyPositionComponent())
     StateManager.initState(e)
     return e
 end
@@ -31,8 +35,8 @@ local function createPlayer()
     e:emplace('Graphics')
     e:emplace('Collide', {size=vec(32, 12)})
     e:emplace('Animation', {name='resources/anims/spaceship.json'})
-    setComponent(e, 'StateMachine', require('PlayerStateMachine'))
-    setComponent(e, 'timer', 0)
+    addComponent(e, StateMachineComponent('PlayerStateMachine'))
+    addComponent(e, TimerComponent())
     StateManager.initState(e)
     return e
 end

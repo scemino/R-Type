@@ -1,9 +1,14 @@
 StateManager = {
     currentState = nil,
 
+    getStateMachine = function(entity)
+        local handle = Handles[entity:getId()]
+        return handle.components.stateMachine:get()
+    end,
+
     changeState = function(entity, state)
-        local sm = getComponent(entity, "StateMachine")
-        if sm.currentState==state then
+        local sm = StateManager.getStateMachine(entity)
+        if sm.currentState == state then
             return
         end
         if sm.currentState then
@@ -20,13 +25,13 @@ StateManager = {
     end,
 
     initState = function(entity)
-        local sm = getComponent(entity, "StateMachine")
+        local sm = StateManager.getStateMachine(entity)
         StateManager.changeState(entity, sm.initialState)
         sm.currentState = sm.initialState
     end,
 
     update = function(entity)
-        local sm = getComponent(entity, "StateMachine")
+        local sm = StateManager.getStateMachine(entity)
         local state = sm.states[sm.currentState]
         if state.update then
             local nextState = state.update(entity)
@@ -37,10 +42,7 @@ StateManager = {
     end,
 
     onEvent = function(entity, event)
-        local sm = getComponent(entity, "StateMachine")
-        if not sm then
-            return nil
-        end
+        local sm = StateManager.getStateMachine(entity)
         local callback = sm.states[sm.currentState][event.type]
         if callback then
             local nextState = callback(entity, event)
@@ -51,7 +53,7 @@ StateManager = {
     end,
 
     onKeyUp = function(entity, code)
-        local sm = getComponent(entity, "StateMachine")
+        local sm = StateManager.getStateMachine(entity)
         local callback = sm.states[sm.currentState]["onKeyUp"]
         if callback then
             local nextState = callback(entity, code)
@@ -62,7 +64,7 @@ StateManager = {
     end,
 
     onKeyDown = function(entity, code)
-        local sm = getComponent(entity, "StateMachine")
+        local sm = StateManager.getStateMachine(entity)
         local callback = sm.states[sm.currentState]["onKeyDown"]
         if callback then
             local nextState = callback(entity, code)
