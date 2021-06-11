@@ -57,6 +57,7 @@ local PlayerStateMachine =
         ExplodingState = {
             init = function(entity)
                 entity:setAnim('explode', 1)
+                playSound('resources/audio/rtype-053.wav')
             end,
             anim = function(entity, event)
                 if event.data.name == 'explode' then

@@ -5,16 +5,23 @@
 #include <System/MotionSystem.h>
 #include <System/CollisionSystem.h>
 #include <System/CameraSystem.h>
+#include <Scripting/EntityManager.h>
+#include <Scripting/EventManager.h>
 #include <Engine.h>
 #include <Level.h>
 #include <Log.h>
 #include <ComponentFactory.h>
 #include <Scripting/Bindings/Bindings.h>
 #include <ngf/Audio/AudioSystem.h>
+#include <Scripting/SoundManager.h>
+#include <ngf/Audio/SoundBuffer.h>
+#include <ngf/Audio/SoundHandle.h>
+
 
 Engine::Engine(ngf::AudioSystem &audio) : m_audio(audio) {
   m_entityManager = std::make_unique<EntityManager>(m_reg, m_lua);
   m_eventManager = std::make_unique<EventManager>(m_lua);
+  m_soundManager = std::make_unique<SoundManager>();
   m_componentFactory = std::make_unique<ComponentFactory>();
 
   createVm();
@@ -88,6 +95,7 @@ void Engine::update() {
     sol::error e = r;
     RTYPE_LOG_ERROR("[lua] failed to call update:\n{}", e.what());
   }
+  m_soundManager->update();
 }
 
 void Engine::draw(ngf::RenderTarget &target, ngf::RenderStates states) {

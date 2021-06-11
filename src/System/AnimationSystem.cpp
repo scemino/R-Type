@@ -1,6 +1,8 @@
 #include "AnimationSystem.h"
 #include <Component/Components.h>
 #include <Locator.h>
+#include <Scripting/EntityManager.h>
+#include <Scripting/EventManager.h>
 
 namespace Systems::AnimationSystem {
 

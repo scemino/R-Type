@@ -3,6 +3,8 @@
 #include "Level.h"
 #include <entt/entt.hpp>
 #include <Locator.h>
+#include <Scripting/EntityManager.h>
+#include <Scripting/EventManager.h>
 
 namespace Systems::CollisionSystem {
 

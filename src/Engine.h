@@ -5,20 +5,23 @@
 #include <memory>
 #include <string>
 #include <entt/entity/registry.hpp>
-#include <ngf/Graphics/RenderTarget.h>
 #include <ngf/Graphics/RenderStates.h>
-#include <ngf/Graphics/Texture.h>
-#include <Scripting/EntityManager.h>
-#include <Scripting/EventManager.h>
+#include <ngf/System/Scancode.h>
 
 #define GAME_WIDTH  384
 #define GAME_HEIGHT 272
 
+class ComponentFactory;
+class EntityManager;
+class EventManager;
 class Keys;
 class Level;
-class ComponentFactory;
+class SoundManager;
+
 namespace ngf {
 class AudioSystem;
+class RenderTarget;
+class Texture;
 }
 
 class Engine {
@@ -34,6 +37,7 @@ public:
   EventManager &eventManager() { return *m_eventManager; }
   ComponentFactory &componentFactory() { return *m_componentFactory; }
   ngf::AudioSystem &audio() { return m_audio; }
+  SoundManager &soundManager() { return *m_soundManager; }
 
   void startGame();
 
@@ -54,6 +58,7 @@ private:
   std::unique_ptr<EntityManager> m_entityManager;
   std::unique_ptr<EventManager> m_eventManager;
   std::unique_ptr<ComponentFactory> m_componentFactory;
+  std::unique_ptr<SoundManager> m_soundManager;
   entt::registry m_reg;
   sol::state m_lua;
   ngf::AudioSystem& m_audio;

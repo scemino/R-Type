@@ -5,6 +5,7 @@
 #include "MotionComponentBindings.h"
 #include "AnimationComponentBindings.h"
 #include "FileSystemBindings.h"
+#include "AudioBindings.h"
 
 namespace Bindings {
 void bindAll(sol::state &lua) {
@@ -14,5 +15,6 @@ void bindAll(sol::state &lua) {
   bindPositionComponent(lua);
   bindMotionComponent(lua);
   bindAnimationComponent(lua);
+  bindAudio(lua);
 }
 }

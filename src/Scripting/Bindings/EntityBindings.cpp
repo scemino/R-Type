@@ -3,15 +3,16 @@
 #include "EntityBindings.h"
 #include <Locator.h>
 #include <ComponentFactory.h>
+#include <Scripting/EntityManager.h>
 
 namespace Bindings {
 
 namespace {
-void emplace(const Entity e, const std::string& name) {
+void emplace(const Entity e, const std::string &name) {
   locator::engine::ref().componentFactory().emplace(e.getId(), name, std::nullopt);
 }
 
-void emplace_with_table(const Entity e, const std::string& name, const sol::table& t) {
+void emplace_with_table(const Entity e, const std::string &name, const sol::table &t) {
   locator::engine::ref().componentFactory().emplace(e.getId(), name, t);
 }
 
@@ -28,7 +29,7 @@ void bindEntity(sol::state &lua) {
   ADD_MEMBER_FUNCTION(getId);
 #undef ADD_MEMBER_FUNCTION
 
-  entityType.set_function("emplace", sol::overload( &emplace, &emplace_with_table ));
+  entityType.set_function("emplace", sol::overload(&emplace, &emplace_with_table));
 
 #define ADD_ENTITY_FUNCTION(x) entityType.set_function(#x, x)
   ADD_ENTITY_FUNCTION(remove);

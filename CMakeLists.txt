@@ -20,7 +20,9 @@ add_executable(R-Type
         src/Component/Components.cpp
         src/Scripting/Entity.cpp
         src/Scripting/EntityManager.cpp
+        src/Scripting/SoundManager.cpp
         src/Scripting/Bindings/AnimationComponentBindings.cpp
+        src/Scripting/Bindings/AudioBindings.cpp
         src/Scripting/Bindings/Bindings.cpp
         src/Scripting/Bindings/EntityBindings.cpp
         src/Scripting/Bindings/FileSystemBindings.cpp
