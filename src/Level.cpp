@@ -119,17 +119,17 @@ std::optional<CollisionResult> Level::collideLevel(const ngf::irect &rect) const
   }
 
   // see if it is out of the screen
-  if (rect.max.y >= GAME_HEIGHT - HudHpix) {
+  if (rect.max.y >= GameHeight - HudHpix) {
     collisionMask |= CollisionMaskDown;
-    y = GAME_HEIGHT - HudHpix;
+    y = GameHeight - HudHpix;
   }
   if (rect.min.y < 0) {
     collisionMask |= CollisionMaskUp;
     y = 0;
   }
-  if (rect.max.x >= m_position + GAME_WIDTH) {
+  if (rect.max.x >= m_position + GameWidth) {
     collisionMask |= CollisionMaskRight;
-    x = m_position + GAME_WIDTH;
+    x = m_position + GameWidth;
   }
   if (rect.min.x < m_position) {
     collisionMask |= CollisionMaskLeft;
@@ -198,8 +198,8 @@ bool Level::collide(const ngf::irect &rect) const {
 ngf::irect Level::getRect() const {
   auto x = m_position;
   auto y = 0;
-  auto w = GAME_WIDTH;
-  auto h = GAME_HEIGHT - HudHeight;
+  auto w = GameWidth;
+  auto h = GameHeight - HudHeight;
   return ngf::irect::fromPositionSize({x, y}, {w, h});
 }
 

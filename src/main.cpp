@@ -7,7 +7,7 @@
 #include <spdlog/spdlog.h>
 
 namespace {
-constexpr static const char *GameName = "R-Type";
+constexpr const char *GameName = "R-Type";
 }
 
 class RTypeApplication final : public ngf::Application {
@@ -25,9 +25,9 @@ private:
   }
 
   void onRender(ngf::RenderTarget &target) final {
-    target.setView(ngf::View(ngf::frect::fromMinMax({0, 0}, {384, 272})));
+    target.setView(ngf::View(ngf::frect::fromMinMax({0, 0}, {GameWidth, GameHeight})));
     target.clear();
-    locator::engine::ref().draw(target, {});
+    locator::engine::ref().draw(target);
     Application::onRender(target);
   }
 
@@ -65,7 +65,7 @@ private:
   }
 };
 
-int main(int argc, char **argv) {
+int main([[maybe_unused]] int argc, [[maybe_unused]] char **argv) {
   RTypeApplication app{};
   app.run();
   return EXIT_SUCCESS;

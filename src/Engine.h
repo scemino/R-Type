@@ -11,8 +11,8 @@
 
 namespace fs = std::filesystem;
 
-#define GAME_WIDTH  384
-#define GAME_HEIGHT 272
+static constexpr const int GameWidth = 384;
+static constexpr const int GameHeight = 272;
 
 class ComponentFactory;
 class EntityManager;
@@ -31,8 +31,10 @@ public:
   explicit Engine(ngf::AudioSystem &audio);
   ~Engine();
 
+  // TODO: move this to a resource manager
   std::shared_ptr<ngf::Texture> loadTexture(const fs::path &path);
 
+  // services
   sol::state &lua() { return m_lua; }
   entt::registry &registry() { return m_reg; }
   EntityManager &entityManager() { return *m_entityManager; }
@@ -43,11 +45,13 @@ public:
 
   void startGame();
 
+  // input management
   void onKeyDown(ngf::Scancode code);
   void onKeyUp(ngf::Scancode code);
 
+  // update & draw
   void update();
-  void draw(ngf::RenderTarget &target, ngf::RenderStates states);
+  void draw(ngf::RenderTarget &target);
 
 private:
   void createVm();
@@ -63,4 +67,5 @@ private:
   entt::registry m_reg;
   sol::state m_lua;
   ngf::AudioSystem &m_audio;
+  bool m_gameStarted{false};
 };
