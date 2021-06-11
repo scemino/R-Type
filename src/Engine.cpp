@@ -1,5 +1,4 @@
 #include <entt/entt.hpp>
-#include <Scripting/Entity.h>
 #include <Component/Components.h>
 #include <System/AnimationSystem.h>
 #include <System/MotionSystem.h>
@@ -15,8 +14,8 @@
 #include <ngf/Audio/AudioSystem.h>
 #include <Scripting/SoundManager.h>
 #include <ngf/Audio/SoundBuffer.h>
-#include <ngf/Audio/SoundHandle.h>
-
+#include <System/RenderSystem.h>
+#include <ngf/Math/Transform.h>
 
 Engine::Engine(ngf::AudioSystem &audio) : m_audio(audio) {
   m_entityManager = std::make_unique<EntityManager>(m_reg, m_lua);
@@ -40,7 +39,7 @@ void Engine::createVm() {
   m_componentFactory->registerComponentType<CollideComponent>("Collide");
 }
 
-std::shared_ptr<ngf::Texture> Engine::loadTexture(const std::string &path) {
+std::shared_ptr<ngf::Texture> Engine::loadTexture(const fs::path &path) {
   auto it = m_textures.find(path);
   if (it == m_textures.end()) {
     auto texture = std::make_shared<ngf::Texture>(path);
@@ -48,9 +47,6 @@ std::shared_ptr<ngf::Texture> Engine::loadTexture(const std::string &path) {
     return texture;
   }
   return it->second;
-}
-
-void Engine::processKeys(const Keys &keys) {
 }
 
 void Engine::onKeyDown(ngf::Scancode code) {
@@ -83,8 +79,6 @@ void Engine::loadLevel() {
 }
 
 void Engine::update() {
-  if (m_level)
-    m_level->update();
   Systems::MotionSystem::update(m_reg);
   Systems::CollisionSystem::update(m_reg);
   Systems::AnimationSystem::update(m_reg);
@@ -99,6 +93,12 @@ void Engine::update() {
 }
 
 void Engine::draw(ngf::RenderTarget &target, ngf::RenderStates states) {
+  // move camera position
+  ngf::Transform t;
+  t.setPosition({-m_level->getPosition(), 0});
+  states.transform = t.getTransform() * states.transform;
+
   if (m_level)
     m_level->draw(target, states);
+  Systems::RenderSystem::draw(m_reg, target, states);
 }

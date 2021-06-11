@@ -1,7 +1,8 @@
 #pragma once
 
-#include "CollisionResult.h"
+#include <CollisionResult.h>
 #include <entt/entt.hpp>
+#include <filesystem>
 #include <optional>
 #include <vector>
 #include <glm/vec2.hpp>
@@ -10,22 +11,14 @@
 #include <ngf/Graphics/Texture.h>
 #include <ngf/Graphics/Rect.h>
 
-enum class LevelState {
-  Start,
-  Alive,
-  Dead,
-  Abort
-};
-
-constexpr int TileWidth = 8;
-constexpr int TileHeight = 8;
-
 class Engine;
 class Keys;
 
+namespace fs = std::filesystem;
+
 class Level {
 public:
-  Level(const char *mapPath, const char *texturePath);
+  Level(const fs::path &mapPath, const fs::path &texturePath);
   ~Level();
 
   // for the level the box is the rectangle that represents the coordinates of the screen
@@ -34,18 +27,15 @@ public:
   [[nodiscard]] std::optional<CollisionResult> collideLevel(const ngf::irect &rect) const;
   [[nodiscard]] bool collide(const ngf::irect &rect) const;
 
-  void setPosition(float pos);
+  void setPosition(int pos);
+  [[nodiscard]] int getPosition() const { return m_position; }
 
-  void update();
   void draw(ngf::RenderTarget &target, ngf::RenderStates states) const;
 
-  void end();
+private:
+  void load(const fs::path &path);
 
 private:
-  bool load(const char *path);
-
-private:
-  LevelState m_state{LevelState::Start};
   int m_position{0};      // scroll position
   int m_positionFinal{0}; // scroll end
 
@@ -55,7 +45,4 @@ private:
   std::shared_ptr<ngf::Texture> m_tex;
 
   std::vector<int> m_tilesMap;
-
-  int m_maxFade{0};
-  int m_seq{0};
 };

@@ -1,39 +1,34 @@
-#include "Engine.h"
-#include "Locator.h"
-#include "Keys.h"
-#include "Level.h"
-#include "CollisionResult.h"
-#include <ngf/Graphics/RectangleShape.h>
 #include <ngf/Graphics/Sprite.h>
 #include <ngf/IO/Json/JsonParser.h>
-#include "Component/Components.h"
-#include "System/RenderSystem.h"
+#include <Engine.h>
+#include <Locator.h>
+#include <Level.h>
+#include <CollisionResult.h>
+#include <Component/Components.h>
 
 namespace {
 constexpr int MapNumTilesWidth = 48;
 constexpr int MapNumTilesHeight = 32;
 
+constexpr int TileWidth = 8;
+constexpr int TileHeight = 8;
+
 constexpr int HudHeight = 2;
 constexpr int HudHpix = 32;
-
-constexpr int LevelFade = 500;
 }
 
-Level::Level(const char *mapPath, const char *texturePath) {
+Level::Level(const fs::path &mapPath, const fs::path &texturePath) {
   m_tex = locator::engine::ref().loadTexture(texturePath);
   m_tilesWidthTex = m_tex->getSize().x / TileWidth;
 
   load(mapPath);
 
   m_positionFinal = m_numTilesWidth * TileWidth - MapNumTilesWidth * TileWidth;
-
-  m_state = LevelState::Start;
-  m_maxFade = LevelFade;
 }
 
 Level::~Level() = default;
 
-bool Level::load(const char *path) {
+void Level::load(const fs::path &path) {
   const auto jMap = ngf::Json::load(path);
   const auto jData = jMap["layers"][0]["data"];
   m_numTilesWidth = jMap["width"].getInt();
@@ -45,7 +40,6 @@ bool Level::load(const char *path) {
   for (const auto &jTile : jData) {
     m_tilesMap[i++] = jTile.getInt() - 1;
   }
-  return true;
 }
 
 std::optional<CollisionResult> Level::collideLevel(const ngf::irect &rect) const {
@@ -209,37 +203,11 @@ ngf::irect Level::getRect() const {
   return ngf::irect::fromPositionSize({x, y}, {w, h});
 }
 
-void Level::setPosition(float pos) {
-  m_position = std::clamp(pos, 0.f, static_cast<float>(m_positionFinal));
-}
-
-void Level::update() {
-  if (m_state == LevelState::Start) {
-    // fade in
-    ++m_seq;
-    if (m_seq == LevelFade)
-      m_state = LevelState::Alive;
-  } else if (m_state == LevelState::Dead) {
-    // fade out
-    --m_seq;
-  } else if (m_state == LevelState::Abort) {
-    --m_seq;
-  }
-}
-
-void Level::end() {
-  if (m_state != LevelState::Abort) {
-    m_state = LevelState::Dead;
-    m_maxFade = LevelFade;
-  }
+void Level::setPosition(int pos) {
+  m_position = std::clamp(pos, 0, m_positionFinal);
 }
 
 void Level::draw(ngf::RenderTarget &target, ngf::RenderStates states) const {
-  // move camera position
-  ngf::Transform t;
-  t.setPosition({-m_position, 0});
-  states.transform = t.getTransform() * states.transform;
-
   // draw tiles
   int colIni = m_position / TileWidth;
   ngf::Sprite s;
@@ -270,15 +238,5 @@ void Level::draw(ngf::RenderTarget &target, ngf::RenderStates states) const {
       s.setFlipX(flipX);
       s.draw(target, states);
     }
-  }
-
-  Systems::RenderSystem::draw(locator::engine::ref().registry(), target, states);
-
-  if (m_state == LevelState::Start || m_state == LevelState::Dead || m_state == LevelState::Abort) {
-    float alpha = (m_maxFade - m_seq) / static_cast<float>(m_maxFade);
-    //  fade in/out
-    ngf::RectangleShape fadeShape({GAME_WIDTH, GAME_HEIGHT});
-    fadeShape.setColor(ngf::Color(0.f, 0.f, 0.f, alpha));
-    fadeShape.draw(target, {});
   }
 }
