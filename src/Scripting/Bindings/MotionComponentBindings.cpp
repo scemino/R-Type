@@ -1,7 +1,7 @@
 #include "MotionComponentBindings.h"
 #include <glm/vec2.hpp>
-#include <Scripting/Entity.h>
-#include <Component/Components.h>
+#include <ECS/Entity.h>
+#include <ECS/Component/Components.h>
 
 namespace {
 void setVelocity(Entity &e, const glm::vec2 &velocity) {

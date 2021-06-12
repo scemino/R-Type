@@ -6,7 +6,7 @@
 #include <sol/sol.hpp>
 #include <entt/entt.hpp>
 #include <Engine.h>
-#include <Locator.h>
+#include <System/Locator.h>
 
 class ComponentFactory {
 private:

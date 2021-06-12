@@ -1,8 +1,11 @@
-#include <ngf/IO/Json/JsonParser.h>
 #include "AnimationLoader.h"
-#include <Log.h>
+#include <ngf/IO/Json/JsonParser.h>
+#include <System/Log.h>
+#include <Engine.h>
+#include <System/Locator.h>
 
-AnimationsInfo loadAnimations(Engine &engine, const std::filesystem::path &path) {
+AnimationsInfo loadAnimations(const std::filesystem::path &path) {
+  Engine &engine = locator::engine::ref();
   RTYPE_LOG_INFO("Load animations {}", path.string());
   std::unordered_map<std::string, Animation> anims;
   const auto jAnims = ngf::Json::load(path);

@@ -1,5 +1,5 @@
-#include <Scripting/Entity.h>
-#include <Component/Components.h>
+#include <ECS/Entity.h>
+#include <ECS/Component/Components.h>
 #include "AnimationComponentBindings.h"
 
 namespace {

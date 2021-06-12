@@ -4,7 +4,7 @@
 #include <vector>
 #include <ngf/Audio/AudioSystem.h>
 #include <Engine.h>
-#include <Locator.h>
+#include <System/Locator.h>
 
 namespace ngf {
 class SoundBuffer;

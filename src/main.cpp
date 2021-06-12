@@ -1,8 +1,8 @@
 #include <cstdlib>
 #include <ngf/Application.h>
 #include <Engine.h>
-#include <Locator.h>
-#include <Component/Components.h>
+#include <System/Locator.h>
+#include <ECS/Component/Components.h>
 #include <Debug/DebugTools.h>
 #include <spdlog/spdlog.h>
 

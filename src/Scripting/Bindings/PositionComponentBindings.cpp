@@ -1,6 +1,6 @@
 #include <glm/vec2.hpp>
-#include <Scripting/Entity.h>
-#include <Component/Components.h>
+#include <ECS/Entity.h>
+#include <ECS/Component/Components.h>
 #include "PositionComponentBindings.h"
 
 namespace {

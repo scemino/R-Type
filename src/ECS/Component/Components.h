@@ -11,6 +11,7 @@
 #include <entt/entt.hpp>
 #include <sol/sol.hpp>
 #include <CollisionResult.h>
+#include <Graphics/Animation.h>
 
 struct PositionComponent {
   glm::vec2 pos{};
@@ -44,17 +45,6 @@ struct GraphicComponent {
 
   GraphicComponent() = default;
   explicit GraphicComponent(const sol::table &t);
-};
-
-struct AnimationFrame {
-  ngf::irect rect;
-  glm::vec2 offset{0};
-};
-
-struct Animation {
-  std::vector<AnimationFrame> frames;
-  std::shared_ptr<ngf::Texture> texture;
-  int frameDelay{0};
 };
 
 struct AnimationComponent {

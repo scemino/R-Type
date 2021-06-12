@@ -1,6 +1,6 @@
 #include <imgui.h>
+#include <ECS/Component/Components.h>
 #include "DebugTools.h"
-#include "Component/Components.h"
 
 namespace DebugTools {
 void show(entt::registry &registry) {

@@ -1,20 +1,20 @@
 #include <entt/entt.hpp>
-#include <Component/Components.h>
-#include <System/AnimationSystem.h>
-#include <System/MotionSystem.h>
-#include <System/CollisionSystem.h>
-#include <Scripting/EntityManager.h>
-#include <Scripting/EventManager.h>
+#include <ngf/Audio/AudioSystem.h>
+#include <ngf/Audio/SoundBuffer.h>
+#include <ngf/Math/Transform.h>
+#include <ECS/ComponentFactory.h>
 #include <Engine.h>
 #include <Level.h>
-#include <Log.h>
-#include <ComponentFactory.h>
+#include <System/Log.h>
+#include <ECS/Component/Components.h>
+#include <ECS/System/AnimationSystem.h>
+#include <ECS/System/MotionSystem.h>
+#include <ECS/System/CollisionSystem.h>
+#include <ECS/System/RenderSystem.h>
+#include <Scripting/EntityManager.h>
+#include <Scripting/EventManager.h>
 #include <Scripting/Bindings/Bindings.h>
-#include <ngf/Audio/AudioSystem.h>
 #include <Scripting/SoundManager.h>
-#include <ngf/Audio/SoundBuffer.h>
-#include <System/RenderSystem.h>
-#include <ngf/Math/Transform.h>
 
 template<>
 struct fmt::formatter<fs::path> {

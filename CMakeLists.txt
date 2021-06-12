@@ -15,10 +15,14 @@ add_executable(R-Type
         src/Level.cpp
         src/Debug/DebugTools.cpp
         src/Engine.cpp
-        src/AnimationLoader.cpp
-        src/ComponentFactory.cpp
-        src/Component/Components.cpp
-        src/Scripting/Entity.cpp
+        src/ECS/ComponentFactory.cpp
+        src/ECS/Entity.cpp
+        src/ECS/Component/Components.cpp
+        src/ECS/System/AnimationSystem.cpp
+        src/ECS/System/CollisionSystem.cpp
+        src/ECS/System/RenderSystem.cpp
+        src/ECS/System/MotionSystem.cpp
+        src/Graphics/AnimationLoader.cpp
         src/Scripting/EntityManager.cpp
         src/Scripting/SoundManager.cpp
         src/Scripting/Bindings/AnimationComponentBindings.cpp
@@ -30,10 +34,6 @@ add_executable(R-Type
         src/Scripting/Bindings/MathBindings.cpp
         src/Scripting/Bindings/MotionComponentBindings.cpp
         src/Scripting/Bindings/PositionComponentBindings.cpp
-        src/System/AnimationSystem.cpp
-        src/System/CollisionSystem.cpp
-        src/System/RenderSystem.cpp
-        src/System/MotionSystem.cpp
         src/main.cpp)
 
 set(LUA_SOURCE_FILES

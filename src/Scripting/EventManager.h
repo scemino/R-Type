@@ -1,7 +1,7 @@
 #pragma once
 
 #include <sol/sol.hpp>
-#include <Log.h>
+#include <System/Log.h>
 
 class EventManager {
 public:

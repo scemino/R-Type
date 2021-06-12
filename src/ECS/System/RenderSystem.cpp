@@ -1,5 +1,5 @@
-#include "Component/Components.h"
-#include "RenderSystem.h"
+#include <ECS/Component/Components.h>
+#include <ECS/System/RenderSystem.h>
 #include <ngf/Graphics/Sprite.h>
 
 namespace Systems::RenderSystem {

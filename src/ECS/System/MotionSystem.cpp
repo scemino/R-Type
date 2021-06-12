@@ -1,5 +1,5 @@
 #include "MotionSystem.h"
-#include "Component/Components.h"
+#include <ECS/Component/Components.h>
 
 namespace Systems::MotionSystem {
 

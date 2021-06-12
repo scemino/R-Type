@@ -2,10 +2,7 @@
 
 #include <string>
 #include <entt/entt.hpp>
-#include <sol/sol.hpp>
-#include <glm/vec2.hpp>
-#include <utility>
-#include <Locator.h>
+#include <System/Locator.h>
 
 struct Entity {
   explicit Entity(entt::entity e);

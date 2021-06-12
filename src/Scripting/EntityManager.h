@@ -4,7 +4,7 @@
 #include <entt/entt.hpp>
 #include <unordered_map>
 #include <memory>
-#include <Scripting/Entity.h>
+#include <ECS/Entity.h>
 
 using EntityId = entt::entity;
 

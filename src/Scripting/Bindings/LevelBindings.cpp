@@ -1,5 +1,5 @@
 #include "LevelBindings.h"
-#include <Locator.h>
+#include <System/Locator.h>
 #include <Level.h>
 
 namespace {

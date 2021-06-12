@@ -1,5 +1,5 @@
 #include "AudioBindings.h"
-#include <Locator.h>
+#include <System/Locator.h>
 #include <Engine.h>
 #include <Scripting/SoundManager.h>
 

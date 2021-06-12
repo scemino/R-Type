@@ -1,8 +1,8 @@
-#include <Scripting/Entity.h>
+#include <ECS/ComponentFactory.h>
+#include <ECS/Entity.h>
 #include <entt/entt.hpp>
 #include "EntityBindings.h"
-#include <Locator.h>
-#include <ComponentFactory.h>
+#include <System/Locator.h>
 #include <Scripting/EntityManager.h>
 
 namespace Bindings {

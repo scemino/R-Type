@@ -1,10 +1,10 @@
 #include <ngf/Graphics/Sprite.h>
 #include <ngf/IO/Json/JsonParser.h>
 #include <Engine.h>
-#include <Locator.h>
+#include <System/Locator.h>
 #include <Level.h>
 #include <CollisionResult.h>
-#include <Component/Components.h>
+#include <ECS/Component/Components.h>
 
 namespace {
 constexpr int MapNumTilesWidth = 48;

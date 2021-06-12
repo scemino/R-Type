@@ -1,6 +1,5 @@
 #include "Components.h"
-#include <Locator.h>
-#include <AnimationLoader.h>
+#include <Graphics/AnimationLoader.h>
 
 PositionComponent::PositionComponent(const sol::table &t) {
   const auto p = t["pos"].get<glm::vec2>();
@@ -24,7 +23,7 @@ NameComponent::NameComponent(const sol::table &t) {
 
 AnimationComponent::AnimationComponent(const sol::table &t) {
   const auto name = t["name"].get<std::string>();
-  auto animsInfo = loadAnimations(locator::engine::ref(), name);
+  auto animsInfo = loadAnimations(name);
   animations = animsInfo.animations;
   setAnim(animsInfo.initialAnim, -1);
 }

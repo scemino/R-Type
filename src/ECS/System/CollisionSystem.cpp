@@ -1,8 +1,8 @@
-#include "Component/Components.h"
 #include "CollisionSystem.h"
-#include "Level.h"
 #include <entt/entt.hpp>
-#include <Locator.h>
+#include <ECS/Component/Components.h>
+#include <Level.h>
+#include <System/Locator.h>
 #include <Scripting/EntityManager.h>
 #include <Scripting/EventManager.h>
 
