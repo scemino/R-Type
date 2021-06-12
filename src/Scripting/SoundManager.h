@@ -19,9 +19,11 @@ private:
   };
 
 public:
+  explicit SoundManager(ngf::AudioSystem &audio);
   void playSound(const std::string& path);
   void update();
 
 private:
+  ngf::AudioSystem &m_audio;
   std::vector<Sound> m_sounds;
 };

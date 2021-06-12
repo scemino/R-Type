@@ -1,14 +1,10 @@
 #pragma once
 
-#include <algorithm>
 #include <string>
 #include <unordered_map>
-#include <utility>
-#include <vector>
 #include <glm/vec2.hpp>
 #include <ngf/Graphics/Rect.h>
 #include <ngf/Graphics/Texture.h>
-#include <entt/entt.hpp>
 #include <sol/sol.hpp>
 #include <CollisionResult.h>
 #include <Graphics/Animation.h>

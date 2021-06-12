@@ -4,7 +4,7 @@
 
 namespace Systems::RenderSystem {
 
-void draw(entt::registry &registry, ngf::RenderTarget &target, ngf::RenderStates states) {
+void draw(entt::registry &registry, ngf::RenderTarget &target) {
   registry.view<GraphicComponent, PositionComponent,NameComponent>()
       .each([&](const auto &gc, const auto &pc, const auto& nc) {
         if(!gc.texture)
@@ -13,7 +13,7 @@ void draw(entt::registry &registry, ngf::RenderTarget &target, ngf::RenderStates
           return;
         ngf::Sprite s(*gc.texture, gc.frame);
         s.getTransform().setPosition(pc.pos + gc.offset);
-        s.draw(target, states);
+        s.draw(target, {});
       });
 }
 }

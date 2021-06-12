@@ -26,10 +26,10 @@ struct fmt::formatter<fs::path> {
   }
 };
 
-Engine::Engine(ngf::AudioSystem &audio) : m_audio(audio) {
+Engine::Engine(ngf::AudioSystem &audio) {
   m_entityManager = std::make_unique<EntityManager>(m_reg, m_lua);
   m_eventManager = std::make_unique<EventManager>(m_lua);
-  m_soundManager = std::make_unique<SoundManager>();
+  m_soundManager = std::make_unique<SoundManager>(audio);
   m_componentFactory = std::make_unique<ComponentFactory>();
 
   createVm();
@@ -102,14 +102,8 @@ void Engine::update() {
 }
 
 void Engine::draw(ngf::RenderTarget &target) {
-  // move camera position
-  ngf::Transform t;
-  t.setPosition({-m_level->getPosition(), 0});
-  ngf::RenderStates states;
-  states.transform = t.getTransform() * states.transform;
-
   if (m_level)
-    m_level->draw(target, states);
+    m_level->draw(target);
 
-  Systems::RenderSystem::draw(m_reg, target, {});
+  Systems::RenderSystem::draw(m_reg, target);
 }

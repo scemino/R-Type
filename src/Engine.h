@@ -41,7 +41,6 @@ public:
   EntityManager &entityManager() { assert(m_entityManager); return *m_entityManager; }
   EventManager &eventManager() { assert(m_eventManager); return *m_eventManager; }
   ComponentFactory &componentFactory() { assert(m_componentFactory); return *m_componentFactory; }
-  ngf::AudioSystem &audio() { return m_audio; }
   SoundManager &soundManager() { assert(m_soundManager); return *m_soundManager; }
   Level& level() { assert(m_level); return *m_level; }
 
@@ -68,6 +67,5 @@ private:
   std::unique_ptr<SoundManager> m_soundManager;
   entt::registry m_reg;
   sol::state m_lua;
-  ngf::AudioSystem &m_audio;
   bool m_gameStarted{false};
 };

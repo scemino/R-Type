@@ -207,7 +207,13 @@ void Level::setPosition(int pos) {
   m_position = std::clamp(pos, 0, m_positionFinal);
 }
 
-void Level::draw(ngf::RenderTarget &target, ngf::RenderStates states) const {
+void Level::draw(ngf::RenderTarget &target) const {
+  // move camera position
+  ngf::Transform t;
+  t.setPosition({-m_position, 0});
+  ngf::RenderStates states;
+  states.transform = t.getTransform() * states.transform;
+
   // draw tiles
   int colIni = m_position / TileWidth;
   ngf::Sprite s;

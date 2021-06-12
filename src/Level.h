@@ -30,7 +30,7 @@ public:
   void setPosition(int pos);
   [[nodiscard]] int getPosition() const { return m_position; }
 
-  void draw(ngf::RenderTarget &target, ngf::RenderStates states) const;
+  void draw(ngf::RenderTarget &target) const;
 
 private:
   void load(const fs::path &path);
