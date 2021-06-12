@@ -1,5 +1,6 @@
-local PlayerStateMachine =
-{
+local util = require 'util'
+
+local PlayerStateMachine = {
     states = {
         MoveState = {
             init = function(entity)
@@ -48,9 +49,14 @@ local PlayerStateMachine =
                     entity:setVelocity(vec(0, vel.y))
                 end
             end,
-            hit = function(entity, event)
+            hit = function(e, event)
                 if event.data.collisionType == 'tile' then
                     return 'ExplodingState'
+                else
+                    -- clamp player position to screen
+                    local pos = e:getPosition()
+                    pos = util.clampVector(pos, vec(0, 0), vec(352, 240))
+                    e:setPosition(pos)
                 end
             end
         },
