@@ -48,8 +48,8 @@ std::optional<CollisionResult> Level::collideLevel(const ngf::irect &rect) const
 
   int tileUp = rect.min.y / TileHeight;
   int tileDown = (rect.max.y) / TileHeight;
-  int tileLeft = rect.min.x / TileWidth;
-  int tileRight = (rect.max.x) / TileWidth;
+  int tileLeft = (m_position + rect.min.x) / TileWidth;
+  int tileRight = (m_position + rect.max.x) / TileWidth;
 
   //--------------------------------------------------------------------------
   // tiles collision
@@ -119,7 +119,7 @@ std::optional<CollisionResult> Level::collideLevel(const ngf::irect &rect) const
   }
 
   // see if it is out of the screen
-  if (rect.max.y >= GameHeight - HudHpix) {
+  if (rect.max.y >= (GameHeight - HudHpix)) {
     collisionMask |= CollisionMaskDown;
     y = GameHeight - HudHpix;
   }
@@ -127,13 +127,13 @@ std::optional<CollisionResult> Level::collideLevel(const ngf::irect &rect) const
     collisionMask |= CollisionMaskUp;
     y = 0;
   }
-  if (rect.max.x >= m_position + GameWidth) {
+  if (rect.max.x >= GameWidth) {
     collisionMask |= CollisionMaskRight;
-    x = m_position + GameWidth;
+    x = GameWidth;
   }
-  if (rect.min.x < m_position) {
+  if (rect.min.x < 0) {
     collisionMask |= CollisionMaskLeft;
-    x = m_position;
+    x = 0;
   }
 
   if (collisionMask)
