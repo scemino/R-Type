@@ -1,5 +1,6 @@
 #pragma once
 
+#include <cassert>
 #include <filesystem>
 #include <map>
 #include <memory>
@@ -37,11 +38,12 @@ public:
   // services
   sol::state &lua() { return m_lua; }
   entt::registry &registry() { return m_reg; }
-  EntityManager &entityManager() { return *m_entityManager; }
-  EventManager &eventManager() { return *m_eventManager; }
-  ComponentFactory &componentFactory() { return *m_componentFactory; }
+  EntityManager &entityManager() { assert(m_entityManager); return *m_entityManager; }
+  EventManager &eventManager() { assert(m_eventManager); return *m_eventManager; }
+  ComponentFactory &componentFactory() { assert(m_componentFactory); return *m_componentFactory; }
   ngf::AudioSystem &audio() { return m_audio; }
-  SoundManager &soundManager() { return *m_soundManager; }
+  SoundManager &soundManager() { assert(m_soundManager); return *m_soundManager; }
+  Level& level() { assert(m_level); return *m_level; }
 
   void startGame();
 

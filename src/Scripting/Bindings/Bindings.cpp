@@ -6,6 +6,7 @@
 #include "AnimationComponentBindings.h"
 #include "FileSystemBindings.h"
 #include "AudioBindings.h"
+#include "LevelBindings.h"
 
 namespace Bindings {
 void bindAll(sol::state &lua) {
@@ -16,5 +17,6 @@ void bindAll(sol::state &lua) {
   bindMotionComponent(lua);
   bindAnimationComponent(lua);
   bindAudio(lua);
+  bindLevel(lua);
 }
 }

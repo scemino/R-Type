@@ -26,11 +26,11 @@ add_executable(R-Type
         src/Scripting/Bindings/Bindings.cpp
         src/Scripting/Bindings/EntityBindings.cpp
         src/Scripting/Bindings/FileSystemBindings.cpp
+        src/Scripting/Bindings/LevelBindings.cpp
         src/Scripting/Bindings/MathBindings.cpp
         src/Scripting/Bindings/MotionComponentBindings.cpp
         src/Scripting/Bindings/PositionComponentBindings.cpp
         src/System/AnimationSystem.cpp
-        src/System/CameraSystem.cpp
         src/System/CollisionSystem.cpp
         src/System/RenderSystem.cpp
         src/System/MotionSystem.cpp

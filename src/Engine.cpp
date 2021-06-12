@@ -3,7 +3,6 @@
 #include <System/AnimationSystem.h>
 #include <System/MotionSystem.h>
 #include <System/CollisionSystem.h>
-#include <System/CameraSystem.h>
 #include <Scripting/EntityManager.h>
 #include <Scripting/EventManager.h>
 #include <Engine.h>
@@ -69,19 +68,15 @@ void Engine::onKeyUp(ngf::Scancode code) {
 }
 
 void Engine::startGame() {
-  auto e = m_entityManager->createEntity().getId();
-  m_reg.emplace<NameComponent>(e, "camera");
-  m_reg.emplace<CameraComponent>(e);
-  m_reg.emplace<PositionComponent>(e);
-  m_reg.emplace<MotionComponent>(e, glm::vec2{1, 0});
+
   loadLevel();
-  update();
 
   auto r = m_lua.script_file("resources/scripts/boot.lua");
   if (!r.valid()) {
     sol::error err = r;
     RTYPE_LOG_ERROR("[lua] failed to load boot.lua:\n {}", err.what());
   }
+
   m_gameStarted = true;
 }
 
@@ -97,7 +92,6 @@ void Engine::update() {
   Systems::MotionSystem::update(m_reg);
   Systems::CollisionSystem::update(m_reg);
   Systems::AnimationSystem::update(m_reg);
-  Systems::CameraSystem::update(m_reg);
 
   auto r = m_lua["update"].call();
   if (!r.valid()) {

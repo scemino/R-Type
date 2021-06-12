@@ -41,7 +41,19 @@ local function createPlayer()
     return e
 end
 
+-- define camera
+ local function createCamera()
+     local e = Entity()
+     e:emplace('Name', {name='camera'})
+     e:emplace('Position')
+     e:emplace('Motion')
+     addComponent(e, StateMachineComponent('CameraStateMachine'))
+     StateManager.initState(e)
+     return e
+ end
+
 -- create entities
+createCamera()
 createPlayer()
 createEnemy('enemy1')
 createEnemy('enemy2')

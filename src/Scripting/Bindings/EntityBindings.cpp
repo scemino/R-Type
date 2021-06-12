@@ -8,11 +8,11 @@
 namespace Bindings {
 
 namespace {
-void emplace(const Entity e, const std::string &name) {
+void emplace(const Entity& e, const std::string &name) {
   locator::engine::ref().componentFactory().emplace(e.getId(), name, std::nullopt);
 }
 
-void emplace_with_table(const Entity e, const std::string &name, const sol::table &t) {
+void emplace_with_table(const Entity& e, const std::string &name, const sol::table &t) {
   locator::engine::ref().componentFactory().emplace(e.getId(), name, t);
 }
 

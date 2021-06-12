@@ -78,5 +78,3 @@ struct NameComponent {
   explicit NameComponent(std::string  n) : name(std::move(n)) {}
   explicit NameComponent(const sol::table &t);
 };
-
-struct CameraComponent {};

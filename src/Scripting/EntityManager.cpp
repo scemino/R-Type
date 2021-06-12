@@ -5,7 +5,7 @@ EntityManager::EntityManager(entt::registry &registry, sol::state &lua) :
 
 Entity &EntityManager::createEntity() {
   auto e = m_registry.create();
-  auto inserted = entities.emplace(e, std::make_unique<Entity>(m_registry, e));
+  auto inserted = entities.emplace(e, std::make_unique<Entity>(e));
   auto it = inserted.first; // iterator to created id/Entity pair
   auto &entity = *it->second; // created entity
   m_lua["createHandle"](entity);
