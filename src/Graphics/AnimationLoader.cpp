@@ -9,12 +9,14 @@ AnimationsInfo loadAnimations(const std::filesystem::path &path) {
   RTYPE_LOG_INFO("Load animations {}", path.string());
   std::unordered_map<std::string, Animation> anims;
   const auto jAnims = ngf::Json::load(path);
+  const auto &sDefaultTexture = jAnims["texture"].getString();
   for (const auto &jAnimItem : jAnims["animations"].items()) {
     const auto &name = jAnimItem.key();
     const auto &jAnim = jAnimItem.value();
     const auto &jFrames = jAnim["frames"];
     const auto &jDelay = jAnim["delay"];
-    const auto &sTexture = jAnim["texture"].getString();
+    const auto jTexture = jAnim["texture"];
+    const auto &sTexture = jTexture.isNull() ? sDefaultTexture : jTexture.getString();
     const auto delay = jDelay.isNull() ? 6 : jDelay.getInt();
     std::vector<AnimationFrame> frames;
     for (const auto &jFrame : jFrames) {
