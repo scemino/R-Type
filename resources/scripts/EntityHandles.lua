@@ -44,19 +44,20 @@ function createHandle(cppRef)
 end
 
 function isHandleValid(handle)
-    return handle.cppRef ~= nil and Handles[handle.cppRef:getId()] ~= nil
+    return handle ~= nil and
+            handle.cppRef ~= nil and Handles[handle.cppRef:getId()] ~= nil
 end
 
-function onEntityRemoved(cppRef)
-    local handle = Handles[cppRef:getId()]
+function onEntityRemoved(id)
+    local handle = Handles[id]
     handle.cppRef = nil
-    Handles[cppRef:getId()] = nil
+    Handles[id] = nil
 end
 
 -- components functions
 function addComponent(entity, component)
     local handle = Handles[entity:getId()]
-    component:setEntity(handle)
+    component:setEntity(entity)
     local name = component.class.static.name
     handle.components[name] = component
 end
