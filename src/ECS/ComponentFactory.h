@@ -14,7 +14,7 @@ private:
 
 public:
   template<typename T>
-  void registerComponentType(const std::string &name) {
+  ComponentFactory& registerComponentType(const std::string &name) {
     m_factories[name] = [](const entt::entity e, std::optional<sol::table> t) {
       if(t.has_value()) {
         locator::engine::ref().registry().emplace<T>(e, t.value());
@@ -22,6 +22,7 @@ public:
         locator::engine::ref().registry().emplace<T>(e);
       }
     };
+    return *this;
   }
 
   void emplace(const entt::entity e, const std::string &name, std::optional<sol::table> t) {

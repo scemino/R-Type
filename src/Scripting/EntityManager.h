@@ -13,8 +13,9 @@ public:
   EntityManager(entt::registry &registry, sol::state &lua);
 
   Entity &createEntity();
-  void removeEntity(EntityId id);
+  void destroyEntity(EntityId id);
   [[nodiscard]] Entity *getEntity(EntityId id) const;
+  void removeDeadEntities();
 
 private:
   entt::registry &m_registry;

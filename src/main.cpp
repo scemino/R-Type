@@ -1,10 +1,10 @@
 #include <cstdlib>
 #include <ngf/Application.h>
-#include <Engine.h>
-#include <System/Locator.h>
-#include <ECS/Component/Components.h>
 #include <Debug/DebugTools.h>
-#include <spdlog/spdlog.h>
+#include <Engine.h>
+#include <ECS/Component/Components.h>
+#include <System/Locator.h>
+#include <System/Log.h>
 
 namespace {
 constexpr const char *GameName = "R-Type";
@@ -13,14 +13,14 @@ constexpr const char *GameName = "R-Type";
 class RTypeApplication final : public ngf::Application {
 private:
   void onInit() final {
-    SPDLOG_INFO("Init {} game", GameName);
+    RTYPE_LOG_INFO("Init {} game", GameName);
     m_window.init({"R-Type", glm::ivec2{640, 480}, true, false, true});
     m_window.setVerticalSyncEnabled();
     restartGame();
   }
 
   void onQuit() final {
-    SPDLOG_INFO("Quit {} game", GameName);
+    RTYPE_LOG_INFO("Quit {} game", GameName);
     ngf::Application::onQuit();
   }
 
@@ -54,7 +54,7 @@ private:
   }
 
   void restartGame() {
-    SPDLOG_INFO("Start {} game", GameName);
+    RTYPE_LOG_INFO("Start {} game", GameName);
     locator::engine::reset();
     locator::engine::set<Engine>(m_audioSystem);
     locator::engine::ref().startGame();

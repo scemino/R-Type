@@ -1,3 +1,4 @@
+#include <System/Log.h>
 #include "EntityManager.h"
 
 EntityManager::EntityManager(entt::registry &registry, sol::state &lua) :
@@ -5,6 +6,7 @@ EntityManager::EntityManager(entt::registry &registry, sol::state &lua) :
 
 Entity &EntityManager::createEntity() {
   auto e = m_registry.create();
+  RTYPE_LOG_INFO("Create entity {}", e);
   auto inserted = entities.emplace(e, std::make_unique<Entity>(e));
   auto it = inserted.first; // iterator to created id/Entity pair
   auto &entity = *it->second; // created entity
@@ -12,10 +14,23 @@ Entity &EntityManager::createEntity() {
   return entity;
 }
 
-void EntityManager::removeEntity(EntityId id) {
+void EntityManager::destroyEntity(EntityId id) {
+  RTYPE_LOG_INFO("Destroy entity {}", id);
   m_lua["onEntityRemoved"](id);
-  entities.erase(id);
-  m_registry.destroy(id);
+  auto pEntity = getEntity(id);
+  if (pEntity)
+    pEntity->die();
+}
+
+void EntityManager::removeDeadEntities() {
+  for (auto it = entities.begin(); it != entities.end();) {
+    if (it->second->isDead()) {
+      m_registry.destroy(it->second->getId());
+      it = entities.erase(it);
+    } else {
+      ++it;
+    }
+  }
 }
 
 Entity *EntityManager::getEntity(EntityId id) const {

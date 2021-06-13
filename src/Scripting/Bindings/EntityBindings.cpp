@@ -1,5 +1,4 @@
 #include <ECS/ComponentFactory.h>
-#include <ECS/Entity.h>
 #include <entt/entt.hpp>
 #include "EntityBindings.h"
 #include <System/Locator.h>
@@ -16,8 +15,8 @@ void emplace_with_table(const Entity& e, const std::string &name, const sol::tab
   locator::engine::ref().componentFactory().emplace(e.getId(), name, t);
 }
 
-void remove(const Entity &e) {
-  locator::engine::ref().entityManager().removeEntity(e.getId());
+void die(const Entity &e) {
+  locator::engine::ref().entityManager().destroyEntity(e.getId());
 }
 }
 
@@ -32,7 +31,7 @@ void bindEntity(sol::state &lua) {
   entityType.set_function("emplace", sol::overload(&emplace, &emplace_with_table));
 
 #define ADD_ENTITY_FUNCTION(x) entityType.set_function(#x, x)
-  ADD_ENTITY_FUNCTION(remove);
+  ADD_ENTITY_FUNCTION(die);
 #undef ADD_ENTITY_FUNCTION
 }
 }

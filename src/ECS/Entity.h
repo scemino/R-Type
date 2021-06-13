@@ -9,6 +9,9 @@ struct Entity {
 
   [[nodiscard]] entt::entity getId() const { return m_entity; }
 
+  void die();
+  bool isDead() const;
+
   template<typename T>
   const T& component() const;
 
@@ -17,6 +20,7 @@ struct Entity {
 
 private:
   entt::entity m_entity;
+  bool m_isDead{false};
 };
 
 template<typename T>

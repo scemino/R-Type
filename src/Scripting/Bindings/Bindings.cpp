@@ -1,9 +1,10 @@
 #include "Bindings.h"
 #include "EntityBindings.h"
 #include "MathBindings.h"
-#include "PositionComponentBindings.h"
-#include "MotionComponentBindings.h"
-#include "AnimationComponentBindings.h"
+#include "Components/PositionComponentBindings.h"
+#include "Components/MotionComponentBindings.h"
+#include "Components/AnimationComponentBindings.h"
+#include "Components/NameComponentBindings.h"
 #include "FileSystemBindings.h"
 #include "AudioBindings.h"
 #include "LevelBindings.h"
@@ -16,6 +17,7 @@ void bindAll(sol::state &lua) {
   bindPositionComponent(lua);
   bindMotionComponent(lua);
   bindAnimationComponent(lua);
+  bindNameComponent(lua);
   bindAudio(lua);
   bindLevel(lua);
 }

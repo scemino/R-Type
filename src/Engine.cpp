@@ -1,7 +1,6 @@
 #include <entt/entt.hpp>
 #include <ngf/Audio/AudioSystem.h>
 #include <ngf/Audio/SoundBuffer.h>
-#include <ngf/Math/Transform.h>
 #include <ECS/ComponentFactory.h>
 #include <Engine.h>
 #include <Level.h>
@@ -40,18 +39,18 @@ Engine::~Engine() = default;
 void Engine::createVm() {
   m_lua.open_libraries();
   Bindings::bindAll(m_lua);
-  m_componentFactory->registerComponentType<AnimationComponent>("Animation");
-  m_componentFactory->registerComponentType<PositionComponent>("Position");
-  m_componentFactory->registerComponentType<MotionComponent>("Motion");
-  m_componentFactory->registerComponentType<GraphicComponent>("Graphics");
-  m_componentFactory->registerComponentType<NameComponent>("Name");
-  m_componentFactory->registerComponentType<CollideComponent>("Collide");
+  m_componentFactory->registerComponentType<AnimationComponent>("Animation")
+  .registerComponentType<PositionComponent>("Position")
+  .registerComponentType<MotionComponent>("Motion")
+  .registerComponentType<GraphicComponent>("Graphics")
+  .registerComponentType<NameComponent>("Name")
+  .registerComponentType<CollideComponent>("Collide");
 }
 
 std::shared_ptr<ngf::Texture> Engine::loadTexture(const fs::path &path) {
   auto it = m_textures.find(path);
   if (it == m_textures.end()) {
-    SPDLOG_INFO("Load texture {}", path.string());
+    RTYPE_LOG_INFO("Load texture {}", path.string());
     auto texture = std::make_shared<ngf::Texture>(path);
     m_textures.insert({path, texture});
     return texture;
@@ -98,6 +97,7 @@ void Engine::update() {
     sol::error e = r;
     RTYPE_LOG_ERROR("[lua] failed to call update:\n{}", e.what());
   }
+  m_entityManager->removeDeadEntities();
   m_soundManager->update();
 }
 

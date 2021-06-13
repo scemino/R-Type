@@ -21,6 +21,12 @@ void show(entt::registry &registry) {
       if (cc) {
         ImGui::DragInt2("Hit box", &cc->size.x);
       }
+      auto ac = registry.try_get<AnimationComponent>(e);
+      if (ac) {
+        ImGui::TextDisabled("Animation: %s", ac->current.c_str());
+        ImGui::TextDisabled("Frame: %lu", ac->frameIndex);
+        ImGui::TextDisabled("Loop: %d", ac->loop);
+      }
       ImGui::TreePop();
     }
   });

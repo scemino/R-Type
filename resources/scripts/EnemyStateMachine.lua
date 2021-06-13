@@ -21,7 +21,7 @@ local EnemyStateMachine = {
             end,
             anim = function(entity, event)
                 if event.data.name == 'explode' then
-                    entity:remove()
+                    entity:die()
                 end
             end
         }

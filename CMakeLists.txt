@@ -25,15 +25,16 @@ add_executable(R-Type
         src/Graphics/AnimationLoader.cpp
         src/Scripting/EntityManager.cpp
         src/Scripting/SoundManager.cpp
-        src/Scripting/Bindings/AnimationComponentBindings.cpp
         src/Scripting/Bindings/AudioBindings.cpp
         src/Scripting/Bindings/Bindings.cpp
         src/Scripting/Bindings/EntityBindings.cpp
         src/Scripting/Bindings/FileSystemBindings.cpp
         src/Scripting/Bindings/LevelBindings.cpp
         src/Scripting/Bindings/MathBindings.cpp
-        src/Scripting/Bindings/MotionComponentBindings.cpp
-        src/Scripting/Bindings/PositionComponentBindings.cpp
+        src/Scripting/Bindings/Components/AnimationComponentBindings.cpp
+        src/Scripting/Bindings/Components/MotionComponentBindings.cpp
+        src/Scripting/Bindings/Components/NameComponentBindings.cpp
+        src/Scripting/Bindings/Components/PositionComponentBindings.cpp
         src/main.cpp)
 
 set(LUA_SOURCE_FILES
