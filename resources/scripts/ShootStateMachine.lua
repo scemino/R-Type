@@ -1,23 +1,22 @@
-local EnemyStateMachine = {
+local ShootStateMachine = {
     states = {
         MoveState = {
-            update = function(e)
-                local handle = Handles[e:getId()]
-                handle.components.enemyPosition:updatePosition(e)
-            end,
-            hit = function(_, event)
+            hit = function(e, event)
                 if event.data.collisionType == 'tile' then
+                    e:setVelocity(vec(0,0))
                     return 'ExplodingState'
+                else
+                    e:die()
                 end
             end
         },
         ExplodingState = {
             init = function(e)
-                print('BOOM', e)
-                e:setAnim('explode', 1)
+                playSound(Sounds.shoot_explode2)
+                e:setAnim('shoot_explode', 1)
             end,
             anim = function(e, event)
-                if event.data.name == 'explode' then
+                if event.data.name == 'shoot_explode' then
                     e:die()
                 end
             end
@@ -25,4 +24,4 @@ local EnemyStateMachine = {
     },
     initialState = 'MoveState'
 }
-return EnemyStateMachine
+return ShootStateMachine

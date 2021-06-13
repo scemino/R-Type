@@ -3,7 +3,8 @@ package.path = package.path .. ';' .. getWorkingDirectory() .. '/resources/scrip
 
 require 'EntityHandles'
 require 'StateManager'
-Keys = require 'Keys'
+require 'Sounds'
+require 'Keys'
 
 local EnemyPositionComponent = require 'EnemyPositionComponent'
 local TimerComponent = require 'TimerComponent'

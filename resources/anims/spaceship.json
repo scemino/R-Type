@@ -1,24 +1,20 @@
 {
+  "texture": "resources/images/r-typesheet1.png",
   "animations": {
     "move": {
-      "frames": [[167, 3, 32, 12]],
-      "texture": "resources/images/r-typesheet1.png"
+      "frames": [[167, 3, 32, 12]]
     },
     "moreDown": {
-      "frames": [[101, 3, 32, 14]],
-      "texture": "resources/images/r-typesheet1.png"
+      "frames": [[101, 3, 32, 14]]
     },
     "down": {
-      "frames": [[134, 3, 32, 13]],
-      "texture": "resources/images/r-typesheet1.png"
+      "frames": [[134, 3, 32, 13]]
     },
     "up": {
-      "frames": [[200, 3, 32, 13]],
-      "texture": "resources/images/r-typesheet1.png"
+      "frames": [[200, 3, 32, 13]]
     },
     "upper": {
-      "frames": [[233, 2, 32, 14]],
-      "texture": "resources/images/r-typesheet1.png"
+      "frames": [[233, 2, 32, 14]]
     },
     "explode":
     {
@@ -31,9 +27,53 @@
         [170, 345, 26, 24],
         [202, 344, 28, 26],
         [233, 343, 32, 28]
-      ],
-      "delay": 6,
-      "texture": "resources/images/r-typesheet1.png"
+      ]
+    },
+    "shoot1":
+    {
+      "frames": [[ 249, 90, 16, 4 ]]
+    },
+    "shoot2":
+    {
+      "frames": [
+        [ 249, 105, 16, 8 ],
+        [ 232, 103, 16, 12 ]
+      ]
+    },
+    "shoot3":
+    {
+      "frames": [
+        [ 200, 121, 32, 10 ],
+        [ 233, 120, 32, 12 ]
+      ]
+    },
+    "shoot4":
+    {
+      "frames": [
+        [ 168, 137, 48, 12 ],
+        [ 217, 136, 48, 14 ]
+      ]
+    },
+    "shoot5":
+    {
+      "frames": [
+        [ 136, 154, 64, 14 ],
+        [ 201, 154, 64, 14 ]
+      ]
+    },
+    "shoot6":
+    {
+      "frames": [
+        [ 104, 171, 80, 14 ],
+        [ 185, 170, 80, 16 ]
+      ]
+    },
+    "shoot_explode":
+    {
+      "frames": [
+        [ 303, 85, 14, 12  ],
+        [ 288, 87, 11, 9 ]
+      ]
     }
   },
   "initialAnim": "move"

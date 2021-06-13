@@ -1,52 +1,76 @@
 local util = require 'util'
+local StateMachineComponent = require 'StateMachineComponent'
+
+local function shoot(power, pos)
+    local e = Entity()
+    e:emplace('Name', {name='shoot'})
+    e:emplace('Position')
+    e:emplace('Motion')
+    e:emplace('Graphics')
+    e:emplace('Collide', {size=vec(32, 16)})
+    e:emplace('Animation', {name='resources/anims/spaceship.json'})
+    e:setAnim('shoot'..power, -1)
+    e:setPosition(pos+vec(32,4))
+    e:setVelocity(vec(6,0))
+    addComponent(e, StateMachineComponent('ShootStateMachine'))
+    StateManager.initState(e)
+    if power == 1 then
+        playSound(Sounds.shoot1)
+    else
+        playSound(Sounds.shoot2)
+    end
+end
 
 local PlayerStateMachine = {
     states = {
         MoveState = {
-            init = function(entity)
-                entity:setAnim('move', 1)
-                local vel = entity:getVelocity()
+            init = function(e)
+                e:setAnim('move', 1)
+                local vel = e:getVelocity()
                 vel.y = 0
-                entity:setVelocity(vel)
+                e:setVelocity(vel)
             end,
-            onKeyDown = function(entity, code)
+            onKeyDown = function(e, code)
                 if code == Keys.Up then
-                    entity:setAnim('up', 1)
-                    local vel = entity:getVelocity()
-                    entity:setVelocity(vec(vel.x, -3))
+                    e:setAnim('up', 1)
+                    local vel = e:getVelocity()
+                    e:setVelocity(vec(vel.x, -3))
                 end
                 if code == Keys.Down then
-                    entity:setAnim('down', 1)
-                    local vel = entity:getVelocity()
-                    entity:setVelocity(vec(vel.x, 3))
+                    e:setAnim('down', 1)
+                    local vel = e:getVelocity()
+                    e:setVelocity(vec(vel.x, 3))
                 end
                 if code == Keys.Right then
-                    local vel = entity:getVelocity()
-                    entity:setVelocity(vec(3, vel.y))
+                    local vel = e:getVelocity()
+                    e:setVelocity(vec(3, vel.y))
                 end
                 if code == Keys.Left then
-                    local vel = entity:getVelocity()
-                    entity:setVelocity(vec(-3, vel.y))
+                    local vel = e:getVelocity()
+                    e:setVelocity(vec(-3, vel.y))
                 end
             end,
-            onKeyUp = function(entity, code)
+            onKeyUp = function(e, code)
                 if code == Keys.Up then
-                    entity:setAnim('move', 1)
-                    local vel = entity:getVelocity()
-                    entity:setVelocity(vec(vel.x, 0))
+                    e:setAnim('move', 1)
+                    local vel = e:getVelocity()
+                    e:setVelocity(vec(vel.x, 0))
                 end
                 if code == Keys.Down then
-                    entity:setAnim('move', 1)
-                    local vel = entity:getVelocity()
-                    entity:setVelocity(vec(vel.x, 0))
+                    e:setAnim('move', 1)
+                    local vel = e:getVelocity()
+                    e:setVelocity(vec(vel.x, 0))
                 end
                 if code == Keys.Right then
-                    local vel = entity:getVelocity()
-                    entity:setVelocity(vec(0, vel.y))
+                    local vel = e:getVelocity()
+                    e:setVelocity(vec(0, vel.y))
                 end
                 if code == Keys.Left then
-                    local vel = entity:getVelocity()
-                    entity:setVelocity(vec(0, vel.y))
+                    local vel = e:getVelocity()
+                    e:setVelocity(vec(0, vel.y))
+                end
+                if code == Keys.Space then
+                    shoot(1, e:getPosition())
                 end
             end,
             hit = function(e, event)
@@ -61,13 +85,14 @@ local PlayerStateMachine = {
             end
         },
         ExplodingState = {
-            init = function(entity)
-                entity:setAnim('explode', 1)
-                playSound('resources/audio/rtype-053.wav')
+            init = function(e)
+                e:setVelocity(vec(0,0))
+                e:setAnim('explode', 1)
+                playSound(Sounds.player_explode)
             end,
-            anim = function(entity, event)
+            anim = function(e, event)
                 if event.data.name == 'explode' then
-                    entity:die()
+                    e:die()
                 end
             end
         }

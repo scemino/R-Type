@@ -12,4 +12,16 @@ function StateMachineComponent:get()
     return self.stateMachine
 end
 
+function StateMachineComponent:setStateName(stateName)
+    self.stateName = stateName
+end
+
+function StateMachineComponent:getStateName()
+    return self.stateName
+end
+
+function StateMachineComponent:getState()
+    return self.stateMachine.states[self.stateName]
+end
+
 return StateMachineComponent
