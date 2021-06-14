@@ -2,8 +2,7 @@ local EnemyStateMachine = {
     states = {
         MoveState = {
             update = function(e)
-                local handle = Handles[e:getId()]
-                handle.components.enemyPosition:updatePosition(e)
+                e.components.enemyPosition:updatePosition(e)
             end,
             hit = function(_, event)
                 if event.data.collisionType == 'tile' then

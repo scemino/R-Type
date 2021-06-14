@@ -40,21 +40,21 @@ local BeamStateMachine = {
     states = {
         MoveState = {
             update = function(e)
-                local beam = Handles[e:getId()].components.beam
+                local beam = e.components.beam
                 e:setVisible(beam:getPower()>1)
                 beam:update()
             end,
             onKeyDown = function(e, code)
                 if code == Keys.Space then
-                    Handles[e:getId()].components.beam:setEnabled(true)
+                    e.components.beam:setEnabled(true)
                 end
             end,
             onKeyUp = function(e, code)
                 if code == Keys.Space then
                     e:setVisible(false)
-                    local handle = Handles[e:getId()]
-                    shoot(handle.components.beam:getPower(), e:getPosition())
-                    handle.components.beam:setEnabled(false)
+                    local beam = e.components.beam
+                    shoot(beam:getPower(), e:getPosition())
+                    beam:setEnabled(false)
                 end
             end
         }

@@ -13,7 +13,7 @@ local ShootStateMachine = {
         ExplodingState = {
             init = function(e)
                 playSound(Sounds.shoot_explode2)
-                if Handles[e:getId()].components.damage:getDamage() == 1 then
+                if e.components.damage:getDamage() == 1 then
                     e:setAnim('shoot_explode', 1)
                 else
                     e:setAnim('shoot_explode_big', 1)

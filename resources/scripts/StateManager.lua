@@ -1,8 +1,6 @@
 StateManager = {
     getStateMachine = function(e)
-        local handle = Handles[e:getId()]
-        if not handle.components.stateMachine then return end
-        return handle.components.stateMachine
+        return e.components.stateMachine
     end,
 
     changeState = function(e, stateName)
@@ -24,8 +22,9 @@ StateManager = {
     end,
 
     initState = function(e)
-        local sm = StateManager.getStateMachine(e)
-        StateManager.changeState(e, sm:get().initialState)
+        local handle = Handles[e:getId()]
+        local sm = StateManager.getStateMachine(handle)
+        StateManager.changeState(handle, sm:get().initialState)
         sm:setStateName(sm:get().initialState)
     end,
 
@@ -46,7 +45,6 @@ StateManager = {
         if not sm then return end
         local callback = sm:getState()[event.type]
         if callback then
-            print('Call '..sm:getStateName()..'.'..event.type..' with '..e:getName())
             local nextState = callback(e, event)
             if nextState then
                 StateManager.changeState(e, nextState)

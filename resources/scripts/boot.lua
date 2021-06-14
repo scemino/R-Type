@@ -83,24 +83,25 @@ createEnemy('enemy2')
 function update()
     for key,value in pairs(Handles)
     do
-        if isHandleValid(value) then StateManager.update(value.cppRef) end
+        if isHandleValid(value) then StateManager.update(value) end
     end
 end
 
 function onEvent(e, event)
-    StateManager.onEvent(e, event)
+    local handle = Handles[e:getId()]
+    if isHandleValid(handle) then StateManager.onEvent(handle, event) end
 end
 
 function onKeyUp(code)
     for key,value in pairs(Handles)
     do
-        if isHandleValid(value) then StateManager.onKeyUp(value.cppRef, code) end
+        if isHandleValid(value) then StateManager.onKeyUp(value, code) end
     end
 end
 
 function onKeyDown(code)
     for key,value in pairs(Handles)
     do
-        if isHandleValid(value) then StateManager.onKeyDown(value.cppRef, code) end
+        if isHandleValid(value) then StateManager.onKeyDown(value, code) end
     end
 end
