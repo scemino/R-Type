@@ -4,6 +4,17 @@
 #include <Engine.h>
 #include <System/Locator.h>
 
+namespace {
+ngf::irect toRect(const ngf::GGPackValue &jRect) {
+  return ngf::irect::fromPositionSize({jRect[0].getInt(), jRect[1].getInt()},
+                                      {jRect[2].getInt(), jRect[3].getInt()});
+}
+
+glm::vec2 toVector(const ngf::GGPackValue &jVector) {
+  return {static_cast<float>(jVector[0].getDouble()), static_cast<float>(jVector[1].getDouble())};
+}
+}
+
 AnimationsInfo loadAnimations(const std::filesystem::path &path) {
   Engine &engine = locator::engine::ref();
   RTYPE_LOG_INFO("Load animations {}", path.string());
@@ -16,14 +27,14 @@ AnimationsInfo loadAnimations(const std::filesystem::path &path) {
     const auto &jFrames = jAnim["frames"];
     const auto &jDelay = jAnim["delay"];
     const auto jTexture = jAnim["texture"];
+    const auto jOrigins = jAnim["origins"];
     const auto &sTexture = jTexture.isNull() ? sDefaultTexture : jTexture.getString();
     const auto delay = jDelay.isNull() ? 6 : jDelay.getInt();
     std::vector<AnimationFrame> frames;
-    for (const auto &jFrame : jFrames) {
-      frames.push_back(AnimationFrame{
-          ngf::irect::fromPositionSize(
-              {jFrame[0].getInt(), jFrame[1].getInt()},
-              {jFrame[2].getInt(), jFrame[3].getInt()})});
+    for (size_t i = 0; i < jFrames.size(); ++i) {
+      const auto jOrigin = jOrigins.isNull() ? glm::vec2(0, 0) : toVector(jOrigins[i]);
+      const auto &jFrame = jFrames[i];
+      frames.push_back(AnimationFrame{toRect(jFrame), jOrigin});
     }
     auto texture = engine.loadTexture(sTexture);
     anims[name] = Animation{frames, texture, delay};

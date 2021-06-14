@@ -12,7 +12,8 @@ void draw(entt::registry &registry, ngf::RenderTarget &target) {
         if (!gc.visible)
           return;
         ngf::Sprite s(*gc.texture, gc.frame);
-        s.getTransform().setPosition(pc.getPosition() + gc.offset);
+        s.getTransform().setOrigin(gc.origin);
+        s.getTransform().setPosition(pc.getPosition());
         s.draw(target, {});
       });
 }

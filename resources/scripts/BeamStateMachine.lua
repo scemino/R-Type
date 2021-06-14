@@ -1,6 +1,19 @@
 local StateMachineComponent = require 'StateMachineComponent'
 local DamageComponent = require 'DamageComponent'
 
+local hitBoxes = {
+    vec(16, 4),
+    vec(16, 8),
+    vec(32, 10),
+    vec(48, 12),
+    vec(64, 14),
+    vec(80, 14),
+}
+
+local function getHitBox(power)
+    return hitBoxes[power];
+end
+
 local function shoot(power, pos)
     print('shoot '..power)
     local e = Entity()
@@ -8,10 +21,10 @@ local function shoot(power, pos)
     e:emplace('Position')
     e:emplace('Motion')
     e:emplace('Graphics')
-    e:emplace('Collide', {size=vec(32, 16)})
+    e:emplace('Collide', {size=getHitBox(power)})
     e:emplace('Animation', {name='resources/anims/spaceship.json'})
     e:setAnim('shoot'..power, -1)
-    e:setPosition(pos+vec(0,4))
+    e:setPosition(pos+vec(0,0))
     e:setVelocity(vec(12,0))
     addComponent(e, DamageComponent(power))
     addComponent(e, StateMachineComponent('ShootStateMachine'))

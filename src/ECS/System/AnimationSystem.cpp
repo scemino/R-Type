@@ -1,6 +1,7 @@
 #include "AnimationSystem.h"
 #include <ECS/Component/Components.h>
 #include <System/Locator.h>
+#include <System/Log.h>
 #include <Scripting/EntityManager.h>
 #include <Scripting/EventManager.h>
 
@@ -15,7 +16,7 @@ void update(entt::registry &registry) {
       return;
     auto it = ac.animations.find(ac.current);
     if (it == ac.animations.end()) {
-      std::cerr << "Animation not found: " << ac.current;
+      RTYPE_LOG_WARN("Animation {} not found", ac.current);
       continue;
     }
     // skip if animation is not playing
@@ -44,7 +45,7 @@ void update(entt::registry &registry) {
       ++ac.delay;
     }
     gc.frame = it->second.frames[ac.frameIndex].rect;
-    gc.offset = it->second.frames[ac.frameIndex].offset;
+    gc.origin = it->second.frames[ac.frameIndex].origin;
     gc.texture = it->second.texture;
   }
 }

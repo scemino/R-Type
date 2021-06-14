@@ -8,7 +8,7 @@
 
 struct AnimationFrame {
   ngf::irect rect;
-  glm::vec2 offset{0};
+  glm::vec2 origin{0};
 };
 
 struct Animation {

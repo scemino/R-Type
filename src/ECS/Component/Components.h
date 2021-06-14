@@ -42,7 +42,7 @@ struct CollideComponent {
 struct GraphicComponent {
   std::shared_ptr<ngf::Texture> texture;
   ngf::irect frame;
-  glm::vec2 offset{};
+  glm::vec2 origin{};
   bool visible{true};
 
   GraphicComponent() = default;
