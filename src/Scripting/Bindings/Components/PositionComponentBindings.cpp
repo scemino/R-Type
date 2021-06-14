@@ -5,11 +5,11 @@
 
 namespace {
 void setPosition(Entity &e, const glm::vec2 &position) {
-  e.component<PositionComponent>().pos = position;
+  e.component<PositionComponent>().setPosition(position);
 }
 
 glm::vec2 getPosition(const Entity &e) {
-  return e.component<PositionComponent>().pos;
+  return e.component<PositionComponent>().getPosition();
 }
 }
 

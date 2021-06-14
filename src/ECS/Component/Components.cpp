@@ -6,6 +6,18 @@ PositionComponent::PositionComponent(const sol::table &t) {
   pos = p;
 }
 
+void PositionComponent::setPosition(const glm::vec2 &p) {
+  pos = p;
+  auto &r = locator::engine::ref().registry();
+  auto e = entt::to_entity(r, *this);
+  auto hc = r.try_get<HierarchyComponent>(e);
+  if(!hc) return;
+  hc->updateParentOffset();
+  hc->updateChildrenPosition();
+}
+
+glm::vec2 PositionComponent::getPosition() const { return pos; }
+
 MotionComponent::MotionComponent(const sol::table &t) {
   const auto v = t["velocity"].get<glm::vec2>();
   velocity = v;
@@ -36,4 +48,7 @@ void AnimationComponent::setAnim(const std::string &anim, int loop) {
   this->frameIndex = 0;
   this->loop = loop;
   this->playing = true;
+}
+
+HierarchyComponent::HierarchyComponent(const sol::table &t) {
 }

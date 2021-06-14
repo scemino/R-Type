@@ -8,6 +8,7 @@ require 'Keys'
 
 local EnemyPositionComponent = require 'EnemyPositionComponent'
 local TimerComponent = require 'TimerComponent'
+local BeamComponent = require 'BeamComponent'
 local StateMachineComponent = require 'StateMachineComponent'
 
 -- define enemy
@@ -27,6 +28,22 @@ local function createEnemy(name)
 end
 
 -- define player
+local function createBeam()
+    local beam = Entity()
+    beam:emplace('Name', {name='beam'})
+    beam:emplace('Position')
+    beam:emplace('Graphics')
+    beam:emplace('Hierarchy')
+    beam:emplace('Animation', {name='resources/anims/spaceship.json'})
+    beam:setAnim('beam', -1)
+    beam:setVisible(false)
+    beam:setPosition(vec(32,0))
+    addComponent(beam, BeamComponent())
+    addComponent(beam, StateMachineComponent('BeamStateMachine'))
+    StateManager.initState(beam)
+    return beam
+end
+
 local function createPlayer()
     print('Create player')
     local e = Entity()
@@ -34,11 +51,14 @@ local function createPlayer()
     e:emplace('Position')
     e:emplace('Motion')
     e:emplace('Graphics')
+    e:emplace('Hierarchy')
     e:emplace('Collide', {size=vec(32, 12)})
     e:emplace('Animation', {name='resources/anims/spaceship.json'})
     addComponent(e, StateMachineComponent('PlayerStateMachine'))
     addComponent(e, TimerComponent())
     StateManager.initState(e)
+
+    e:addChild(createBeam())
     return e
 end
 

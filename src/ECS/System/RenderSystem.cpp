@@ -12,7 +12,7 @@ void draw(entt::registry &registry, ngf::RenderTarget &target) {
         if (!gc.visible)
           return;
         ngf::Sprite s(*gc.texture, gc.frame);
-        s.getTransform().setPosition(pc.pos + gc.offset);
+        s.getTransform().setPosition(pc.getPosition() + gc.offset);
         s.draw(target, {});
       });
 }

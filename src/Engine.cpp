@@ -44,7 +44,8 @@ void Engine::createVm() {
   .registerComponentType<MotionComponent>("Motion")
   .registerComponentType<GraphicComponent>("Graphics")
   .registerComponentType<NameComponent>("Name")
-  .registerComponentType<CollideComponent>("Collide");
+  .registerComponentType<CollideComponent>("Collide")
+  .registerComponentType<HierarchyComponent>("Hierarchy");
 }
 
 std::shared_ptr<ngf::Texture> Engine::loadTexture(const fs::path &path) {

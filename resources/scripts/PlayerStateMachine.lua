@@ -1,25 +1,4 @@
 local util = require 'util'
-local StateMachineComponent = require 'StateMachineComponent'
-
-local function shoot(power, pos)
-    local e = Entity()
-    e:emplace('Name', {name='shoot'})
-    e:emplace('Position')
-    e:emplace('Motion')
-    e:emplace('Graphics')
-    e:emplace('Collide', {size=vec(32, 16)})
-    e:emplace('Animation', {name='resources/anims/spaceship.json'})
-    e:setAnim('shoot'..power, -1)
-    e:setPosition(pos+vec(32,4))
-    e:setVelocity(vec(6,0))
-    addComponent(e, StateMachineComponent('ShootStateMachine'))
-    StateManager.initState(e)
-    if power == 1 then
-        playSound(Sounds.shoot1)
-    else
-        playSound(Sounds.shoot2)
-    end
-end
 
 local PlayerStateMachine = {
     states = {
@@ -68,9 +47,6 @@ local PlayerStateMachine = {
                 if code == Keys.Left then
                     local vel = e:getVelocity()
                     e:setVelocity(vec(0, vel.y))
-                end
-                if code == Keys.Space then
-                    shoot(1, e:getPosition())
                 end
             end,
             hit = function(e, event)

@@ -5,6 +5,8 @@
 #include "Components/MotionComponentBindings.h"
 #include "Components/AnimationComponentBindings.h"
 #include "Components/NameComponentBindings.h"
+#include "Components/HierarchyComponentBindings.h"
+#include "Components/GraphicsComponentBindings.h"
 #include "FileSystemBindings.h"
 #include "AudioBindings.h"
 #include "LevelBindings.h"
@@ -18,6 +20,8 @@ void bindAll(sol::state &lua) {
   bindMotionComponent(lua);
   bindAnimationComponent(lua);
   bindNameComponent(lua);
+  bindHierarchyComponent(lua);
+  bindGraphicsComponent(lua);
   bindAudio(lua);
   bindLevel(lua);
 }

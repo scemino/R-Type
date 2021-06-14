@@ -3,7 +3,6 @@
 #include <ECS/Component/Components.h>
 #include <Level.h>
 #include <System/Locator.h>
-#include <Scripting/EntityManager.h>
 #include <Scripting/EventManager.h>
 
 namespace Systems::CollisionSystem {
@@ -17,7 +16,7 @@ void update(entt::registry &registry) {
   for (const entt::entity e : view) {
     // look for collisions with the level
     const auto &[cc, pc] = registry.get<CollideComponent, PositionComponent>(e);
-    auto rect = ngf::irect::fromPositionSize(pc.pos, cc.size);
+    auto rect = ngf::irect::fromPositionSize(pc.getPosition(), cc.size);
     auto collision = level->collideLevel(rect);
 
     if (!collision.has_value())

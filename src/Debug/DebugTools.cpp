@@ -11,7 +11,10 @@ void show(entt::registry &registry) {
     if (ImGui::TreeNode(name.c_str())) {
       auto pc = registry.try_get<PositionComponent>(e);
       if (pc) {
-        ImGui::DragFloat2("Position", &pc->pos.x);
+        auto pos = pc->getPosition();
+        if (ImGui::DragFloat2("Position", &pos.x)) {
+          pc->setPosition(pos);
+        }
       }
       auto mc = registry.try_get<MotionComponent>(e);
       if (mc) {
