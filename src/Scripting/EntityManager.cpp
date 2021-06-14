@@ -1,3 +1,4 @@
+#include <cassert>
 #include <System/Log.h>
 #include "EntityManager.h"
 
@@ -6,7 +7,7 @@ EntityManager::EntityManager(entt::registry &registry, sol::state &lua) :
 
 Entity &EntityManager::createEntity() {
   auto e = m_registry.create();
-  RTYPE_LOG_INFO("Create entity {}", e);
+  RTYPE_LOG_DEBUG("Create entity {}", e);
   auto inserted = entities.emplace(e, std::make_unique<Entity>(e));
   auto it = inserted.first; // iterator to created id/Entity pair
   auto &entity = *it->second; // created entity
@@ -15,11 +16,9 @@ Entity &EntityManager::createEntity() {
 }
 
 void EntityManager::destroyEntity(EntityId id) {
-  RTYPE_LOG_INFO("Destroy entity {}", id);
+  RTYPE_LOG_DEBUG("Destroy entity {}", id);
   m_lua["onEntityRemoved"](id);
-  auto pEntity = getEntity(id);
-  if (pEntity)
-    pEntity->die();
+  getEntity(id).die();
 }
 
 void EntityManager::removeDeadEntities() {
@@ -33,9 +32,12 @@ void EntityManager::removeDeadEntities() {
   }
 }
 
-Entity *EntityManager::getEntity(EntityId id) const {
+Entity& EntityManager::getEntity(EntityId id) const {
   auto it = entities.find(id);
   if (it == entities.end())
-    return nullptr;
-  return it->second.get();
+  {
+    RTYPE_LOG_ERROR("Entity {} has not been found", id);
+    assert(false);
+  }
+  return *it->second;
 }

@@ -12,15 +12,16 @@ local BeamComponent = require 'BeamComponent'
 local StateMachineComponent = require 'StateMachineComponent'
 
 -- define enemy
-local function createEnemy(name)
+local function createEnemy(name, pos)
     print('Create', name)
     local e  = Entity()
     e:emplace('Name', {name=name})
     e:emplace('Position')
     e:emplace('Motion')
     e:emplace('Graphics')
-    e:emplace('Collide', {size = vec(32, 12)})
+    e:emplace('Collide', {size = vec(32, 32)})
     e:emplace('Animation', {name = 'resources/anims/enemy1.json'})
+    e:setPosition(pos)
     addComponent(e, StateMachineComponent('EnemyStateMachine'))
     addComponent(e, EnemyPositionComponent())
     StateManager.initState(e)
@@ -76,8 +77,9 @@ end
 -- create entities
 createCamera()
 createPlayer()
-createEnemy('enemy1')
-createEnemy('enemy2')
+for i = 1, 7 do
+    createEnemy('enemy'..i, vec(60+40*i, 100))
+end
 
 -- callbacks
 function update()

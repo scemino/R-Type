@@ -4,4 +4,5 @@ Sounds = {
     shoot_explode2 = 'resources/audio/rtype-093.wav',
     shoot1 = 'resources/audio/rtype-048.wav',
     shoot2 = 'resources/audio/rtype-049.wav',
+    enemy1_explode = 'resources/audio/rtype-080.wav'
 }

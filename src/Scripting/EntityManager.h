@@ -14,8 +14,9 @@ public:
 
   Entity &createEntity();
   void destroyEntity(EntityId id);
-  [[nodiscard]] Entity *getEntity(EntityId id) const;
   void removeDeadEntities();
+
+  [[nodiscard]] Entity &getEntity(EntityId id) const;
 
 private:
   entt::registry &m_registry;

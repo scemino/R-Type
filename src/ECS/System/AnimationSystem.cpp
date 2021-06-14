@@ -35,8 +35,8 @@ void update(entt::registry &registry) {
           ac.playing = false;
           // notify end of animation
           auto& engine = locator::engine::ref();
-          auto pEntity = engine.entityManager().getEntity(e);
-          engine.eventManager().publish(pEntity, "anim", "name", ac.current, "eventType", "finished");
+          auto& entity = engine.entityManager().getEntity(e);
+          engine.eventManager().publish(entity, "anim", "name", ac.current, "eventType", "finished");
           continue;
         }
         ac.frameIndex = 0;

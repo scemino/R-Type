@@ -1,4 +1,5 @@
 {
+  "texture":  "resources/images/r-typesheet5.png",
   "animations": {
     "move":
     {
@@ -10,24 +11,19 @@
         [132, 0, 32, 32],
         [165, 0, 32, 32],
         [198, 0, 32, 32]
-      ],
-      "delay": 6,
-      "texture":  "resources/images/r-typesheet5.png"
+      ]
     },
     "explode":
     {
       "frames": [
-        [1, 343, 32, 28],
-        [35, 343, 32, 28],
-        [73, 348, 21, 18],
-        [106, 347, 22, 20],
-        [138, 346, 24, 22],
-        [170, 345, 26, 24],
-        [202, 344, 28, 26],
-        [233, 343, 32, 28]
+        [ 130, 2, 30, 28 ],
+        [ 162, 1, 31, 32 ],
+        [ 194, 1, 32, 32 ],
+        [ 228, 2, 31, 30 ],
+        [ 261, 2, 31, 30 ],
+        [ 295, 1, 31, 31 ]
       ],
-      "delay": 6,
-      "texture": "resources/images/r-typesheet1.png"
+      "texture": "resources/images/r-typesheet44.png"
     }
   },
   "initialAnim": "move"

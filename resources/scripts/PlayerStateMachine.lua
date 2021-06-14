@@ -52,11 +52,14 @@ local PlayerStateMachine = {
             hit = function(e, event)
                 if event.data.collisionType == 'tile' then
                     return 'ExplodingState'
-                else
+                elseif event.data.collisionType == 'screen' then
                     -- clamp player position to screen
                     local pos = e:getPosition()
                     pos = util.clampVector(pos, vec(0, 0), vec(352, 240))
                     e:setPosition(pos)
+                elseif event.data.collisionType == 'entities' then
+                    print('hit '..event.data.entity:getName())
+                    return "ExplodingState"
                 end
             end
         },

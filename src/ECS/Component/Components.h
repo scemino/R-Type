@@ -99,7 +99,7 @@ public:
     const auto &em = locator::engine::ref().entityManager();
     if (hasParent()) {
       auto parent = em.getEntity(m_parentId);
-      parent->component<HierarchyComponent>().updateOffset(getEntity());
+      parent.component<HierarchyComponent>().updateOffset(getEntity());
     }
   }
 
@@ -108,7 +108,7 @@ public:
     const auto &em = locator::engine::ref().entityManager();
     for (const auto &child : m_children) {
       auto childEntity = em.getEntity(child.entityId);
-      auto &childPos = childEntity->component<PositionComponent>();
+      auto &childPos = childEntity.component<PositionComponent>();
       const auto &parentPos = r.get<PositionComponent>(getEntity());
 
       childPos.setPosition(parentPos.getPosition() + child.offset);
@@ -129,7 +129,7 @@ private:
     it->offset = getOffset(e);
   }
 
-  glm::vec2 getOffset(entt::entity entityChild) const {
+  [[nodiscard]] glm::vec2 getOffset(entt::entity entityChild) const {
     auto &r = locator::engine::ref().registry();
     const auto offset = r.get<PositionComponent>(entityChild).getPosition() -
         r.get<PositionComponent>(getEntity()).getPosition();
