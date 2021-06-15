@@ -12,41 +12,33 @@ local PlayerStateMachine = {
             onKeyDown = function(e, code)
                 if code == Keys.Up then
                     e:setAnim('up', 1)
-                    local vel = e:getVelocity()
-                    e:setVelocity(vec(vel.x, -3))
+                    e:setVelocity(vec(e:getVelocity().x, -3))
                 end
                 if code == Keys.Down then
                     e:setAnim('down', 1)
-                    local vel = e:getVelocity()
-                    e:setVelocity(vec(vel.x, 3))
+                    e:setVelocity(vec(e:getVelocity().x, 3))
                 end
                 if code == Keys.Right then
-                    local vel = e:getVelocity()
-                    e:setVelocity(vec(3, vel.y))
+                    e:setVelocity(vec(3, e:getVelocity().y))
                 end
                 if code == Keys.Left then
-                    local vel = e:getVelocity()
-                    e:setVelocity(vec(-3, vel.y))
+                    e:setVelocity(vec(-3, e:getVelocity().y))
                 end
             end,
             onKeyUp = function(e, code)
                 if code == Keys.Up then
                     e:setAnim('move', 1)
-                    local vel = e:getVelocity()
-                    e:setVelocity(vec(vel.x, 0))
+                    e:setVelocity(vec(e:getVelocity().x, 0))
                 end
                 if code == Keys.Down then
                     e:setAnim('move', 1)
-                    local vel = e:getVelocity()
-                    e:setVelocity(vec(vel.x, 0))
+                    e:setVelocity(vec(e:getVelocity().x, 0))
                 end
                 if code == Keys.Right then
-                    local vel = e:getVelocity()
-                    e:setVelocity(vec(0, vel.y))
+                    e:setVelocity(vec(0, e:getVelocity().y))
                 end
                 if code == Keys.Left then
-                    local vel = e:getVelocity()
-                    e:setVelocity(vec(0, vel.y))
+                    e:setVelocity(vec(0, e:getVelocity().y))
                 end
             end,
             hit = function(e, event)
@@ -58,7 +50,6 @@ local PlayerStateMachine = {
                     pos = util.clampVector(pos, vec(0, 0), vec(352, 240))
                     e:setPosition(pos)
                 elseif event.data.collisionType == 'entities' then
-                    print('hit '..event.data.entity:getName())
                     if event.data.entity:getName() ~= 'shoot' then
                         return "ExplodingState"
                     end
