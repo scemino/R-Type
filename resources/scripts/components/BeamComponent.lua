@@ -1,3 +1,4 @@
+require 'components.BeamType'
 local Component = require 'Component'
 local BeamComponent = Component:subclass('BeamComponent')
 
@@ -6,6 +7,15 @@ BeamComponent.static.name = 'beam'
 function BeamComponent:initialize()
     Component.initialize(self)
     self.timer = 0
+    self.beamType = BeamType.Normal
+end
+
+function BeamComponent:setBeamType(beamType)
+    self.beamType = beamType
+end
+
+function BeamComponent:getBeamType()
+    return self.beamType
 end
 
 function BeamComponent:update()

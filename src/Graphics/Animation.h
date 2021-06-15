@@ -15,4 +15,5 @@ struct Animation {
   std::vector<AnimationFrame> frames;
   std::shared_ptr<ngf::Texture> texture;
   int frameDelay{0};
+  std::size_t loopFrom{0};
 };

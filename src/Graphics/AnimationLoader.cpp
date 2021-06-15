@@ -26,18 +26,22 @@ AnimationsInfo loadAnimations(const std::filesystem::path &path) {
     const auto &jAnim = jAnimItem.value();
     const auto &jFrames = jAnim["frames"];
     const auto &jDelay = jAnim["delay"];
+    const auto &jLoopFrom = jAnim["loopFrom"];
     const auto jTexture = jAnim["texture"];
     const auto jOrigins = jAnim["origins"];
     const auto &sTexture = jTexture.isNull() ? sDefaultTexture : jTexture.getString();
     const auto delay = jDelay.isNull() ? 6 : jDelay.getInt();
+    const auto loopFrom = jLoopFrom.isNull() ? 0 : jLoopFrom.getInt();
     std::vector<AnimationFrame> frames;
     for (size_t i = 0; i < jFrames.size(); ++i) {
-      const auto jOrigin = jOrigins.isNull() ? glm::vec2(0, 0) : toVector(jOrigins[i]);
-      const auto &jFrame = jFrames[i];
-      frames.push_back(AnimationFrame{toRect(jFrame), jOrigin});
+      const auto jFrame = toRect(jFrames[i]);
+      const auto jOrigin = jOrigins.isNull() ?
+                           glm::vec2(static_cast<float>(jFrame.getWidth() / 2.f),
+                                     static_cast<float>(jFrame.getHeight() / 2.f)) : toVector(jOrigins[i]);
+      frames.push_back(AnimationFrame{jFrame, jOrigin});
     }
     auto texture = engine.loadTexture(sTexture);
-    anims[name] = Animation{frames, texture, delay};
+    anims[name] = Animation{frames, texture, delay, static_cast<std::size_t >(loopFrom)};
   }
   return AnimationsInfo{anims, jAnims["initialAnim"].getString()};
 }

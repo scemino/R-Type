@@ -19,14 +19,15 @@ void update(entt::registry &registry) {
       RTYPE_LOG_WARN("Animation {} not found", ac.current);
       continue;
     }
+    const Animation& anim = it->second;
     // skip if animation is not playing
     if (!ac.playing)
       continue;
     // check if frame is elapsed
-    if (ac.delay >= it->second.frameDelay) {
+    if (ac.delay >= anim.frameDelay) {
       ac.delay = 0;
       ac.frameIndex++;
-      if (ac.frameIndex >= it->second.frames.size()) {
+      if (ac.frameIndex >= anim.frames.size()) {
         if (ac.loop > 0) {
           ac.loop--;
         }
@@ -39,14 +40,14 @@ void update(entt::registry &registry) {
           engine.eventManager().publish(entity, "anim", "name", ac.current, "eventType", "finished");
           continue;
         }
-        ac.frameIndex = 0;
+        ac.frameIndex = anim.loopFrom;
       }
     } else {
       ++ac.delay;
     }
-    gc.frame = it->second.frames[ac.frameIndex].rect;
-    gc.origin = it->second.frames[ac.frameIndex].origin;
-    gc.texture = it->second.texture;
+    gc.frame = anim.frames[ac.frameIndex].rect;
+    gc.origin = anim.frames[ac.frameIndex].origin;
+    gc.texture = anim.texture;
   }
 }
 }

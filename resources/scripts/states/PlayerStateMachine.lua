@@ -59,7 +59,9 @@ local PlayerStateMachine = {
                     e:setPosition(pos)
                 elseif event.data.collisionType == 'entities' then
                     print('hit '..event.data.entity:getName())
-                    return "ExplodingState"
+                    if event.data.entity:getName() ~= 'shoot' then
+                        return "ExplodingState"
+                    end
                 end
             end
         },

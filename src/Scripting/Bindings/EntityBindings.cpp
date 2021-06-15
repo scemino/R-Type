@@ -45,7 +45,6 @@ void bindEntity(sol::state &lua) {
 
 #define ADD_ENTITY_FUNCTION(x) entityType.set_function(#x, x)
   ADD_ENTITY_FUNCTION(die);
-  ADD_ENTITY_FUNCTION(getEntity);
 #undef ADD_ENTITY_FUNCTION
 }
 }
