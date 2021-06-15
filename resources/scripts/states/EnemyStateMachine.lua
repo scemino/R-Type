@@ -1,7 +1,16 @@
 local StateMachineComponent = require 'components.StateMachineComponent'
 
 local function shoot(pos)
-    if math.random() > 0.99 then
+    if not hasEntity('player') then return end
+
+    local player = getEntity('player')
+    local playerPos = player:getPosition()
+    local dX = playerPos.x - pos.x;
+    local dY = playerPos.y - pos.y;
+    local d = math.sqrt(dX * dX + dY * dY)
+
+    -- probability to shoot
+    if math.random() > 0.994 then
         local e = Entity()
         e:emplace('Name', { name = 'enemy_bullet' })
         e:emplace('Position')
@@ -10,7 +19,7 @@ local function shoot(pos)
         e:emplace('Collide', { size = vec(4, 4) })
         e:emplace('Animation', { name = 'resources/anims/enemy_bullet.json' })
         e:setPosition(pos)
-        e:setVelocity(vec(-2, 2))
+        e:setVelocity(vec(2*dX/d, 2*dY/d))
         addComponent(e, StateMachineComponent('states.EnemyBulletStateMachine'))
         StateManager.initState(e)
     end

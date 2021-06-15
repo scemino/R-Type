@@ -13,16 +13,21 @@
 
 namespace Bindings {
 void bindAll(sol::state &lua) {
+  // general bindings
   bindFileSystem(lua);
-  bindEntity(lua);
   bindMath(lua);
+  bindAudio(lua);
+  bindLevel(lua);
+
+  // entity bindings
+  bindEntity(lua);
+
+  // components bindings
   bindPositionComponent(lua);
   bindMotionComponent(lua);
   bindAnimationComponent(lua);
   bindNameComponent(lua);
   bindHierarchyComponent(lua);
   bindGraphicsComponent(lua);
-  bindAudio(lua);
-  bindLevel(lua);
 }
 }

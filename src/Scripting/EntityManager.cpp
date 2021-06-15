@@ -1,5 +1,6 @@
 #include <cassert>
 #include <System/Log.h>
+#include <ECS/Component/Components.h>
 #include "EntityManager.h"
 
 EntityManager::EntityManager(entt::registry &registry, sol::state &lua) :
@@ -32,12 +33,31 @@ void EntityManager::removeDeadEntities() {
   }
 }
 
-Entity& EntityManager::getEntity(EntityId id) const {
+Entity &EntityManager::getEntity(EntityId id) const {
   auto it = entities.find(id);
-  if (it == entities.end())
-  {
+  if (it == entities.end()) {
     RTYPE_LOG_ERROR("Entity {} has not been found", id);
     assert(false);
   }
   return *it->second;
+}
+
+Entity &EntityManager::getEntity(const std::string &name) const {
+  auto it = std::find_if(entities.begin(), entities.end(), [&name](const auto &pair) {
+    Entity &e = *pair.second;
+    return e.component<NameComponent>().name == name;
+  });
+  if (it == entities.end()) {
+    RTYPE_LOG_ERROR("Entity {} has not been found", name);
+    assert(false);
+  }
+  return *it->second;
+}
+
+bool EntityManager::hasEntity(const std::string &name) const {
+  auto it = std::find_if(entities.begin(), entities.end(), [&name](const auto &pair) {
+    Entity &e = *pair.second;
+    return e.component<NameComponent>().name == name;
+  });
+  return it != entities.end();
 }

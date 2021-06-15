@@ -28,6 +28,10 @@ local function getWrappedSafeFunction(f)
         end
 end
 
+local function isAlive(e)
+    return e.components.health:isAlive()
+end
+
 function createHandle(cppRef)
     local handle = {
         cppRef = cppRef,
@@ -36,6 +40,7 @@ function createHandle(cppRef)
 
     -- speedy access without __index call
     handle.getName = getWrappedSafeFunction(Entity.getName)
+    handle.isAlive = isAlive
 
     local id = cppRef:getId()
     setmetatable(handle, mt)
