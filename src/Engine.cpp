@@ -93,11 +93,14 @@ void Engine::update() {
   Systems::CollisionSystem::update(m_reg);
   Systems::AnimationSystem::update(m_reg);
 
+  m_eventManager->sendAll();
+
   auto r = m_lua["update"].call();
   if (!r.valid()) {
     sol::error e = r;
     RTYPE_LOG_ERROR("[lua] failed to call update:\n{}", e.what());
   }
+
   m_entityManager->removeDeadEntities();
   m_soundManager->update();
 }

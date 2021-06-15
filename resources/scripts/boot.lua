@@ -10,6 +10,7 @@ local EnemyPositionComponent = require 'EnemyPositionComponent'
 local TimerComponent = require 'TimerComponent'
 local BeamComponent = require 'BeamComponent'
 local StateMachineComponent = require 'StateMachineComponent'
+local HealthComponent = require 'HealthComponent'
 
 -- define enemy
 local function createEnemy(name, pos)
@@ -24,6 +25,7 @@ local function createEnemy(name, pos)
     e:setPosition(pos)
     addComponent(e, StateMachineComponent('EnemyStateMachine'))
     addComponent(e, EnemyPositionComponent())
+    addComponent(e, HealthComponent(20))
     StateManager.initState(e)
     return e
 end

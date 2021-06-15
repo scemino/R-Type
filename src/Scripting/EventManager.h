@@ -8,16 +8,24 @@ public:
   explicit EventManager(sol::state &lua) : m_lua(lua) {}
 
   template<typename... Args>
-  void publish(Entity& entity, std::string_view type, Args &&... args) {
+  void publish(Entity &entity, std::string_view type, Args &&... args) {
     auto data = m_lua.create_table_with(std::forward<Args>(args)...);
     auto event = m_lua.create_table_with("type", type, "data", data);
-    auto r = m_lua["onEvent"](entity, event);
-    if (!r.valid()) {
-      sol::error e = r;
-      RTYPE_LOG_ERROR("[lua] failed to call onEvent:\n{}", e.what());
+    m_events.push_back(std::make_tuple(std::reference_wrapper(entity), event));
+  }
+
+  void sendAll() {
+    for (const auto&[entity, event] : m_events) {
+      auto r = m_lua["onEvent"](entity, event);
+      if (!r.valid()) {
+        sol::error e = r;
+        RTYPE_LOG_ERROR("[lua] failed to call onEvent:\n{}", e.what());
+      }
     }
+    m_events.clear();
   }
 
 private:
   sol::state &m_lua;
+  std::vector<std::tuple<std::reference_wrapper<Entity>, sol::table>> m_events;
 };

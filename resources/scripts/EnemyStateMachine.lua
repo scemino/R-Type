@@ -9,7 +9,15 @@ local EnemyStateMachine = {
                     if event.data.entity:getName() == 'player' then
                         return 'ExplodingState'
                     elseif event.data.entity:getName() == 'shoot' then
-                        return 'ExplodingState'
+                        -- TODO: find a way to get this handle from event
+                        local handle = Handles[event.data.entity:getId()]
+                        local damage = handle.components.damage:getDamage()
+                        print('hit entity '..event.data.entity:getName()..' with damage '..damage)
+                        handle.components.damage:removeDamage(e.components.health:getHealth())
+                        e.components.health:setDamage(damage)
+                        if not e.components.health:isAlive() then
+                            return 'ExplodingState'
+                        end
                     end
                 end
             end

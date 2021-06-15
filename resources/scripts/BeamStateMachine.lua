@@ -11,22 +11,26 @@ local hitBoxes = {
 }
 
 local function getHitBox(power)
-    return hitBoxes[power];
+    return hitBoxes[power]
+end
+
+local function getDamageFromPower(power)
+    return 20 + (power - 1) * 100
 end
 
 local function shoot(power, pos)
-    print('shoot power '..power)
+    print('shoot power ' .. power)
     local e = Entity()
-    e:emplace('Name', {name='shoot'})
+    e:emplace('Name', { name = 'shoot' })
     e:emplace('Position')
     e:emplace('Motion')
     e:emplace('Graphics')
-    e:emplace('Collide', {size=getHitBox(power)})
-    e:emplace('Animation', {name='resources/anims/spaceship.json'})
-    e:setAnim('shoot'..power, -1)
+    e:emplace('Collide', { size = getHitBox(power) })
+    e:emplace('Animation', { name = 'resources/anims/spaceship.json' })
+    e:setAnim('shoot' .. power, -1)
     e:setPosition(pos)
-    e:setVelocity(vec(12,0))
-    addComponent(e, DamageComponent(power))
+    e:setVelocity(vec(12, 0))
+    addComponent(e, DamageComponent(getDamageFromPower(power)))
     addComponent(e, StateMachineComponent('ShootStateMachine'))
     StateManager.initState(e)
     if power == 1 then
@@ -41,7 +45,7 @@ local BeamStateMachine = {
         MoveState = {
             update = function(e)
                 local beam = e.components.beam
-                e:setVisible(beam:getPower()>1)
+                e:setVisible(beam:getPower() > 1)
                 beam:update()
             end,
             onKeyDown = function(e, code)

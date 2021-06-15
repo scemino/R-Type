@@ -1,19 +1,24 @@
 local ShootStateMachine = {
     states = {
         MoveState = {
-            hit = function(e, event)
-                if event.data.collisionType == 'tile' then
-                    e:setVelocity(vec(0,0))
+            update = function(e)
+                if e.components.damage:getDamage() == 0 then
                     return 'ExplodingState'
-                else
+                end
+            end,
+            hit = function(e, event)
+                if event.data.collisionType == 'screen' then
                     e:die()
+                elseif event.data.collisionType == 'tile' then
+                    return 'ExplodingState'
                 end
             end
         },
         ExplodingState = {
             init = function(e)
+                e:setVelocity(vec(0, 0))
                 playSound(Sounds.shoot_explode2)
-                if e.components.damage:getDamage() == 1 then
+                if e.components.damage:getInitialDamage() == 20 then
                     e:setAnim('shoot_explode', 1)
                 else
                     e:setAnim('shoot_explode_big', 1)
