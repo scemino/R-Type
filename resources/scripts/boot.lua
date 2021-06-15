@@ -6,11 +6,11 @@ require 'StateManager'
 require 'Sounds'
 require 'Keys'
 
-local EnemyPositionComponent = require 'EnemyPositionComponent'
-local TimerComponent = require 'TimerComponent'
-local BeamComponent = require 'BeamComponent'
-local StateMachineComponent = require 'StateMachineComponent'
-local HealthComponent = require 'HealthComponent'
+local EnemyPositionComponent = require 'components.EnemyPositionComponent'
+local TimerComponent = require 'components.TimerComponent'
+local BeamComponent = require 'components.BeamComponent'
+local StateMachineComponent = require 'components.StateMachineComponent'
+local HealthComponent = require 'components.HealthComponent'
 
 -- define enemy
 local function createEnemy(name, pos)
@@ -23,7 +23,7 @@ local function createEnemy(name, pos)
     e:emplace('Collide', {size = vec(32, 32)})
     e:emplace('Animation', {name = 'resources/anims/enemy1.json'})
     e:setPosition(pos)
-    addComponent(e, StateMachineComponent('EnemyStateMachine'))
+    addComponent(e, StateMachineComponent('states.EnemyStateMachine'))
     addComponent(e, EnemyPositionComponent())
     addComponent(e, HealthComponent(20))
     StateManager.initState(e)
@@ -42,7 +42,7 @@ local function createBeam()
     beam:setVisible(false)
     beam:setPosition(vec(32,8))
     addComponent(beam, BeamComponent())
-    addComponent(beam, StateMachineComponent('BeamStateMachine'))
+    addComponent(beam, StateMachineComponent('states.BeamStateMachine'))
     StateManager.initState(beam)
     return beam
 end
@@ -57,7 +57,7 @@ local function createPlayer()
     e:emplace('Hierarchy')
     e:emplace('Collide', {size=vec(32, 12)})
     e:emplace('Animation', {name='resources/anims/spaceship.json'})
-    addComponent(e, StateMachineComponent('PlayerStateMachine'))
+    addComponent(e, StateMachineComponent('states.PlayerStateMachine'))
     addComponent(e, TimerComponent())
     StateManager.initState(e)
 
@@ -71,7 +71,7 @@ end
      e:emplace('Name', {name='camera'})
      e:emplace('Position')
      e:emplace('Motion')
-     addComponent(e, StateMachineComponent('CameraStateMachine'))
+     addComponent(e, StateMachineComponent('states.CameraStateMachine'))
      StateManager.initState(e)
      return e
  end

@@ -1,5 +1,5 @@
-local StateMachineComponent = require 'StateMachineComponent'
-local DamageComponent = require 'DamageComponent'
+local StateMachineComponent = require 'components.StateMachineComponent'
+local DamageComponent = require 'components.DamageComponent'
 
 local hitBoxes = {
     vec(16, 4),
@@ -31,7 +31,7 @@ local function shoot(power, pos)
     e:setPosition(pos)
     e:setVelocity(vec(12, 0))
     addComponent(e, DamageComponent(getDamageFromPower(power)))
-    addComponent(e, StateMachineComponent('ShootStateMachine'))
+    addComponent(e, StateMachineComponent('states.ShootStateMachine'))
     StateManager.initState(e)
     if power == 1 then
         playSound(Sounds.shoot1)
