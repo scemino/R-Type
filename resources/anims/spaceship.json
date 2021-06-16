@@ -173,6 +173,67 @@
       ],
       "loopFrom": 16,
       "delay": 1
+    },
+    "force1": {
+      "texture": "resources/images/r-typesheet2.png",
+      "frames": [
+        [159, 35, 20, 16],
+        [183, 35, 20, 16],
+        [207, 35, 20, 16],
+        [231, 35, 20, 16],
+        [255, 35, 20, 16],
+        [279, 35, 20, 16]
+      ]
+    },
+    "force2": {
+      "texture": "resources/images/r-typesheet2.png",
+      "frames": [
+        [120, 69, 30, 22],
+        [150, 69, 30, 22],
+        [181, 69, 30, 22],
+        [212, 69, 30, 22],
+        [242, 69, 30, 22],
+        [272, 69, 28, 22]
+      ]
+    },
+    "force3": {
+      "texture": "resources/images/r-typesheet2.png",
+      "frames": [
+        [164, 379, 31, 24],
+        [198, 381, 31, 20],
+        [233, 379, 31, 24],
+        [268, 377, 31, 28]
+      ]
+    },
+    "force_bullet_e": {
+      "texture": "resources/images/r-typesheet2.png",
+      "frames": [
+        [283, 59, 16, 4]
+      ]
+    },
+    "force_bullet_ne": {
+      "texture": "resources/images/r-typesheet2.png",
+      "frames": [
+        [266, 440, 16, 8]
+      ]
+    },
+    "force_bullet_se": {
+      "texture": "resources/images/r-typesheet2.png",
+      "frames": [
+        [283, 438, 16, 8]
+      ]
+    },
+    "force_bullet_n": {
+      "texture": "resources/images/r-typesheet2.png",
+      "frames": [
+        [341, 436, 4, 15]
+      ]
+    },
+    "force_bullet_s": {
+      "texture": "resources/images/r-typesheet2.png",
+      "frames": [
+        [358, 435, 4, 15]
+      ]
     }
   },
   "initialAnim": "move"

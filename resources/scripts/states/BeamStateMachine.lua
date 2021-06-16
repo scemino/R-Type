@@ -7,16 +7,20 @@ local BeamStateMachine = {
                 beam:update()
             end,
             onKeyDown = function(e, code)
-                if code == Keys.Space then
+                if code == Keys.Z then
                     e.components.beam:setEnabled(true)
-                elseif code == Keys.D1 then
+                elseif code == Keys.D0 then
                     e.components.beam:setBeamType(BeamType.Normal)
-                elseif code == Keys.D2 then
+                elseif code == Keys.D9 then
+                    local force = Handles[getEntity('force'):getId()].components.force
+                    if force:getForceLevel() == 1 then
+                        force:setForceLevel(2)
+                    end
                     e.components.beam:setBeamType(BeamType.Ribbon)
                 end
             end,
             onKeyUp = function(e, code)
-                if code == Keys.Space then
+                if code == Keys.Z then
                     e:setVisible(false)
                     local beam = e.components.beam
                     EntityFactory.shoot(beam:getPower(), beam:getBeamType(), e:getPosition())

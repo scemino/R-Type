@@ -1,5 +1,9 @@
 -- keys constants
 Keys = {
+    W = 26,
+    X = 27,
+    Z = 29,
+
     D1 = 30,
     D2 = 31,
     D3 = 32,

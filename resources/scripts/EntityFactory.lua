@@ -4,6 +4,7 @@ local StateMachineComponent = require 'components.StateMachineComponent'
 local EnemyPositionComponent = require 'components.EnemyPositionComponent'
 local HealthComponent = require 'components.HealthComponent'
 local DamageComponent = require 'components.DamageComponent'
+local ForceComponent = require 'components.ForceComponent'
 require 'components.BeamType'
 
 local hitBoxes = {
@@ -39,6 +40,41 @@ local function createBeam()
     return beam
 end
 
+local function createForce()
+    local e = Entity()
+    e:emplace('Name', { name = 'force' })
+    e:emplace('Position')
+    e:emplace('Motion')
+    e:emplace('Graphics')
+    e:emplace('Hierarchy')
+    e:emplace('Collide', { size = vec(32, 32) })
+    e:emplace('Animation', { name = 'resources/anims/spaceship.json' })
+    e:setAnim('force1', -1)
+    e:setPosition(vec(32, 2))
+    addComponent(e, ForceComponent())
+    addComponent(e, StateMachineComponent('states.ForceStateMachine'))
+    StateManager.initState(e)
+    return e
+end
+
+local function createForceBullet(name, pos, vel, anim)
+    local e = Entity()
+    e:emplace('Name', { name = name })
+    e:emplace('Position')
+    e:emplace('Motion')
+    e:emplace('Graphics')
+    e:emplace('Hierarchy')
+    e:emplace('Collide', { size = vec(32, 12) })
+    e:emplace('Animation', { name = 'resources/anims/spaceship.json' })
+    e:setAnim(anim, -1)
+    e:setVelocity(vel)
+    e:setPosition(pos)
+    addComponent(e, DamageComponent(getDamageFromPower(1)))
+    addComponent(e, StateMachineComponent('states.ShootStateMachine'))
+    StateManager.initState(e)
+    getEntity('force'):addChild(e)
+end
+
 EntityFactory = {
     createPlayer = function()
         print('Create player')
@@ -55,6 +91,7 @@ EntityFactory = {
         StateManager.initState(e)
 
         e:addChild(createBeam())
+        createForce()
         return e
     end,
 
@@ -86,6 +123,10 @@ EntityFactory = {
     end,
 
     shoot = function(power, beamType, pos)
+        local force = Handles[getEntity('force'):getId()]
+        if not force.components.force:isAttached() then
+            beamType = BeamType.Normal
+        end
         print('shoot power ' .. power)
         local e = Entity()
         e:emplace('Name', { name = 'shoot' })
@@ -110,6 +151,35 @@ EntityFactory = {
         else
             playSound(Sounds.shoot2)
         end
+    end,
+
+    forceShoot = function()
+        local force = Handles[getEntity('force'):getId()]
+        print('shoot force',force)
+        local pos = force:getPosition()
+        local forceLevel = force.components.force:getForceLevel()
+        print('shoot force '..forceLevel)
+
+        -- East bullet
+        if forceLevel == 1 then
+            createForceBullet('force_bullet_e', pos, vec(6, 0), 'force_bullet_e')
+        end
+
+        if forceLevel < 2 then return end
+
+        -- NE bullet
+        createForceBullet('force_bullet_ne', pos, vec(6, -2), 'force_bullet_ne')
+
+        -- SE bullet
+        createForceBullet('force_bullet_se', pos, vec(6, 2), 'force_bullet_se')
+
+        if forceLevel < 3 then return end
+
+        -- North bullet
+        createForceBullet('force_bullet_n', pos, vec(0, -4), 'force_bullet_n')
+
+        -- South bullet
+        createForceBullet('force_bullet_s', pos, vec(0, 4), 'force_bullet_s')
     end,
 
     enemyShoot = function(pos)

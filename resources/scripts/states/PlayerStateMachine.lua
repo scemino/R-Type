@@ -50,7 +50,8 @@ local PlayerStateMachine = {
                     pos = util.clampVector(pos, vec(0, 0), vec(352, 240))
                     e:setPosition(pos)
                 elseif event.data.collisionType == 'entities' then
-                    if event.data.entity:getName() ~= 'shoot' then
+                    if event.data.entity:getName() == 'enemy_bullet' or
+                            event.data.entity:getName() == 'enemy' then
                         return "ExplodingState"
                     end
                 end
@@ -58,7 +59,7 @@ local PlayerStateMachine = {
         },
         ExplodingState = {
             init = function(e)
-                e:setVelocity(vec(0,0))
+                e:setVelocity(vec(0, 0))
                 e:setAnim('explode', 1)
                 playSound(Sounds.player_explode)
             end,

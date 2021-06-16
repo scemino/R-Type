@@ -25,6 +25,16 @@ void EntityManager::destroyEntity(EntityId id) {
 void EntityManager::removeDeadEntities() {
   for (auto it = entities.begin(); it != entities.end();) {
     if (it->second->isDead()) {
+      auto hc = it->second->tryComponent<HierarchyComponent>();
+      if (hc.has_value()) {
+        // remove entity from parent's list
+        auto parent = hc.value().get().getParent();
+        if (parent.has_value()) {
+          parent.value().get().component<HierarchyComponent>().removeChild(*it->second);
+        }
+
+        // TODO: detach all children
+      }
       m_registry.destroy(it->second->getId());
       it = entities.erase(it);
     } else {

@@ -17,4 +17,10 @@ function util.clampVector(value, min, max)
     return value
 end
 
+function util.distance(p1, p2)
+    local x = p1.x - p2.x
+    local y = p1.y - p2.y
+    return math.sqrt(x * x + y * y)
+end
+
 return util
