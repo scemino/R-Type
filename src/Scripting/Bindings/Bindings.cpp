@@ -7,6 +7,7 @@
 #include "Components/NameComponentBindings.h"
 #include "Components/HierarchyComponentBindings.h"
 #include "Components/GraphicsComponentBindings.h"
+#include "Components/TilesComponentBindings.h"
 #include "FileSystemBindings.h"
 #include "AudioBindings.h"
 #include "LevelBindings.h"
@@ -29,5 +30,6 @@ void bindAll(sol::state &lua) {
   bindNameComponent(lua);
   bindHierarchyComponent(lua);
   bindGraphicsComponent(lua);
+  bindTilesComponent(lua);
 }
 }

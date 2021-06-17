@@ -119,3 +119,8 @@ glm::vec2 HierarchyComponent::getOffset(entt::entity entityChild) const {
   const auto &em = locator::engine::ref().entityManager();
   return std::make_optional(std::ref(em.getEntity(m_parentId)));
 }
+
+TilesComponent::TilesComponent(const sol::table &t) {
+  const auto name = t["name"].get<std::string>();
+  tilesInfo = loadTiles(name);
+}

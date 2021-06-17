@@ -5,6 +5,8 @@ local EnemyPositionComponent = require 'components.EnemyPositionComponent'
 local HealthComponent = require 'components.HealthComponent'
 local DamageComponent = require 'components.DamageComponent'
 local ForceComponent = require 'components.ForceComponent'
+local LivesComponent = require 'components.LivesComponent'
+local ScoreComponent = require 'components.ScoreComponent'
 require 'components.BeamType'
 
 local hitBoxes = {
@@ -88,6 +90,7 @@ EntityFactory = {
         e:emplace('Animation', { name = 'resources/anims/spaceship.json' })
         addComponent(e, StateMachineComponent('states.PlayerStateMachine'))
         addComponent(e, TimerComponent())
+        addComponent(e, LivesComponent())
         StateManager.initState(e)
 
         e:addChild(createBeam())
@@ -151,21 +154,25 @@ EntityFactory = {
         else
             playSound(Sounds.shoot2)
         end
+        local score = Handles[getEntity('score'):getId()].components.score
+        score:setScore(score:getScore() + 1)
     end,
 
     forceShoot = function()
         local force = Handles[getEntity('force'):getId()]
-        print('shoot force',force)
+        print('shoot force', force)
         local pos = force:getPosition()
         local forceLevel = force.components.force:getForceLevel()
-        print('shoot force '..forceLevel)
+        print('shoot force ' .. forceLevel)
 
         -- East bullet
         if forceLevel == 1 then
             createForceBullet('force_bullet_e', pos, vec(6, 0), 'force_bullet_e')
         end
 
-        if forceLevel < 2 then return end
+        if forceLevel < 2 then
+            return
+        end
 
         -- NE bullet
         createForceBullet('force_bullet_ne', pos, vec(6, -2), 'force_bullet_ne')
@@ -173,7 +180,9 @@ EntityFactory = {
         -- SE bullet
         createForceBullet('force_bullet_se', pos, vec(6, 2), 'force_bullet_se')
 
-        if forceLevel < 3 then return end
+        if forceLevel < 3 then
+            return
+        end
 
         -- North bullet
         createForceBullet('force_bullet_n', pos, vec(0, -4), 'force_bullet_n')
@@ -201,6 +210,69 @@ EntityFactory = {
         e:setVelocity(vec(2 * dX / d, 2 * dY / d))
         addComponent(e, StateMachineComponent('states.EnemyBulletStateMachine'))
         StateManager.initState(e)
+    end,
+
+    createHUD = function()
+        -- don't know yet if it's a good idea to use tiles
+        local e = Entity()
+        e:emplace('Name', { name = 'lives' })
+        e:emplace('Position')
+        e:emplace('Graphics')
+        e:emplace('Tiles', { name = 'resources/tiles/hud.json' })
+        e:setTilesData({ 79, 79 })
+        e:setPosition(vec(8, 256))
+        addComponent(e, StateMachineComponent('states.LivesIndicatorStateMachine'))
+        StateManager.initState(e)
+
+        e = Entity()
+        e:emplace('Name', { name = '1P' })
+        e:emplace('Position')
+        e:emplace('Tiles', { name = 'resources/tiles/hud.json' })
+        e:setTilesData({ 69, 70, 71, 72 })
+        e:setPosition(vec(24, 264))
+
+        e = Entity()
+        e:emplace('Name', { name = 'beam_text' })
+        e:emplace('Position')
+        e:emplace('Tiles', { name = 'resources/tiles/hud.json' })
+        e:setTilesData({ 57, 58, 59, 60, 61, 62 })
+        e:setPosition(vec(80, 256))
+
+        e = Entity()
+        e:emplace('Name', { name = 'beam_level' })
+        e:emplace('Position')
+        e:emplace('Tiles', { name = 'resources/tiles/hud.json' })
+        e:setPosition(vec(128, 256))
+
+        e = Entity()
+        e:emplace('Name', { name = 'score' })
+        e:emplace('Position')
+        e:emplace('Tiles', { name = 'resources/tiles/hud.json' })
+        addComponent(e, ScoreComponent(0, vec(104, 264)))
+
+        e = Entity()
+        e:emplace('Name', { name = 'hi' })
+        e:emplace('Position')
+        e:emplace('Tiles', { name = 'resources/tiles/hud.json' })
+        e:setPosition(vec(144, 264))
+        e:setTilesData({ 76, 77, 78, 72 })
+
+        -- ranking
+        -- ABIKO 174500
+        -- SUMITA 168600
+        -- AKIO.O 159700
+        -- SHINJI 117900
+        -- MISAKO! 100500
+        -- MASATO 98900
+        -- HAMA 92000
+        -- KENT.K 80000
+        -- JIJEE 76000
+        -- IREM . 75000
+        e = Entity()
+        e:emplace('Name', { name = 'hiscore' })
+        e:emplace('Position')
+        e:emplace('Tiles', { name = 'resources/tiles/hud.json' })
+        addComponent(e, ScoreComponent(174500, vec(224, 264)))
     end
 }
 

@@ -62,6 +62,7 @@ local PlayerStateMachine = {
                 e:setVelocity(vec(0, 0))
                 e:setAnim('explode', 1)
                 playSound(Sounds.player_explode)
+                e.components.lives:setLives(e.components.lives:getLives() - 1)
             end,
             anim = function(e, event)
                 if event.data.name == 'explode' then

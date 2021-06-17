@@ -54,6 +54,7 @@ StateManager = {
 
     onKeyUp = function(e, code)
         local sm = StateManager.getStateMachine(e)
+        if not sm then return end
         local callback = sm:getState()["onKeyUp"]
         if callback then
             local nextState = callback(e, code)
@@ -65,6 +66,7 @@ StateManager = {
 
     onKeyDown = function(e, code)
         local sm = StateManager.getStateMachine(e)
+        if not sm then return end
         local callback = sm:getState()["onKeyDown"]
         if callback then
             local nextState = callback(e, code)

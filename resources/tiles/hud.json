@@ -1,0 +1,40 @@
+{ "compressionlevel":-1,
+ "editorsettings":
+    {
+     "export":
+        {
+         "format":"json",
+         "target":"hud.json"
+        }
+    },
+ "height":6,
+ "infinite":false,
+ "layers":[
+        {
+         "data":[49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 34, 41, 42, 45, 46, 47, 48, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 0, 0, 0, 0, 0, 0, 0, 81, 82, 83, 84, 85, 86, 87, 88, 89, 90, 91, 92, 93, 94, 95, 96, 97, 0, 0, 0, 0, 0, 0, 98, 99, 100, 101, 102, 103, 100, 104, 105, 106, 107, 2, 109, 110, 111, 112, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1710, 1711, 1728, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1712, 1713, 1714, 1715, 1716, 1716, 1717, 1718, 1719, 1720, 1721, 1722, 1723, 1724, 1725, 1726, 1727, 0, 0, 0, 0, 0, 0],
+         "height":6,
+         "id":1,
+         "name":"Tile Layer 1",
+         "opacity":1,
+         "type":"tilelayer",
+         "visible":true,
+         "width":23,
+         "x":0,
+         "y":0
+        }],
+ "nextlayerid":2,
+ "nextobjectid":1,
+ "orientation":"orthogonal",
+ "renderorder":"right-down",
+ "tiledversion":"1.6.0",
+ "tileheight":8,
+ "tilesets":[
+        {
+         "firstgid":1,
+         "source":"hud.tsx"
+        }],
+ "tilewidth":8,
+ "type":"map",
+ "version":"1.6",
+ "width":23
+}

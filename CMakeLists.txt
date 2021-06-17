@@ -23,6 +23,7 @@ add_executable(R-Type
         src/ECS/System/RenderSystem.cpp
         src/ECS/System/MotionSystem.cpp
         src/Graphics/AnimationLoader.cpp
+        src/Graphics/TilesLoader.cpp
         src/Scripting/EntityManager.cpp
         src/Scripting/SoundManager.cpp
         src/Scripting/Bindings/AudioBindings.cpp
@@ -37,6 +38,7 @@ add_executable(R-Type
         src/Scripting/Bindings/Components/MotionComponentBindings.cpp
         src/Scripting/Bindings/Components/NameComponentBindings.cpp
         src/Scripting/Bindings/Components/PositionComponentBindings.cpp
+        src/Scripting/Bindings/Components/TilesComponentBindings.cpp
         src/main.cpp)
 
 set(LUA_SOURCE_FILES

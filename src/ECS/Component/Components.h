@@ -10,6 +10,7 @@
 #include <CollisionResult.h>
 #include <Graphics/Animation.h>
 #include <Scripting/EntityManager.h>
+#include <Graphics/TilesLoader.h>
 
 struct PositionComponent {
   PositionComponent() = default;
@@ -105,4 +106,12 @@ private:
 private:
   EntityId m_parentId = entt::null;
   std::vector<Child> m_children;
+};
+
+struct TilesComponent {
+  TilesInfo tilesInfo;
+  std::vector<int> tiles;
+
+  TilesComponent() = default;
+  explicit TilesComponent(const sol::table &t);
 };

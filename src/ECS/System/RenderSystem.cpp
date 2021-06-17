@@ -16,5 +16,22 @@ void draw(entt::registry &registry, ngf::RenderTarget &target) {
         s.getTransform().setPosition(pc.getPosition());
         s.draw(target, {});
       });
+  registry.view<TilesComponent, PositionComponent>()
+      .each([&](const auto &tc, const auto &pc) {
+        if (!tc.tilesInfo.texture)
+          return;
+        auto pos = pc.getPosition();
+        ngf::Sprite s(*tc.tilesInfo.texture);
+        for (const auto tile : tc.tiles) {
+          auto x = tile % tc.tilesInfo.numTiles.x;
+          auto y = tile / tc.tilesInfo.numTiles.x;
+          s.setTextureRect(ngf::irect::fromPositionSize(
+              {x * tc.tilesInfo.tileSize.x, y * tc.tilesInfo.tileSize.y},
+              tc.tilesInfo.tileSize));
+          s.getTransform().setPosition(pos);
+          s.draw(target, {});
+          pos.x += tc.tilesInfo.tileSize.x;
+        }
+      });
 }
 }

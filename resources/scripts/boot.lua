@@ -9,6 +9,7 @@ require 'EntityFactory'
 
 -- create entities
 EntityFactory.createCamera()
+EntityFactory.createHUD()
 EntityFactory.createPlayer()
 --for i = 1, 7 do
 --    EntityFactory.createEnemy('enemy'..i, vec(60+40*i, 100))
