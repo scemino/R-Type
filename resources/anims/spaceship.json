@@ -143,6 +143,20 @@
       ],
       "delay": 3
     },
+    "ribbon_small1": {
+      "texture": "resources/images/r-typesheet2.png",
+      "frames": [
+        [ 89, 313, 32, 4 ],
+        [ 123, 313, 32, 4 ]
+      ]
+    },
+    "ribbon_small2": {
+      "texture": "resources/images/r-typesheet2.png",
+      "frames": [
+        [ 89, 330, 32, 4 ],
+        [ 123, 330, 32, 4 ]
+      ]
+    },
     "ribbon": {
       "texture": "resources/images/r-typesheet2.png",
       "frames": [

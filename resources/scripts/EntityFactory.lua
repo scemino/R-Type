@@ -77,6 +77,71 @@ local function createForceBullet(name, pos, vel, anim)
     getEntity('force'):addChild(e)
 end
 
+local function shootNormal(power, pos)
+    print('shoot power ' .. power)
+    local e = Entity()
+    e:emplace('Name', { name = 'shoot' })
+    e:emplace('Position')
+    e:emplace('Motion')
+    e:emplace('Graphics')
+    e:emplace('Collide', { size = getHitBox(power) })
+    e:emplace('Animation', { name = 'resources/anims/spaceship.json' })
+    e:setAnim('shoot' .. power, -1)
+    e:setVelocity(vec(12, 0))
+    e:setPosition(pos)
+    addComponent(e, DamageComponent(getDamageFromPower(power)))
+    addComponent(e, StateMachineComponent('states.ShootStateMachine'))
+    StateManager.initState(e)
+end
+
+local function shootRibbon(force, pos)
+    local forceLevel = force.components.force:getForceLevel()
+
+    if forceLevel == 2 then
+        local e = Entity()
+        e:emplace('Name', { name = 'shoot1' })
+        e:emplace('Position')
+        e:emplace('Motion')
+        e:emplace('Graphics')
+        e:emplace('Collide', { size = getHitBox(2) })
+        e:emplace('Animation', { name = 'resources/anims/spaceship.json' })
+        e:setAnim('ribbon_small1', -1)
+        e:setPosition(pos + vec(0, -8))
+        e:setVelocity(vec(6, 0))
+        addComponent(e, DamageComponent(getDamageFromPower(forceLevel)))
+        addComponent(e, StateMachineComponent('states.ShootStateMachine'))
+        StateManager.initState(e)
+
+        e = Entity()
+        e:emplace('Name', { name = 'shoot2' })
+        e:emplace('Position')
+        e:emplace('Motion')
+        e:emplace('Graphics')
+        e:emplace('Collide', { size = getHitBox(2) })
+        e:emplace('Animation', { name = 'resources/anims/spaceship.json' })
+        e:setAnim('ribbon_small2', -1)
+        e:setPosition(pos + vec(0, 8))
+        e:setVelocity(vec(6, 0))
+        addComponent(e, DamageComponent(getDamageFromPower(forceLevel)))
+        addComponent(e, StateMachineComponent('states.ShootStateMachine'))
+        StateManager.initState(e)
+    elseif forceLevel == 3 then
+        local e = Entity()
+        e:emplace('Name', { name = 'shoot' })
+        e:emplace('Position')
+        e:emplace('Motion')
+        e:emplace('Graphics')
+        e:emplace('Collide', { size = getHitBox(3) })
+        e:emplace('Animation', { name = 'resources/anims/spaceship.json' })
+        e:setAnim('ribbon', -1)
+        e:setPosition(pos)
+        e:setVelocity(vec(6, 0))
+        addComponent(e, DamageComponent(getDamageFromPower(forceLevel)))
+        addComponent(e, StateMachineComponent('states.ShootStateMachine'))
+        StateManager.initState(e)
+    end
+end
+
 EntityFactory = {
     createPlayer = function()
         print('Create player')
@@ -127,43 +192,32 @@ EntityFactory = {
 
     shoot = function(power, beamType, pos)
         local force = Handles[getEntity('force'):getId()]
-        if not force.components.force:isAttached() then
+        print('Shoot power ', power)
+        if not force.components.force:isAttached() or power ~= 1 then
             beamType = BeamType.Normal
         end
-        print('shoot power ' .. power)
-        local e = Entity()
-        e:emplace('Name', { name = 'shoot' })
-        e:emplace('Position')
-        e:emplace('Motion')
-        e:emplace('Graphics')
-        e:emplace('Collide', { size = getHitBox(power) })
-        e:emplace('Animation', { name = 'resources/anims/spaceship.json' })
-        if beamType == BeamType.Ribbon and power == 1 then
-            e:setAnim('ribbon', -1)
-            e:setVelocity(vec(6, 0))
-        else
-            e:setAnim('shoot' .. power, -1)
-            e:setVelocity(vec(12, 0))
+        print('Shoot beam type ', beamType)
+
+        if beamType == BeamType.Normal then
+            shootNormal(power, pos)
+        elseif beamType == BeamType.Ribbon then
+            shootRibbon(force, pos)
         end
-        e:setPosition(pos)
-        addComponent(e, DamageComponent(getDamageFromPower(power)))
-        addComponent(e, StateMachineComponent('states.ShootStateMachine'))
-        StateManager.initState(e)
+
         if power == 1 then
             playSound(Sounds.shoot1)
         else
             playSound(Sounds.shoot2)
         end
+
         local score = Handles[getEntity('score'):getId()].components.score
         score:setScore(score:getScore() + 1)
     end,
 
     forceShoot = function()
         local force = Handles[getEntity('force'):getId()]
-        print('shoot force', force)
         local pos = force:getPosition()
         local forceLevel = force.components.force:getForceLevel()
-        print('shoot force ' .. forceLevel)
 
         -- East bullet
         if forceLevel == 1 then
