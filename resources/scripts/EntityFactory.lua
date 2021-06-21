@@ -95,9 +95,16 @@ local function shootNormal(power, pos)
 end
 
 local function shootRibbon(force, pos)
+    print('shootRibbon')
     local forceLevel = force.components.force:getForceLevel()
+    local isRear = force.components.force:isRear()
+    local vel = force.components.force:getVelocity()
 
     if forceLevel == 2 then
+        local offsetX = 32
+        if isRear then
+            offsetX = -48
+        end
         local e = Entity()
         e:emplace('Name', { name = 'shoot1' })
         e:emplace('Position')
@@ -106,8 +113,9 @@ local function shootRibbon(force, pos)
         e:emplace('Collide', { size = getHitBox(2) })
         e:emplace('Animation', { name = 'resources/anims/spaceship.json' })
         e:setAnim('ribbon_small1', -1)
-        e:setPosition(pos + vec(0, -8))
-        e:setVelocity(vec(6, 0))
+        e:setPosition(pos + vec(offsetX, -8))
+        e:setVelocity(vel)
+        e:setFlipX(isRear)
         addComponent(e, DamageComponent(getDamageFromPower(forceLevel)))
         addComponent(e, StateMachineComponent('states.ShootStateMachine'))
         StateManager.initState(e)
@@ -120,12 +128,17 @@ local function shootRibbon(force, pos)
         e:emplace('Collide', { size = getHitBox(2) })
         e:emplace('Animation', { name = 'resources/anims/spaceship.json' })
         e:setAnim('ribbon_small2', -1)
-        e:setPosition(pos + vec(0, 8))
-        e:setVelocity(vec(6, 0))
+        e:setPosition(pos + vec(offsetX, 8))
+        e:setVelocity(vel)
+        e:setFlipX(isRear)
         addComponent(e, DamageComponent(getDamageFromPower(forceLevel)))
         addComponent(e, StateMachineComponent('states.ShootStateMachine'))
         StateManager.initState(e)
     elseif forceLevel == 3 then
+        local offsetX = 0
+        if isRear then
+            offsetX = -32
+        end
         local e = Entity()
         e:emplace('Name', { name = 'shoot' })
         e:emplace('Position')
@@ -134,8 +147,9 @@ local function shootRibbon(force, pos)
         e:emplace('Collide', { size = getHitBox(3) })
         e:emplace('Animation', { name = 'resources/anims/spaceship.json' })
         e:setAnim('ribbon', -1)
-        e:setPosition(pos)
-        e:setVelocity(vec(6, 0))
+        e:setPosition(pos + vec(offsetX, 0))
+        e:setVelocity(vel)
+        e:setFlipX(isRear)
         addComponent(e, DamageComponent(getDamageFromPower(forceLevel)))
         addComponent(e, StateMachineComponent('states.ShootStateMachine'))
         StateManager.initState(e)
@@ -198,9 +212,8 @@ EntityFactory = {
         end
         print('Shoot beam type ', beamType)
 
-        if beamType == BeamType.Normal then
-            shootNormal(power, pos)
-        elseif beamType == BeamType.Ribbon then
+        shootNormal(power, pos)
+        if beamType == BeamType.Ribbon then
             shootRibbon(force, pos)
         end
 

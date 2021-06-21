@@ -45,6 +45,8 @@ struct GraphicComponent {
   ngf::irect frame;
   glm::vec2 origin{};
   bool visible{true};
+  float zOrder{0.f};
+  bool flipX{false};
 
   GraphicComponent() = default;
   explicit GraphicComponent(const sol::table &t);

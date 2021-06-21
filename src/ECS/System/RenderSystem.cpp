@@ -5,6 +5,9 @@
 namespace Systems::RenderSystem {
 
 void draw(entt::registry &registry, ngf::RenderTarget &target) {
+  registry.sort<GraphicComponent>([](const auto &lhs, const auto &rhs) {
+    return lhs.zOrder < rhs.zOrder;
+  });
   registry.view<GraphicComponent, PositionComponent,NameComponent>()
       .each([&](const auto &gc, const auto &pc, const auto& nc) {
         if(!gc.texture)
@@ -12,6 +15,7 @@ void draw(entt::registry &registry, ngf::RenderTarget &target) {
         if (!gc.visible)
           return;
         ngf::Sprite s(*gc.texture, gc.frame);
+        s.setFlipX(gc.flipX);
         s.getTransform().setOrigin(gc.origin);
         s.getTransform().setPosition(pc.getPosition());
         s.draw(target, {});

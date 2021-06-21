@@ -71,7 +71,7 @@ function BeamComponent:update()
     if not self.enabled then
         return
     end
-    self.timer = self.timer + 2
+    self.timer = self.timer + 1
     updateTiles(self.timer)
 end
 
