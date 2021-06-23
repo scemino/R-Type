@@ -24,6 +24,7 @@ add_executable(R-Type
         src/ECS/System/MotionSystem.cpp
         src/Graphics/AnimationLoader.cpp
         src/Graphics/TilesLoader.cpp
+        src/Scripting/DebugManager.cpp
         src/Scripting/EntityManager.cpp
         src/Scripting/SoundManager.cpp
         src/Scripting/Bindings/AudioBindings.cpp
@@ -32,6 +33,7 @@ add_executable(R-Type
         src/Scripting/Bindings/FileSystemBindings.cpp
         src/Scripting/Bindings/LevelBindings.cpp
         src/Scripting/Bindings/MathBindings.cpp
+        src/Scripting/Bindings/DebugBindings.cpp
         src/Scripting/Bindings/Components/AnimationComponentBindings.cpp
         src/Scripting/Bindings/Components/GraphicsComponentBindings.cpp
         src/Scripting/Bindings/Components/HierarchyComponentBindings.cpp

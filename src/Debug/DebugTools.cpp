@@ -22,7 +22,7 @@ void show(entt::registry &registry) {
       }
       auto cc = registry.try_get<CollideComponent>(e);
       if (cc) {
-        ImGui::DragInt2("Hit box", &cc->size.x);
+        ImGui::DragFloat4("Hit box", &cc->hitbox.min.x);
       }
       auto ac = registry.try_get<AnimationComponent>(e);
       if (ac) {

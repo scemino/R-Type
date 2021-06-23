@@ -11,6 +11,7 @@
 #include "FileSystemBindings.h"
 #include "AudioBindings.h"
 #include "LevelBindings.h"
+#include "DebugBindings.h"
 
 namespace Bindings {
 void bindAll(sol::state &lua) {
@@ -19,6 +20,7 @@ void bindAll(sol::state &lua) {
   bindMath(lua);
   bindAudio(lua);
   bindLevel(lua);
+  bindDebug(lua);
 
   // entity bindings
   bindEntity(lua);

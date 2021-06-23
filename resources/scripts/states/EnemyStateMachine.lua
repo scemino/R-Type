@@ -1,5 +1,7 @@
 local function shoot(pos)
-    if not hasEntity('player') then return end
+    if not hasEntity('player') then
+        return
+    end
 
     -- probability to shoot
     if math.random() > 0.994 then
@@ -28,7 +30,7 @@ local EnemyStateMachine = {
                 if event.data.collisionType == 'entities' then
                     if event.data.entity:getName() == 'player' then
                         return 'ExplodingState'
-                    elseif event.data.entity:getName() == 'shoot' then
+                    elseif event.data.entity:getName() == 'shoot' or event.data.entity:getName() == 'force' then
                         -- TODO: find a way to get this handle from event
                         local handle = Handles[event.data.entity:getId()]
                         bulletHitEnemy(handle, e)

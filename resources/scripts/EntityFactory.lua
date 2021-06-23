@@ -7,6 +7,7 @@ local DamageComponent = require 'components.DamageComponent'
 local ForceComponent = require 'components.ForceComponent'
 local LivesComponent = require 'components.LivesComponent'
 local ScoreComponent = require 'components.ScoreComponent'
+local TagComponent = require 'components.TagComponent'
 require 'components.BeamType'
 
 local hitBoxes = {
@@ -54,6 +55,7 @@ local function createForce()
     e:setAnim('force1', -1)
     e:setPosition(vec(32, 2))
     addComponent(e, ForceComponent())
+    addComponent(e, DamageComponent(getDamageFromPower(1), true))
     addComponent(e, StateMachineComponent('states.ForceStateMachine'))
     StateManager.initState(e)
     return e
@@ -71,6 +73,7 @@ local function createForceBullet(name, pos, vel, anim)
     e:setAnim(anim, -1)
     e:setVelocity(vel)
     e:setPosition(pos)
+    addComponent(e, TagComponent('player_shoot'))
     addComponent(e, DamageComponent(getDamageFromPower(1)))
     addComponent(e, StateMachineComponent('states.ShootStateMachine'))
     StateManager.initState(e)
@@ -91,6 +94,7 @@ local function shootNormal(power, pos)
     e:setPosition(pos)
     addComponent(e, DamageComponent(getDamageFromPower(power)))
     addComponent(e, StateMachineComponent('states.ShootStateMachine'))
+    addComponent(e, TagComponent('player_shoot'))
     StateManager.initState(e)
 end
 
@@ -116,6 +120,7 @@ local function shootRibbon(force, pos)
         e:setPosition(pos + vec(offsetX, -8))
         e:setVelocity(vel)
         e:setFlipX(isRear)
+        addComponent(e, TagComponent('player_shoot'))
         addComponent(e, DamageComponent(getDamageFromPower(forceLevel)))
         addComponent(e, StateMachineComponent('states.ShootStateMachine'))
         StateManager.initState(e)
@@ -131,6 +136,7 @@ local function shootRibbon(force, pos)
         e:setPosition(pos + vec(offsetX, 8))
         e:setVelocity(vel)
         e:setFlipX(isRear)
+        addComponent(e, TagComponent('player_shoot'))
         addComponent(e, DamageComponent(getDamageFromPower(forceLevel)))
         addComponent(e, StateMachineComponent('states.ShootStateMachine'))
         StateManager.initState(e)
@@ -150,6 +156,7 @@ local function shootRibbon(force, pos)
         e:setPosition(pos + vec(offsetX, 0))
         e:setVelocity(vel)
         e:setFlipX(isRear)
+        addComponent(e, TagComponent('player_shoot'))
         addComponent(e, DamageComponent(getDamageFromPower(forceLevel)))
         addComponent(e, StateMachineComponent('states.ShootStateMachine'))
         StateManager.initState(e)
@@ -275,6 +282,8 @@ EntityFactory = {
         e:emplace('Animation', { name = 'resources/anims/enemy_bullet.json' })
         e:setPosition(pos)
         e:setVelocity(vec(2 * dX / d, 2 * dY / d))
+        addComponent(e, HealthComponent(1))
+        addComponent(e, DamageComponent(1))
         addComponent(e, StateMachineComponent('states.EnemyBulletStateMachine'))
         StateManager.initState(e)
     end,

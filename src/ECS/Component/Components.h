@@ -33,10 +33,10 @@ struct MotionComponent {
 };
 
 struct CollideComponent {
-  glm::ivec2 size{};
+  ngf::frect hitbox{};
 
   CollideComponent() = default;
-  explicit CollideComponent(const glm::vec2 &s) : size(s) {}
+  explicit CollideComponent(const ngf::frect &hb) : hitbox(hb) {}
   explicit CollideComponent(const sol::table &t);
 };
 

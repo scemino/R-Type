@@ -52,7 +52,10 @@ local PlayerStateMachine = {
                 elseif event.data.collisionType == 'entities' then
                     if event.data.entity:getName() == 'enemy_bullet' or
                             event.data.entity:getName() == 'enemy' then
-                        return "ExplodingState"
+                        local handle = Handles[event.data.entity:getId()]
+                        if handle.components.health:isAlive() then
+                            return "ExplodingState"
+                        end
                     end
                 end
             end

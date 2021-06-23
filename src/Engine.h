@@ -16,6 +16,7 @@ static constexpr const int GameWidth = 384;
 static constexpr const int GameHeight = 272;
 
 class ComponentFactory;
+class DebugManager;
 class EntityManager;
 class EventManager;
 class Level;
@@ -42,6 +43,7 @@ public:
   EventManager &eventManager() { assert(m_eventManager); return *m_eventManager; }
   ComponentFactory &componentFactory() { assert(m_componentFactory); return *m_componentFactory; }
   SoundManager &soundManager() { assert(m_soundManager); return *m_soundManager; }
+  DebugManager &debugManager() { assert(m_debugManager); return *m_debugManager; }
   Level& level() { assert(m_level); return *m_level; }
 
   void startGame();
@@ -65,6 +67,7 @@ private:
   std::unique_ptr<EventManager> m_eventManager;
   std::unique_ptr<ComponentFactory> m_componentFactory;
   std::unique_ptr<SoundManager> m_soundManager;
+  std::unique_ptr<DebugManager> m_debugManager;
   entt::registry m_reg;
   sol::state m_lua;
   bool m_gameStarted{false};

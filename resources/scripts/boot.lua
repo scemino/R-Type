@@ -7,13 +7,16 @@ require 'Sounds'
 require 'Keys'
 require 'EntityFactory'
 
+local hitboxesVisible = false
+showHitboxes(hitboxesVisible)
+
 -- create entities
 EntityFactory.createCamera()
 EntityFactory.createHUD()
 EntityFactory.createPlayer()
---for i = 1, 7 do
---    EntityFactory.createEnemy('enemy'..i, vec(60+40*i, 100))
---end
+for i = 1, 7 do
+    EntityFactory.createEnemy('enemy'..i, vec(60+40*i, 100))
+end
 
 -- callbacks
 function update()
@@ -36,6 +39,10 @@ function onKeyUp(code)
 end
 
 function onKeyDown(code)
+    if code == Keys.H then
+        hitboxesVisible = not hitboxesVisible
+        showHitboxes(hitboxesVisible)
+    end
     for _,value in pairs(Handles)
     do
         if isHandleValid(value) then StateManager.onKeyDown(value, code) end

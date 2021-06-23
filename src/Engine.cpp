@@ -14,6 +14,7 @@
 #include <Scripting/EventManager.h>
 #include <Scripting/Bindings/Bindings.h>
 #include <Scripting/SoundManager.h>
+#include <Scripting/DebugManager.h>
 
 template<>
 struct fmt::formatter<fs::path> {
@@ -30,6 +31,7 @@ Engine::Engine(ngf::AudioSystem &audio) {
   m_eventManager = std::make_unique<EventManager>(m_lua);
   m_soundManager = std::make_unique<SoundManager>(audio);
   m_componentFactory = std::make_unique<ComponentFactory>();
+  m_debugManager = std::make_unique<DebugManager>();
 
   createVm();
 }

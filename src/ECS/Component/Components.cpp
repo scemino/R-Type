@@ -26,8 +26,8 @@ MotionComponent::MotionComponent(const sol::table &t) {
 }
 
 CollideComponent::CollideComponent(const sol::table &t) {
-  const auto s = t["size"].get<glm::vec2>();
-  size = s;
+  const auto size = t["size"].get<glm::vec2>();
+  hitbox = ngf::frect::fromPositionSize(-size / 2.0f, size);
 }
 
 NameComponent::NameComponent(const sol::table &t) {

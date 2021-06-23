@@ -1,12 +1,25 @@
+local function forceHitBullet(force, bullet)
+    local damage = force.components.damage:getDamage()
+    force.components.damage:removeDamage(bullet.components.health:getHealth())
+    bullet.components.health:setDamage(damage)
+end
+
 local EnemyBulletStateMachine = {
     states = {
         MoveState = {
             update = function(e)
+                if not e.components.health:isAlive() then
+                    return 'ExplodingState'
+                end
             end,
             hit = function(e, event)
                 if event.data.collisionType == 'entities' then
                     if event.data.entity:getName() == 'player' then
                         return 'ExplodingState'
+                    elseif event.data.entity:getName() == 'force' then
+                        -- TODO: find a way to get this handle from event
+                        local force = Handles[event.data.entity:getId()]
+                        forceHitBullet(force, e)
                     end
                 elseif event.data.collisionType == 'screen' then
                     e:die()
