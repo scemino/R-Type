@@ -26,6 +26,7 @@ public:
 
   [[nodiscard]] std::optional<CollisionResult> collideLevel(const ngf::irect &rect) const;
   [[nodiscard]] bool collide(const ngf::irect &rect) const;
+  [[nodiscard]] int get(const glm::ivec2 &pos) const;
 
   void setPosition(int pos);
   [[nodiscard]] int getPosition() const { return m_position; }

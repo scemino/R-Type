@@ -52,6 +52,11 @@ void AnimationComponent::setAnim(const std::string &anim, int loop) {
   this->playing = true;
 }
 
+void AnimationComponent::setFrame(std::size_t frame) {
+  this->playing = false;
+  this->frameIndex = std::clamp(frame, static_cast<std::size_t>(0), animations[current].frames.size() - 1);
+}
+
 HierarchyComponent::HierarchyComponent(const sol::table &t) {
 }
 

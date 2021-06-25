@@ -73,14 +73,21 @@ void update(entt::registry &registry) {
       continue;
 
     // notify entity collision with tile or screen
-    auto collisionValue = collision.value();
+    const auto collisionValue = collision.value();
     auto &entity = etm.getEntity(e);
+    const auto directionTable = engine.lua().create_table_with(
+        "up", collisionValue.up(),
+        "down", collisionValue.down(),
+        "left", collisionValue.left(),
+        "right", collisionValue.right());
     em.publish(entity,
                "hit",
                "collisionType",
                collisionValue.tile() ? "tile" : "screen",
+               "dir",
+               directionTable,
                "pos",
-               collisionValue.pos());
+               glm::vec2(collisionValue.pos()));
   }
 
   auto itEnd = view.end();

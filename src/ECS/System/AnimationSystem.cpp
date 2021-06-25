@@ -21,8 +21,12 @@ void update(entt::registry &registry) {
     }
     const Animation& anim = it->second;
     // skip if animation is not playing
-    if (!ac.playing)
+    if (!ac.playing) {
+      gc.frame = anim.frames.at(ac.frameIndex).rect;
+      gc.origin = anim.frames.at(ac.frameIndex).origin;
+      gc.texture = anim.texture;
       continue;
+    }
     // check if frame is elapsed
     if (ac.delay >= anim.frameDelay) {
       ac.delay = 0;
@@ -34,6 +38,7 @@ void update(entt::registry &registry) {
         // end of animation ?
         if (ac.loop == 0) {
           ac.playing = false;
+          ac.frameIndex = anim.frames.size() - 1;
           // notify end of animation
           auto& engine = locator::engine::ref();
           auto& entity = engine.entityManager().getEntity(e);

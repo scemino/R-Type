@@ -11,6 +11,12 @@ local BeamStateMachine = {
                     e.components.beam:setEnabled(true)
                 elseif code == Keys.D0 then
                     e.components.beam:setBeamType(BeamType.Normal)
+                elseif code == Keys.D8 then
+                    local force = Handles[getEntity('force'):getId()].components.force
+                    if force:getForceLevel() == 1 then
+                        force:setForceLevel(2)
+                    end
+                    e.components.beam:setBeamType(BeamType.Laser)
                 elseif code == Keys.D9 then
                     local force = Handles[getEntity('force'):getId()].components.force
                     if force:getForceLevel() == 1 then

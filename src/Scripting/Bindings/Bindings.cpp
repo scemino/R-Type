@@ -4,6 +4,7 @@
 #include "Components/PositionComponentBindings.h"
 #include "Components/MotionComponentBindings.h"
 #include "Components/AnimationComponentBindings.h"
+#include "Components/CollideComponentBindings.h"
 #include "Components/NameComponentBindings.h"
 #include "Components/HierarchyComponentBindings.h"
 #include "Components/GraphicsComponentBindings.h"
@@ -33,5 +34,6 @@ void bindAll(sol::state &lua) {
   bindHierarchyComponent(lua);
   bindGraphicsComponent(lua);
   bindTilesComponent(lua);
+  bindCollideComponent(lua);
 }
 }

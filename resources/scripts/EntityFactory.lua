@@ -8,7 +8,9 @@ local ForceComponent = require 'components.ForceComponent'
 local LivesComponent = require 'components.LivesComponent'
 local ScoreComponent = require 'components.ScoreComponent'
 local TagComponent = require 'components.TagComponent'
+local LaserComponent = require 'components.LaserComponent'
 require 'components.BeamType'
+require 'components.LaserDirection'
 
 local hitBoxes = {
     vec(16, 4),
@@ -163,6 +165,42 @@ local function shootRibbon(force, pos)
     end
 end
 
+local function shootLaser(force, pos)
+    local e = Entity()
+    e:emplace('Name', { name = 'shoot1' })
+    e:emplace('Position')
+    e:emplace('Motion')
+    e:emplace('Graphics')
+    e:emplace('Collide', { size = getHitBox(2) })
+    e:emplace('Animation', { name = 'resources/anims/spaceship.json' })
+    e:setAnim('laser', 1)
+    e:setFrame(0)
+    e:setPosition(pos)
+    e:setVelocity(vec(8, -9))
+    addComponent(e, TagComponent('player_shoot'))
+    addComponent(e, LaserComponent(LaserDirection.NE))
+    addComponent(e, DamageComponent(getDamageFromPower(1)))
+    addComponent(e, StateMachineComponent('states.LaserStateMachine'))
+    StateManager.initState(e)
+
+    e = Entity()
+    e:emplace('Name', { name = 'shoot2' })
+    e:emplace('Position')
+    e:emplace('Motion')
+    e:emplace('Graphics')
+    e:emplace('Collide', { size = getHitBox(2) })
+    e:emplace('Animation', { name = 'resources/anims/spaceship.json' })
+    e:setAnim('laser', 1)
+    e:setFrame(1)
+    e:setPosition(pos)
+    e:setVelocity(vec(8, 9))
+    addComponent(e, TagComponent('player_shoot'))
+    addComponent(e, LaserComponent(LaserDirection.SE))
+    addComponent(e, DamageComponent(getDamageFromPower(1)))
+    addComponent(e, StateMachineComponent('states.LaserStateMachine'))
+    StateManager.initState(e)
+end
+
 EntityFactory = {
     createPlayer = function()
         print('Create player')
@@ -222,6 +260,8 @@ EntityFactory = {
         shootNormal(power, pos)
         if beamType == BeamType.Ribbon then
             shootRibbon(force, pos)
+        elseif beamType == BeamType.Laser then
+            shootLaser(force, pos)
         end
 
         if power == 1 then

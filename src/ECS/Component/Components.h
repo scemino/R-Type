@@ -64,6 +64,7 @@ struct AnimationComponent {
   explicit AnimationComponent(const sol::table &t);
 
   void setAnim(const std::string &anim, int loop);
+  void setFrame(std::size_t frame);
 };
 
 struct NameComponent {

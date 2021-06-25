@@ -35,6 +35,7 @@ add_executable(R-Type
         src/Scripting/Bindings/MathBindings.cpp
         src/Scripting/Bindings/DebugBindings.cpp
         src/Scripting/Bindings/Components/AnimationComponentBindings.cpp
+        src/Scripting/Bindings/Components/CollideComponentBindings.cpp
         src/Scripting/Bindings/Components/GraphicsComponentBindings.cpp
         src/Scripting/Bindings/Components/HierarchyComponentBindings.cpp
         src/Scripting/Bindings/Components/MotionComponentBindings.cpp

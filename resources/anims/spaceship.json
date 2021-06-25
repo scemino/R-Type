@@ -188,6 +188,19 @@
       "loopFrom": 16,
       "delay": 1
     },
+    "laser": {
+      "texture": "resources/images/r-typesheet2.png",
+      "comment" : ["NE","SE","HW", "HE", "HS", "HN"],
+      "frames": [
+        [242, 249, 16, 18 ],
+        [208, 249, 16, 18 ],
+        [187, 216, 8, 18],
+        [266, 216, 8, 18],
+        [225, 282, 16, 9],
+        [225, 159, 16, 9]
+      ]
+    },
+
     "force1": {
       "texture": "resources/images/r-typesheet2.png",
       "frames": [
