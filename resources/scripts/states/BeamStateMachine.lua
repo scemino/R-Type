@@ -4,6 +4,13 @@ local BeamStateMachine = {
             update = function(e)
                 local beam = e.components.beam
                 e:setVisible(beam:getPower() > 1)
+                local force = Handles[getEntity('force'):getId()].components.force
+                local ppos = getEntity('player'):getPosition()
+                if force:isFront() then
+                    e:setPosition(ppos + vec(36, 0))
+                else
+                    e:setPosition(ppos + vec(16, 0))
+                end
                 beam:update()
             end,
             onKeyDown = function(e, code)

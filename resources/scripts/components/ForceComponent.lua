@@ -43,6 +43,10 @@ function ForceComponent:isRear()
     return self.forceAttachment == ForceAttachment.Rear
 end
 
+function ForceComponent:isFront()
+    return self.forceAttachment == ForceAttachment.Front
+end
+
 function ForceComponent:getVelocity()
     if self:isRear() then
         return vec(-6, 0)
