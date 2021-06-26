@@ -69,7 +69,11 @@ local PlayerStateMachine = {
             end,
             anim = function(e, event)
                 if event.data.name == 'explode' then
-                    e:die()
+                    -- TODO: here we should check if no more lives in this case go back to main menu
+                    e:setPosition(vec(100, 100))
+                    -- TODO: here we should go to the last checkpoint
+                    setLevelPosition(0)
+                    return 'MoveState'
                 end
             end
         }
