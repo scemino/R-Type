@@ -6,7 +6,8 @@
 namespace {
 void playSound(const std::string& path)
 {
-  locator::engine::ref().soundManager().playSound(path);
+  // disable sound it's buggy :(
+  //locator::engine::ref().soundManager().playSound(path);
 }
 }
 
