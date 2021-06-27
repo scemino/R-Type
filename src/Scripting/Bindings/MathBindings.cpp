@@ -1,4 +1,5 @@
 #include <glm/vec2.hpp>
+#include <ngf/Graphics/Rect.h>
 #include "MathBindings.h"
 
 namespace Bindings {
@@ -24,6 +25,26 @@ void bindMath(sol::state &lua) {
                               [](const glm::vec2 &v1) -> std::string {
                                 return "x: " + std::to_string(v1.x) + ", y: " + std::to_string(v1.y);
                               }
+  );
+
+  lua.new_usertype<ngf::frect>("rect",
+                               sol::call_constructor,
+                               sol::factories([]() {
+                                                return ngf::frect{};
+                                              },
+                                              [](float x, float y, float w, float h) {
+                                                return ngf::frect::fromPositionSize({x, y}, {w, h});
+                                              },
+                                              [](const glm::vec2 &pos, const glm::vec2 &size) {
+                                                return ngf::frect::fromPositionSize(pos, size);
+                                              }),
+                               "min", &ngf::frect::min,
+                               "max", &ngf::frect::max,
+                               sol::meta_function::to_string,
+                               [](const ngf::frect &r) -> std::string {
+                                 return '(' + std::to_string(r.min.x) + ',' + std::to_string(r.min.y) + ','
+                                     + std::to_string(r.max.x) + ',' + std::to_string(r.max.y) + ')';
+                               }
   );
 }
 }

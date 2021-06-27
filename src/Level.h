@@ -16,6 +16,13 @@ class Keys;
 
 namespace fs = std::filesystem;
 
+struct LevelObject {
+public:
+  std::string name{};
+  glm::vec2 pos{};
+  int group{0};
+};
+
 class Level {
 public:
   Level(const fs::path &mapPath, const fs::path &texturePath);
@@ -33,6 +40,7 @@ public:
 
   void draw(ngf::RenderTarget &target) const;
 
+  const std::vector<LevelObject> &getLevelObjects();
 private:
   void load(const fs::path &path);
 
@@ -46,4 +54,5 @@ private:
   std::shared_ptr<ngf::Texture> m_tex;
 
   std::vector<int> m_tilesMap;
+  std::vector<LevelObject> m_objects;
 };

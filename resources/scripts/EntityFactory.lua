@@ -83,7 +83,7 @@ local function createForceBullet(name, pos, vel, anim)
 end
 
 local function shootNormal(power, pos)
-    print('shoot power ' .. power)
+    --print('shoot power ' .. power)
     local e = Entity()
     e:emplace('Name', { name = 'shoot' })
     e:emplace('Position')
@@ -165,7 +165,7 @@ local function shootRibbon(force, pos)
     end
 end
 
-local function shootLaser(force, pos)
+local function shootLaser(pos)
     local e = Entity()
     e:emplace('Name', { name = 'shoot1' })
     e:emplace('Position')
@@ -223,7 +223,7 @@ EntityFactory = {
     end,
 
     createEnemy = function(name, pos)
-        print('Create', name)
+        print('Create', name, pos)
         local e = Entity()
         e:emplace('Name', { name = name })
         e:emplace('Position')
@@ -232,8 +232,9 @@ EntityFactory = {
         e:emplace('Collide', { size = vec(32, 32) })
         e:emplace('Animation', { name = 'resources/anims/enemy1.json' })
         e:setPosition(pos)
+        e:setVelocity(vec(-2, 0))
         addComponent(e, StateMachineComponent('states.EnemyStateMachine'))
-        addComponent(e, EnemyPositionComponent())
+        addComponent(e, EnemyPositionComponent(pos))
         addComponent(e, HealthComponent(20))
         StateManager.initState(e)
         return e
@@ -251,17 +252,15 @@ EntityFactory = {
 
     shoot = function(power, beamType, pos)
         local force = Handles[getEntity('force'):getId()]
-        print('Shoot power ', power)
         if not force.components.force:isAttached() or power ~= 1 then
             beamType = BeamType.Normal
         end
-        print('Shoot beam type ', beamType)
 
         shootNormal(power, pos)
         if beamType == BeamType.Ribbon then
             shootRibbon(force, pos)
         elseif beamType == BeamType.Laser then
-            shootLaser(force, pos)
+            shootLaser(pos)
         end
 
         if power == 1 then

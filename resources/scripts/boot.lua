@@ -6,6 +6,7 @@ require 'StateManager'
 require 'Sounds'
 require 'Keys'
 require 'EntityFactory'
+require 'EnemySpawning'
 
 local hitboxesVisible = false
 showHitboxes(hitboxesVisible)
@@ -14,27 +15,32 @@ showHitboxes(hitboxesVisible)
 EntityFactory.createCamera()
 EntityFactory.createHUD()
 EntityFactory.createPlayer()
---for i = 1, 7 do
---    EntityFactory.createEnemy('enemy'..i, vec(60+40*i, 100))
---end
+initEnemies()
 
 -- callbacks
 function update()
-    for _,value in pairs(Handles)
+    spawnEnemies()
+    for _, value in pairs(Handles)
     do
-        if isHandleValid(value) then StateManager.update(value) end
+        if isHandleValid(value) then
+            StateManager.update(value)
+        end
     end
 end
 
 function onEvent(e, event)
     local handle = Handles[e:getId()]
-    if isHandleValid(handle) then StateManager.onEvent(handle, event) end
+    if isHandleValid(handle) then
+        StateManager.onEvent(handle, event)
+    end
 end
 
 function onKeyUp(code)
-    for _,value in pairs(Handles)
+    for _, value in pairs(Handles)
     do
-        if isHandleValid(value) then StateManager.onKeyUp(value, code) end
+        if isHandleValid(value) then
+            StateManager.onKeyUp(value, code)
+        end
     end
 end
 
@@ -43,8 +49,11 @@ function onKeyDown(code)
         hitboxesVisible = not hitboxesVisible
         showHitboxes(hitboxesVisible)
     end
-    for _,value in pairs(Handles)
+
+    for _, value in pairs(Handles)
     do
-        if isHandleValid(value) then StateManager.onKeyDown(value, code) end
+        if isHandleValid(value) then
+            StateManager.onKeyDown(value, code)
+        end
     end
 end

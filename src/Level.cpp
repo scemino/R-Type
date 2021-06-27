@@ -34,11 +34,22 @@ void Level::load(const fs::path &path) {
   m_numTilesWidth = jMap["width"].getInt();
   m_numTilesHeight = jMap["height"].getInt();
 
+  // read tiles
   int mapSize = m_numTilesWidth * m_numTilesHeight;
   m_tilesMap.resize(mapSize);
   int i = 0;
   for (const auto &jTile : jData) {
     m_tilesMap[i++] = jTile.getInt() - 1;
+  }
+
+  // read objects
+  i = 0;
+  const auto jObjects = jMap["layers"][1]["objects"];
+  m_objects.resize(jObjects.size());
+  for (const auto &jObject : jObjects) {
+    const glm::vec2 pos{jObject["x"].getDouble(), jObject["y"].getDouble()};
+    const auto group = jObject["properties"][0]["value"].getInt();
+    m_objects[i++] = {jObject["name"].getString(), pos, group};
   }
 }
 
@@ -257,4 +268,7 @@ void Level::draw(ngf::RenderTarget &target) const {
       s.draw(target, states);
     }
   }
+}
+const std::vector<LevelObject> &Level::getLevelObjects() {
+  return m_objects;
 }
