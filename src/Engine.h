@@ -20,6 +20,7 @@ class DebugManager;
 class EntityManager;
 class EventManager;
 class Level;
+class ResourceManager;
 class SoundManager;
 
 namespace ngf {
@@ -33,9 +34,6 @@ public:
   explicit Engine(ngf::AudioSystem &audio);
   ~Engine();
 
-  // TODO: move this to a resource manager
-  std::shared_ptr<ngf::Texture> loadTexture(const fs::path &path);
-
   // services
   sol::state &lua() { return m_lua; }
   entt::registry &registry() { return m_reg; }
@@ -45,6 +43,7 @@ public:
   SoundManager &soundManager() { assert(m_soundManager); return *m_soundManager; }
   DebugManager &debugManager() { assert(m_debugManager); return *m_debugManager; }
   Level& level() { assert(m_level); return *m_level; }
+  ResourceManager& resourceManager() { assert(m_resourceManager); return *m_resourceManager; }
 
   void startGame();
 
@@ -68,6 +67,7 @@ private:
   std::unique_ptr<ComponentFactory> m_componentFactory;
   std::unique_ptr<SoundManager> m_soundManager;
   std::unique_ptr<DebugManager> m_debugManager;
+  std::unique_ptr<ResourceManager> m_resourceManager;
   entt::registry m_reg;
   sol::state m_lua;
   bool m_gameStarted{false};

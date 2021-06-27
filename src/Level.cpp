@@ -5,6 +5,7 @@
 #include <Level.h>
 #include <CollisionResult.h>
 #include <ECS/Component/Components.h>
+#include <Scripting/ResourceManager.h>
 
 namespace {
 constexpr int MapNumTilesWidth = 48;
@@ -18,7 +19,7 @@ constexpr int HudHpix = 32;
 }
 
 Level::Level(const fs::path &mapPath, const fs::path &texturePath) {
-  m_tex = locator::engine::ref().loadTexture(texturePath);
+  m_tex = locator::engine::ref().resourceManager().textureCache.load(texturePath);
   m_tilesWidthTex = m_tex->getSize().x / TileWidth;
 
   load(mapPath);

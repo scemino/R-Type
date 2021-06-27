@@ -3,6 +3,8 @@
 #include <System/Log.h>
 #include <Engine.h>
 #include <System/Locator.h>
+#include <Scripting/ResourceManager.h>
+#include <utility>
 
 namespace {
 ngf::irect toRect(const ngf::GGPackValue &jRect) {
@@ -15,7 +17,12 @@ glm::vec2 toVector(const ngf::GGPackValue &jVector) {
 }
 }
 
-AnimationsInfo loadAnimations(const std::filesystem::path &path) {
+AnimationsInfo::AnimationsInfo(std::unordered_map<std::string, Animation> animations,
+                               std::string initialAnim)
+    : animations(std::move(animations)), initialAnim(std::move(initialAnim)) {
+}
+
+[[nodiscard]] std::shared_ptr<AnimationsInfo> AnimationLoader::load(const std::filesystem::path &path) const {
   Engine &engine = locator::engine::ref();
   RTYPE_LOG_INFO("Load animations {}", path.string());
   std::unordered_map<std::string, Animation> anims;
@@ -40,8 +47,8 @@ AnimationsInfo loadAnimations(const std::filesystem::path &path) {
                                      static_cast<float>(jFrame.getHeight()) / 2.f) : toVector(jOrigins[i]);
       frames.push_back(AnimationFrame{jFrame, jOrigin});
     }
-    auto texture = engine.loadTexture(sTexture);
+    auto texture = engine.resourceManager().textureCache.load(sTexture);
     anims[name] = Animation{frames, texture, delay, static_cast<std::size_t>(loopFrom)};
   }
-  return AnimationsInfo{anims, jAnims["initialAnim"].getString()};
+  return std::make_shared<AnimationsInfo>(anims, jAnims["initialAnim"].getString());
 }

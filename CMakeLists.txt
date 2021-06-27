@@ -23,9 +23,11 @@ add_executable(R-Type
         src/ECS/System/RenderSystem.cpp
         src/ECS/System/MotionSystem.cpp
         src/Graphics/AnimationLoader.cpp
+        src/Graphics/TextureLoader.cpp
         src/Graphics/TilesLoader.cpp
         src/Scripting/DebugManager.cpp
         src/Scripting/EntityManager.cpp
+        src/Scripting/ResourceManager.cpp
         src/Scripting/SoundManager.cpp
         src/Scripting/Bindings/AudioBindings.cpp
         src/Scripting/Bindings/Bindings.cpp

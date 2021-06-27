@@ -12,6 +12,8 @@
 #include <Scripting/EntityManager.h>
 #include <Graphics/TilesLoader.h>
 
+class AnimationsInfo;
+
 struct PositionComponent {
   PositionComponent() = default;
   explicit PositionComponent(const glm::vec2 &p) : pos(p) {}
@@ -54,7 +56,7 @@ struct GraphicComponent {
 
 struct AnimationComponent {
   std::string current;
-  std::unordered_map<std::string, Animation> animations;
+  std::shared_ptr<AnimationsInfo> animations;
   std::size_t frameIndex{0};
   int loop{1};
   int delay{0};
@@ -112,7 +114,7 @@ private:
 };
 
 struct TilesComponent {
-  TilesInfo tilesInfo;
+  std::shared_ptr<TilesInfo> tilesInfo;
   std::vector<int> tiles;
 
   TilesComponent() = default;

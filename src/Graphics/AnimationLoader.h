@@ -1,4 +1,7 @@
+#pragma once
+
 #include <filesystem>
+#include <memory>
 #include <string>
 #include <unordered_map>
 #include <ECS/Component/Components.h>
@@ -7,6 +10,10 @@
 struct AnimationsInfo {
   std::unordered_map<std::string, Animation> animations;
   std::string initialAnim;
+
+  AnimationsInfo(std::unordered_map<std::string, Animation> animations, std::string initialAnim);
 };
 
-AnimationsInfo loadAnimations(const std::filesystem::path &path);
+struct AnimationLoader final {
+  [[nodiscard]] std::shared_ptr<AnimationsInfo> load(const std::filesystem::path &path) const;
+};

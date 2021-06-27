@@ -1,5 +1,6 @@
 #include "Components.h"
 #include <Graphics/AnimationLoader.h>
+#include <Scripting/ResourceManager.h>
 
 PositionComponent::PositionComponent(const sol::table &t) {
   const auto p = t["pos"].get<glm::vec2>();
@@ -37,9 +38,8 @@ NameComponent::NameComponent(const sol::table &t) {
 
 AnimationComponent::AnimationComponent(const sol::table &t) {
   const auto name = t["name"].get<std::string>();
-  auto animsInfo = loadAnimations(name);
-  animations = animsInfo.animations;
-  setAnim(animsInfo.initialAnim, -1);
+  animations = locator::engine::ref().resourceManager().animationsCache.load(name);
+  setAnim(animations->initialAnim, -1);
 }
 
 GraphicComponent::GraphicComponent(const sol::table &t) {
@@ -54,7 +54,7 @@ void AnimationComponent::setAnim(const std::string &anim, int loop) {
 
 void AnimationComponent::setFrame(std::size_t frame) {
   this->playing = false;
-  this->frameIndex = std::clamp(frame, static_cast<std::size_t>(0), animations[current].frames.size() - 1);
+  this->frameIndex = std::clamp(frame, static_cast<std::size_t>(0), animations->animations[current].frames.size() - 1);
 }
 
 HierarchyComponent::HierarchyComponent(const sol::table &t) {
@@ -127,5 +127,5 @@ glm::vec2 HierarchyComponent::getOffset(entt::entity entityChild) const {
 
 TilesComponent::TilesComponent(const sol::table &t) {
   const auto name = t["name"].get<std::string>();
-  tilesInfo = loadTiles(name);
+  tilesInfo = locator::engine::ref().resourceManager().tilesCache.load(name);
 }

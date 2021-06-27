@@ -4,6 +4,7 @@
 #include <System/Log.h>
 #include <Scripting/EntityManager.h>
 #include <Scripting/EventManager.h>
+#include <Graphics/AnimationLoader.h>
 
 namespace Systems::AnimationSystem {
 
@@ -14,8 +15,8 @@ void update(entt::registry &registry) {
     auto &ac = registry.get<AnimationComponent>(e);
     if (ac.current.empty())
       return;
-    auto it = ac.animations.find(ac.current);
-    if (it == ac.animations.end()) {
+    auto it = ac.animations->animations.find(ac.current);
+    if (it == ac.animations->animations.end()) {
       RTYPE_LOG_WARN("Animation {} not found", ac.current);
       continue;
     }

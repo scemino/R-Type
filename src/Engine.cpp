@@ -15,6 +15,7 @@
 #include <Scripting/Bindings/Bindings.h>
 #include <Scripting/SoundManager.h>
 #include <Scripting/DebugManager.h>
+#include <Scripting/ResourceManager.h>
 
 template<>
 struct fmt::formatter<fs::path> {
@@ -32,6 +33,7 @@ Engine::Engine(ngf::AudioSystem &audio) {
   m_soundManager = std::make_unique<SoundManager>(audio);
   m_componentFactory = std::make_unique<ComponentFactory>();
   m_debugManager = std::make_unique<DebugManager>();
+  m_resourceManager = std::make_unique<ResourceManager>();
 
   createVm();
 }
@@ -49,17 +51,6 @@ void Engine::createVm() {
   .registerComponentType<CollideComponent>("Collide")
   .registerComponentType<HierarchyComponent>("Hierarchy")
   .registerComponentType<TilesComponent>("Tiles");
-}
-
-std::shared_ptr<ngf::Texture> Engine::loadTexture(const fs::path &path) {
-  auto it = m_textures.find(path);
-  if (it == m_textures.end()) {
-    RTYPE_LOG_INFO("Load texture {}", path.string());
-    auto texture = std::make_shared<ngf::Texture>(path);
-    m_textures.insert({path, texture});
-    return texture;
-  }
-  return it->second;
 }
 
 void Engine::onKeyDown(ngf::Scancode code) {
