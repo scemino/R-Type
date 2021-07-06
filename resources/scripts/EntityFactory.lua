@@ -335,7 +335,7 @@ EntityFactory = {
         e:emplace('Graphics')
         e:emplace('Tiles', { name = 'resources/tiles/hud.json' })
         e:setTilesData({ 79, 79 })
-        e:setPosition(vec(8, 256))
+        e:setPosition(vec(8, 240))
         addComponent(e, StateMachineComponent('states.LivesIndicatorStateMachine'))
         StateManager.initState(e)
 
@@ -344,32 +344,32 @@ EntityFactory = {
         e:emplace('Position')
         e:emplace('Tiles', { name = 'resources/tiles/hud.json' })
         e:setTilesData({ 69, 70, 71, 72 })
-        e:setPosition(vec(24, 264))
+        e:setPosition(vec(24, 248))
 
         e = Entity()
         e:emplace('Name', { name = 'beam_text' })
         e:emplace('Position')
         e:emplace('Tiles', { name = 'resources/tiles/hud.json' })
         e:setTilesData({ 57, 58, 59, 60, 61, 62 })
-        e:setPosition(vec(80, 256))
+        e:setPosition(vec(80, 240))
 
         e = Entity()
         e:emplace('Name', { name = 'beam_level' })
         e:emplace('Position')
         e:emplace('Tiles', { name = 'resources/tiles/hud.json' })
-        e:setPosition(vec(128, 256))
+        e:setPosition(vec(128, 240))
 
         e = Entity()
         e:emplace('Name', { name = 'score' })
         e:emplace('Position')
         e:emplace('Tiles', { name = 'resources/tiles/hud.json' })
-        addComponent(e, ScoreComponent(0, vec(104, 264)))
+        addComponent(e, ScoreComponent(0, vec(104, 248)))
 
         e = Entity()
         e:emplace('Name', { name = 'hi' })
         e:emplace('Position')
         e:emplace('Tiles', { name = 'resources/tiles/hud.json' })
-        e:setPosition(vec(144, 264))
+        e:setPosition(vec(144, 248))
         e:setTilesData({ 76, 77, 78, 72 })
 
         -- ranking
@@ -387,7 +387,7 @@ EntityFactory = {
         e:emplace('Name', { name = 'hiscore' })
         e:emplace('Position')
         e:emplace('Tiles', { name = 'resources/tiles/hud.json' })
-        addComponent(e, ScoreComponent(174500, vec(224, 264)))
+        addComponent(e, ScoreComponent(174500, vec(224, 248)))
     end
 }
 

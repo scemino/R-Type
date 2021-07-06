@@ -13,7 +13,7 @@
 namespace fs = std::filesystem;
 
 static constexpr const int GameWidth = 384;
-static constexpr const int GameHeight = 272;
+static constexpr const int GameHeight = 256;
 
 class ComponentFactory;
 class DebugManager;

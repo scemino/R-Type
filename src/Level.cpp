@@ -8,14 +8,14 @@
 #include <Scripting/ResourceManager.h>
 
 namespace {
-constexpr int MapNumTilesWidth = 48;
-constexpr int MapNumTilesHeight = 32;
-
 constexpr int TileWidth = 8;
 constexpr int TileHeight = 8;
+constexpr int TileHudHeight = 2;
 
-constexpr int HudHeight = 2;
-constexpr int HudHpix = 32;
+constexpr int MapNumTilesWidth = GameWidth / TileWidth;
+constexpr int MapNumTilesHeight = GameHeight / TileHeight - TileHudHeight;
+
+constexpr int HudHpix = TileHudHeight * TileHeight;
 }
 
 Level::Level(const fs::path &mapPath, const fs::path &texturePath) {
@@ -217,14 +217,6 @@ bool Level::collide(const ngf::irect &rect) const {
   const int index = y * m_numTilesWidth + x;
   const int tile = m_tilesMap.at(index);
   return tile;
-}
-
-ngf::irect Level::getRect() const {
-  auto x = m_position;
-  auto y = 0;
-  auto w = GameWidth;
-  auto h = GameHeight - HudHeight;
-  return ngf::irect::fromPositionSize({x, y}, {w, h});
 }
 
 void Level::setPosition(int pos) {

@@ -28,9 +28,6 @@ public:
   Level(const fs::path &mapPath, const fs::path &texturePath);
   ~Level();
 
-  // for the level the box is the rectangle that represents the coordinates of the screen
-  [[nodiscard]] ngf::irect getRect() const;
-
   [[nodiscard]] std::optional<CollisionResult> collideLevel(const ngf::irect &rect) const;
   [[nodiscard]] bool collide(const ngf::irect &rect) const;
   [[nodiscard]] int get(const glm::ivec2 &pos) const;
