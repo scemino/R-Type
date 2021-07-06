@@ -19,6 +19,7 @@ class ComponentFactory;
 class DebugManager;
 class EntityManager;
 class EventManager;
+class Fade;
 class Level;
 class ResourceManager;
 class SoundManager;
@@ -44,6 +45,7 @@ public:
   DebugManager &debugManager() { assert(m_debugManager); return *m_debugManager; }
   Level& level() { assert(m_level); return *m_level; }
   ResourceManager& resourceManager() { assert(m_resourceManager); return *m_resourceManager; }
+  Fade& fade() { assert(m_fade); return *m_fade; }
 
   void startGame();
 
@@ -68,6 +70,7 @@ private:
   std::unique_ptr<SoundManager> m_soundManager;
   std::unique_ptr<DebugManager> m_debugManager;
   std::unique_ptr<ResourceManager> m_resourceManager;
+  std::unique_ptr<Fade> m_fade;
   entt::registry m_reg;
   sol::state m_lua;
   bool m_gameStarted{false};

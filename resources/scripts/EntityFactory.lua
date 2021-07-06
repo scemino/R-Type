@@ -45,24 +45,6 @@ local function createBeam()
     return beam
 end
 
-local function createForce()
-    local e = Entity()
-    e:emplace('Name', { name = 'force' })
-    e:emplace('Position')
-    e:emplace('Motion')
-    e:emplace('Graphics')
-    e:emplace('Hierarchy')
-    e:emplace('Collide', { size = vec(32, 32) })
-    e:emplace('Animation', { name = 'resources/anims/spaceship.json' })
-    e:setAnim('force1', -1)
-    e:setPosition(vec(32, 2))
-    addComponent(e, ForceComponent())
-    addComponent(e, DamageComponent(getDamageFromPower(1), true))
-    addComponent(e, StateMachineComponent('states.ForceStateMachine'))
-    StateManager.initState(e)
-    return e
-end
-
 local function createForceBullet(name, pos, vel, anim)
     local e = Entity()
     e:emplace('Name', { name = name })
@@ -216,9 +198,41 @@ EntityFactory = {
         addComponent(e, TimerComponent())
         addComponent(e, LivesComponent())
         StateManager.initState(e)
-
         e:addChild(createBeam())
-        createForce()
+        e:addChild(EntityFactory.createBoost(e))
+        EntityFactory.createForce()
+        return e
+    end,
+
+    createForce = function()
+        local e = Entity()
+        e:emplace('Name', { name = 'force' })
+        e:emplace('Position')
+        e:emplace('Motion')
+        e:emplace('Graphics')
+        e:emplace('Hierarchy')
+        e:emplace('Collide', { size = vec(32, 32) })
+        e:emplace('Animation', { name = 'resources/anims/spaceship.json' })
+        e:setAnim('force1', -1)
+        e:setPosition(vec(32, 2))
+        addComponent(e, ForceComponent())
+        addComponent(e, DamageComponent(getDamageFromPower(1), true))
+        addComponent(e, StateMachineComponent('states.ForceStateMachine'))
+        StateManager.initState(e)
+        return e
+    end,
+
+    createBoost = function()
+        local e = Entity()
+        e:emplace('Name', { name = 'boost' })
+        e:emplace('Position')
+        e:emplace('Motion')
+        e:emplace('Graphics')
+        e:emplace('Hierarchy')
+        e:emplace('Collide', { size = vec(32, 32) })
+        e:emplace('Animation', { name = 'resources/anims/spaceship.json' })
+        e:setAnim('boost', -1)
+        e:setPosition(vec(-32, 2))
         return e
     end,
 

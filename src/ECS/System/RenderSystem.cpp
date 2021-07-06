@@ -51,12 +51,17 @@ void draw(entt::registry &registry, ngf::RenderTarget &target) {
       });
 
   // debug collision hit boxes
-  if(!locator::engine::ref().debugManager().showHitboxes) return;
+  if (!locator::engine::ref().debugManager().showHitboxes)
+    return;
 
   const auto view = registry.view<CollideComponent, PositionComponent>();
   for (const entt::entity e : view) {
     const auto &[cc, pc] = registry.get<CollideComponent, PositionComponent>(e);
     const auto rect = getHitBox(cc.hitbox, pc.getPosition());
+
+    const auto gc = registry.try_get<GraphicComponent>(e);
+    if (gc && !gc->visible)
+      return;
 
     // draw hit box
     ngf::RectangleShape hb(rect);

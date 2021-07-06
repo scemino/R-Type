@@ -4,9 +4,8 @@
 #include <Scripting/SoundManager.h>
 
 namespace {
-void playSound(const std::string& path)
-{
-  locator::engine::ref().soundManager().playSound(path);
+void playSound(const std::string &path, std::optional<int> loopTimes) {
+  locator::engine::ref().soundManager().playSound(path, loopTimes);
 }
 }
 

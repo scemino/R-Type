@@ -20,7 +20,9 @@ void bindMath(sol::state &lua) {
                               sol::meta_function::subtraction, std::minus<glm::vec2>(),
                               sol::meta_function::addition, std::plus<glm::vec2>(),
                               sol::meta_function::division, std::divides<glm::vec2>(),
-                              sol::meta_function::multiplication, std::multiplies<glm::vec2>(),
+                              sol::meta_function::multiplication,
+                              sol::overload([](const glm::vec2 &v, float factor) { return v * factor; },
+                                            std::multiplies<glm::vec2>()),
                               sol::meta_function::to_string,
                               [](const glm::vec2 &v1) -> std::string {
                                 return "x: " + std::to_string(v1.x) + ", y: " + std::to_string(v1.y);

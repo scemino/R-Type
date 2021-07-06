@@ -20,7 +20,7 @@ private:
 
 public:
   explicit SoundManager(ngf::AudioSystem &audio);
-  void playSound(const std::string& path);
+  void playSound(const std::string& path, std::optional<int> loopTimes);
   void update();
 
 private:

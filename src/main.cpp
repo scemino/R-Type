@@ -2,7 +2,6 @@
 #include <ngf/Application.h>
 #include <Debug/DebugTools.h>
 #include <Engine.h>
-#include <ECS/Component/Components.h>
 #include <System/Locator.h>
 #include <System/Log.h>
 

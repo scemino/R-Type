@@ -4,10 +4,11 @@
 SoundManager::SoundManager(ngf::AudioSystem &audio) : m_audio(audio) {
 }
 
-void SoundManager::playSound(const std::string &path) {
+void SoundManager::playSound(const std::string &path, std::optional<int> loopTimes) {
   auto buffer = std::make_unique<ngf::SoundBuffer>();
   buffer->loadFromFile(path);
-  auto handle = m_audio.playSound(*buffer);
+  const auto loops = loopTimes.value_or(1);
+  auto handle = m_audio.playSound(*buffer, loops);
   m_sounds.push_back(Sound{std::move(buffer), handle});
 }
 

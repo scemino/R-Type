@@ -15,6 +15,7 @@ add_executable(R-Type
         src/Level.cpp
         src/Debug/DebugTools.cpp
         src/Engine.cpp
+        src/Fade.cpp
         src/ECS/ComponentFactory.cpp
         src/ECS/Entity.cpp
         src/ECS/Component/Components.cpp

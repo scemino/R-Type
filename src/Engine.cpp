@@ -3,6 +3,7 @@
 #include <ngf/Audio/SoundBuffer.h>
 #include <ECS/ComponentFactory.h>
 #include <Engine.h>
+#include <Fade.h>
 #include <Level.h>
 #include <System/Log.h>
 #include <ECS/Component/Components.h>
@@ -34,6 +35,7 @@ Engine::Engine(ngf::AudioSystem &audio) {
   m_componentFactory = std::make_unique<ComponentFactory>();
   m_debugManager = std::make_unique<DebugManager>();
   m_resourceManager = std::make_unique<ResourceManager>();
+  m_fade = std::make_unique<Fade>();
 
   createVm();
 }
@@ -104,4 +106,5 @@ void Engine::draw(ngf::RenderTarget &target) {
     m_level->draw(target);
 
   Systems::RenderSystem::draw(m_reg, target);
+  m_fade->draw(target);
 }
