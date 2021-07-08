@@ -19,18 +19,23 @@ void die(const Entity &e) {
   locator::engine::ref().entityManager().destroyEntity(e.getId());
 }
 
-Entity &getEntity(const std::string &name) {
-  return locator::engine::ref().entityManager().getEntity(name);
+sol::table getEntity(const std::string &name) {
+  auto handles = locator::engine::ref().lua().get<sol::table>("Handles");
+  return handles[locator::engine::ref().entityManager().getEntity(name).getId()];
 }
 
 bool hasEntity(const std::string &name) {
   return locator::engine::ref().entityManager().hasEntity(name);
 }
+
+auto createEntity(sol::state &lua) {
+  return lua["Handles"][locator::engine::ref().entityManager().createEntity().getId()];
+}
 }
 
 void bindEntity(sol::state &lua) {
   auto entityType = lua.new_usertype<Entity>("Entity", sol::call_constructor,
-                                             sol::factories([&]() { return locator::engine::ref().entityManager().createEntity(); }));
+                                             sol::factories([&]() { return createEntity(lua); }));
 
 #define ADD_FUNCTION(x) lua.set_function(#x, x)
   ADD_FUNCTION(getEntity);

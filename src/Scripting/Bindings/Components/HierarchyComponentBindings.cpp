@@ -4,7 +4,8 @@
 #include "PositionComponentBindings.h"
 
 namespace {
-void addChild(Entity &e, Entity &child) {
+void addChild(Entity &e, const sol::table &childTable) {
+  Entity& child = childTable["cppRef"];
   e.component<HierarchyComponent>().addChild(child);
 }
 }

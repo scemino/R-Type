@@ -22,32 +22,31 @@ ngf::frect getHitBox(const Entity &entity) {
 /// Check collision between 2 entities, if there is a collision, sends an event.
 /// \param id1 id of entity 1
 /// \param id2 id of entity 2
-void checkCollision(entt::entity id1, entt::entity id2) {
+void checkCollision(const entt::entity id1, const entt::entity id2) {
   if (id1 == id2)
     return;
 
   auto &engine = locator::engine::ref();
   const auto &etm = engine.entityManager();
-  auto &e1 = etm.getEntity(id1);
-  auto &e2 = etm.getEntity(id2);
-  const auto &h1 = getHitBox(e1);
-  const auto &h2 = getHitBox(e2);
-  if (!h1.intersects(h2))
+  const auto& handles = engine.lua().get<sol::table>("Handles");
+  const auto &e1 = etm.getEntity(id1);
+  const auto &e2 = etm.getEntity(id2);
+  if (!getHitBox(e1).intersects(getHitBox(e2)))
     return;
 
   auto &em = engine.eventManager();
-  em.publish(e1,
+  em.publish(handles[id1],
              "hit",
              "collisionType",
              "entities",
              "entity",
-             e2);
-  em.publish(e2,
+             handles[id2]);
+  em.publish(handles[id2],
              "hit",
              "collisionType",
              "entities",
              "entity",
-             e1);
+             handles[id1]);
 }
 }
 
@@ -61,6 +60,7 @@ void update(entt::registry &registry) {
   auto &engine = locator::engine::ref();
   const auto &etm = engine.entityManager();
   auto &em = engine.eventManager();
+  const auto& handles = locator::engine::ref().lua().get<sol::table>("Handles");
 
   const auto view = registry.view<CollideComponent, PositionComponent>();
   for (const entt::entity e : view) {
@@ -74,13 +74,12 @@ void update(entt::registry &registry) {
 
     // notify entity collision with tile or screen
     const auto collisionValue = collision.value();
-    auto &entity = etm.getEntity(e);
     const auto directionTable = engine.lua().create_table_with(
         "up", collisionValue.up(),
         "down", collisionValue.down(),
         "left", collisionValue.left(),
         "right", collisionValue.right());
-    em.publish(entity,
+    em.publish(handles[e],
                "hit",
                "collisionType",
                collisionValue.tile() ? "tile" : "screen",

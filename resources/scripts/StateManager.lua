@@ -22,9 +22,8 @@ StateManager = {
     end,
 
     initState = function(e)
-        local handle = Handles[e:getId()]
-        local sm = StateManager.getStateMachine(handle)
-        StateManager.changeState(handle, sm:get().initialState)
+        local sm = StateManager.getStateMachine(e)
+        StateManager.changeState(e, sm:get().initialState)
         sm:setStateName(sm:get().initialState)
     end,
 

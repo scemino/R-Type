@@ -19,12 +19,13 @@ local function intro_cutscene()
     end)
 
     tm:startThread(function()
-        local StateMachineComponent = require 'components.StateMachineComponent'
         local player = getEntity('player')
         player:setPosition(vec(-40, 100))
         delay(2)
         moveTo(player, vec(352, 100), 1.5)
         moveTo(player, vec(100, 100), 3)
+        StateManager.changeState(player, 'MoveState')
+        StateManager.changeState(getEntity('beam'), 'MoveState')
     end)
 end
 

@@ -31,9 +31,7 @@ local EnemyStateMachine = {
                     if event.data.entity:getName() == 'player' then
                         return 'ExplodingState'
                     elseif event.data.entity:getName() == 'shoot' or event.data.entity:getName() == 'force' then
-                        -- TODO: find a way to get this handle from event
-                        local handle = Handles[event.data.entity:getId()]
-                        bulletHitEnemy(handle, e)
+                        bulletHitEnemy(event.data.entity, e)
                     end
                 end
             end

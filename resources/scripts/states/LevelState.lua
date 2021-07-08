@@ -16,9 +16,8 @@ function LevelState:update()
 end
 
 function LevelState:onEvent(e, event)
-    local handle = Handles[e:getId()]
-    if isHandleValid(handle) then
-        StateManager.onEvent(handle, event)
+    if isHandleValid(e) then
+        StateManager.onEvent(e, event)
     end
 end
 

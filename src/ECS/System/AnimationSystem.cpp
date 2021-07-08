@@ -42,8 +42,8 @@ void update(entt::registry &registry) {
           ac.frameIndex = anim.frames.size() - 1;
           // notify end of animation
           auto& engine = locator::engine::ref();
-          auto& entity = engine.entityManager().getEntity(e);
-          engine.eventManager().publish(entity, "anim", "name", ac.current, "eventType", "finished");
+          const auto& handles = locator::engine::ref().lua().get<sol::table>("Handles");
+          engine.eventManager().publish(handles[e], "anim", "name", ac.current, "eventType", "finished");
           continue;
         }
         ac.frameIndex = anim.loopFrom;

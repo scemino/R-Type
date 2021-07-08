@@ -11,6 +11,7 @@ local TagComponent = require 'components.TagComponent'
 local LaserComponent = require 'components.LaserComponent'
 require 'components.BeamType'
 require 'components.LaserDirection'
+local util = require 'util'
 
 local hitBoxes = {
     vec(16, 4),
@@ -200,11 +201,12 @@ EntityFactory = {
         StateManager.initState(e)
         e:addChild(createBeam())
         e:addChild(EntityFactory.createBoost(e))
-        EntityFactory.createForce()
+        --EntityFactory.createForce()
         return e
     end,
 
     createForce = function()
+        print('Create force')
         local e = Entity()
         e:emplace('Name', { name = 'force' })
         e:emplace('Position')
@@ -237,7 +239,6 @@ EntityFactory = {
     end,
 
     createEnemy = function(name, pos)
-        print('Create', name, pos)
         local e = Entity()
         e:emplace('Name', { name = name })
         e:emplace('Position')
@@ -251,6 +252,7 @@ EntityFactory = {
         addComponent(e, EnemyPositionComponent(pos))
         addComponent(e, HealthComponent(20))
         StateManager.initState(e)
+        print('Create', e:getName(), pos)
         return e
     end,
 
@@ -265,8 +267,8 @@ EntityFactory = {
     end,
 
     shoot = function(power, beamType, pos)
-        local force = Handles[getEntity('force'):getId()]
-        if not force.components.force:isAttached() or power ~= 1 then
+        local force = util.getEntity('force')
+        if not force or not force.components.force:isAttached() or power ~= 1 then
             beamType = BeamType.Normal
         end
 
@@ -283,12 +285,12 @@ EntityFactory = {
             playSound(Sounds.shoot2)
         end
 
-        local score = Handles[getEntity('score'):getId()].components.score
+        local score = getEntity('score').components.score
         score:setScore(score:getScore() + 1)
     end,
 
     forceShoot = function()
-        local force = Handles[getEntity('force'):getId()]
+        local force = getEntity('force')
         local pos = force:getPosition()
         local forceLevel = force.components.force:getForceLevel()
 

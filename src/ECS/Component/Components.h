@@ -2,6 +2,7 @@
 
 #include <string>
 #include <unordered_map>
+#include <utility>
 #include <vector>
 #include <glm/vec2.hpp>
 #include <ngf/Graphics/Rect.h>
@@ -38,7 +39,7 @@ struct CollideComponent {
   ngf::frect hitbox{};
 
   CollideComponent() = default;
-  explicit CollideComponent(const ngf::frect &hb) : hitbox(hb) {}
+  explicit CollideComponent(ngf::frect hb) : hitbox(std::move(hb)) {}
   explicit CollideComponent(const sol::table &t);
 };
 

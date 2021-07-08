@@ -17,8 +17,7 @@ Entity &EntityManager::createEntity() {
 }
 
 void EntityManager::destroyEntity(EntityId id) {
-  RTYPE_LOG_DEBUG("Destroy entity {}", id);
-  m_lua["onEntityRemoved"](id);
+  RTYPE_LOG_DEBUG("Mark entity {} as dead", id);
   getEntity(id).die();
 }
 
@@ -35,6 +34,8 @@ void EntityManager::removeDeadEntities() {
 
         // TODO: detach all children
       }
+      RTYPE_LOG_DEBUG("Destroy entity {}", it->second->getId());
+      m_lua["onEntityRemoved"](it->second->getId());
       m_registry.destroy(it->second->getId());
       it = entities.erase(it);
     } else {

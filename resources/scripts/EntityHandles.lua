@@ -7,25 +7,17 @@ local mt = {}
 mt.__index = function(handle, key)
     if not isHandleValid(handle) then
         print(debug.traceback())
-        error("Error: handle is not valid!", 2)
+        error("Handle is invalid! (While calling function " .. key .. ")", 2)
     end
 
     local f = memoizedFuncs[key]
     if not f then
-        f = function(handle, ...) return Entity[key](handle.cppRef, ...) end
+        f = function(handle, ...)
+            return Entity[key](handle.cppRef, ...)
+        end
         memoizedFuncs[key] = f
     end
     return f
-end
-
-local function getWrappedSafeFunction(f)
-    return function(handle, ...)
-            if not handle.isValid then
-                print(debug.traceback())
-                error("Error: handle is not valid!", 2)
-            end
-            return f(handle.cppRef, ...)
-        end
 end
 
 local function isAlive(e)
@@ -39,7 +31,6 @@ function createHandle(cppRef)
     }
 
     -- speedy access without __index call
-    handle.getName = getWrappedSafeFunction(Entity.getName)
     handle.isAlive = isAlive
 
     local id = cppRef:getId()
@@ -49,8 +40,7 @@ function createHandle(cppRef)
 end
 
 function isHandleValid(handle)
-    return handle ~= nil and
-            handle.cppRef ~= nil and Handles[handle.cppRef:getId()] ~= nil
+    return handle ~= nil
 end
 
 function onEntityRemoved(id)
@@ -61,10 +51,9 @@ end
 
 -- components functions
 function addComponent(entity, component)
-    local handle = Handles[entity:getId()]
     component:setEntity(entity)
     local name = component.class.static.name
-    handle.components[name] = component
+    entity.components[name] = component
 end
 
 return Handles

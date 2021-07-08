@@ -2,6 +2,7 @@ local util = require 'util'
 
 local PlayerStateMachine = {
     states = {
+        IntroState = {},
         MoveState = {
             init = function(e)
                 e:setAnim('move', 1)
@@ -52,8 +53,7 @@ local PlayerStateMachine = {
                 elseif event.data.collisionType == 'entities' then
                     if event.data.entity:getName() == 'enemy_bullet' or
                             event.data.entity:getName() == 'enemy' then
-                        local handle = Handles[event.data.entity:getId()]
-                        if handle.components.health:isAlive() then
+                        if event.data.entity.components.health:isAlive() then
                             return "ExplodingState"
                         end
                     end
@@ -78,6 +78,6 @@ local PlayerStateMachine = {
             end
         }
     },
-    initialState = 'MoveState'
+    initialState = 'IntroState'
 }
 return PlayerStateMachine

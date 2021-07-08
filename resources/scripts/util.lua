@@ -23,4 +23,14 @@ function util.distance(p1, p2)
     return math.sqrt(x * x + y * y)
 end
 
+function util.getEntity(name)
+    if not hasEntity(name) then return nil end
+    return getEntity(name)
+end
+
+function util.entityDo(name, func)
+    if not hasEntity(name) then return nil end
+    return func(getEntity(name))
+end
+
 return util

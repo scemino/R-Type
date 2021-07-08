@@ -17,9 +17,7 @@ local EnemyBulletStateMachine = {
                     if event.data.entity:getName() == 'player' then
                         return 'ExplodingState'
                     elseif event.data.entity:getName() == 'force' then
-                        -- TODO: find a way to get this handle from event
-                        local force = Handles[event.data.entity:getId()]
-                        forceHitBullet(force, e)
+                        forceHitBullet(event.data.entity, e)
                     end
                 elseif event.data.collisionType == 'screen' then
                     e:die()
