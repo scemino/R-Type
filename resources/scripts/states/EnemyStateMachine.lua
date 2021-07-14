@@ -28,9 +28,10 @@ local EnemyStateMachine = {
             end,
             hit = function(e, event)
                 if event.data.collisionType == 'entities' then
-                    if event.data.entity:getName() == 'player' then
+                    local name = event.data.entity:getName()
+                    if name == 'player' then
                         return 'ExplodingState'
-                    elseif event.data.entity:getName() == 'shoot' or event.data.entity:getName() == 'force' then
+                    elseif name == 'shoot' or name == 'force' or name == 'bits_up' or name == 'bits_dn' then
                         bulletHitEnemy(event.data.entity, e)
                     end
                 end

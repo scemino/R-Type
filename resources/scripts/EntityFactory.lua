@@ -9,6 +9,8 @@ local LivesComponent = require 'components.LivesComponent'
 local ScoreComponent = require 'components.ScoreComponent'
 local TagComponent = require 'components.TagComponent'
 local LaserComponent = require 'components.LaserComponent'
+local BitsComponent = require 'components.BitsComponent'
+
 require 'components.BeamType'
 require 'components.LaserDirection'
 local util = require 'util'
@@ -201,7 +203,6 @@ EntityFactory = {
         StateManager.initState(e)
         e:addChild(createBeam())
         e:addChild(EntityFactory.createBoost(e))
-        --EntityFactory.createForce()
         return e
     end,
 
@@ -222,6 +223,40 @@ EntityFactory = {
         addComponent(e, StateMachineComponent('states.ForceStateMachine'))
         StateManager.initState(e)
         return e
+    end,
+
+    createBitsUp = function()
+        print('Create bits')
+        local e = Entity()
+        e:emplace('Name', { name = 'bits_up' })
+        e:emplace('Position')
+        e:emplace('Motion')
+        e:emplace('Graphics')
+        e:emplace('Hierarchy')
+        e:emplace('Collide', { size = vec(18, 18) })
+        e:emplace('Animation', { name = 'resources/anims/spaceship.json' })
+        e:setAnim('bits', -1)
+        addComponent(e, BitsComponent(BitsType.Up))
+        addComponent(e, DamageComponent(getDamageFromPower(1), true))
+        addComponent(e, StateMachineComponent('states.BitsStateMachine'))
+        StateManager.initState(e)
+    end,
+
+    createBitsDown = function()
+        print('Create bits')
+        local e = Entity()
+        e:emplace('Name', { name = 'bits_dn' })
+        e:emplace('Position')
+        e:emplace('Motion')
+        e:emplace('Graphics')
+        e:emplace('Hierarchy')
+        e:emplace('Collide', { size = vec(18, 18) })
+        e:emplace('Animation', { name = 'resources/anims/spaceship.json' })
+        e:setAnim('bits', -1)
+        addComponent(e, BitsComponent(BitsType.Down))
+        addComponent(e, DamageComponent(getDamageFromPower(1), true))
+        addComponent(e, StateMachineComponent('states.BitsStateMachine'))
+        StateManager.initState(e)
     end,
 
     createBoost = function()
@@ -318,6 +353,31 @@ EntityFactory = {
 
         -- South bullet
         createForceBullet('force_bullet_s', pos, vec(0, 4), 'force_bullet_s')
+    end,
+
+    bitsShoot = function(bits)
+        local bitsType = bits.components.bits:getBitsType()
+        local pos = bits:getPosition() + vec(4, 0)
+        local anim = 'ribbon_small1'
+        if bitsType == BitsType.Down then
+            anim = 'ribbon_small2'
+        end
+
+        local e = Entity()
+        e:emplace('Name', { name = 'bits_shot' })
+        e:emplace('Position')
+        e:emplace('Motion')
+        e:emplace('Graphics')
+        e:emplace('Hierarchy')
+        e:emplace('Collide', { size = vec(32, 12) })
+        e:emplace('Animation', { name = 'resources/anims/spaceship.json' })
+        e:setAnim(anim, -1)
+        e:setVelocity(vec(6, 0))
+        e:setPosition(pos)
+        addComponent(e, TagComponent('player_shoot'))
+        addComponent(e, DamageComponent(getDamageFromPower(1)))
+        addComponent(e, StateMachineComponent('states.ShootStateMachine'))
+        StateManager.initState(e)
     end,
 
     enemyShoot = function(pos)

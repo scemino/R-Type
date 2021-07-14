@@ -7,33 +7,29 @@ local function changeForce(e, code)
         e.components.force:setForceLevel(2)
     elseif code == Keys.D3 then
         e.components.force:setForceLevel(3)
+    elseif code == Keys.D4 then
+        if not hasEntity('bits_up') then
+            EntityFactory.createBitsUp()
+        elseif not hasEntity('bits_dn') then
+            EntityFactory.createBitsDown()
+        else
+            getEntity('bits_up'):die()
+            getEntity('bits_dn'):die()
+        end
     end
 end
 
+local forceFrontOffsets = { vec(26, 0), vec(16, 0), vec(21, 0) }
+local forceRearOffsets = { vec(-26, 0), vec(-40, 0), vec(-30, 0) }
+
 local function getForceFrontOffset(e)
     local forceLevel = e.components.force:getForceLevel()
-    if forceLevel == 1 then
-        return vec(26, 0)
-    end
-    if forceLevel == 2 then
-        return vec(16, 0)
-    end
-    if forceLevel == 3 then
-        return vec(21, 0)
-    end
+    return forceFrontOffsets[forceLevel]
 end
 
 local function getForceRearOffset(e)
     local forceLevel = e.components.force:getForceLevel()
-    if forceLevel == 1 then
-        return vec(-26, 0)
-    end
-    if forceLevel == 2 then
-        return vec(-40, 0)
-    end
-    if forceLevel == 3 then
-        return vec(-30, 0)
-    end
+    return forceRearOffsets[forceLevel]
 end
 
 local function getForceOffset(forceOnTheLeft, e)
@@ -85,7 +81,8 @@ local ForceStateMachine = {
                     x = 68
                 end
                 d = util.distance(vec(x, playerPos.y), forcePos)
-                if d == 0 then
+                if d < 1 then
+                    e:setVelocity(vec(0, 0))
                     return
                 end
 
