@@ -45,7 +45,8 @@ add_executable(R-Type
         src/Scripting/Bindings/Components/NameComponentBindings.cpp
         src/Scripting/Bindings/Components/PositionComponentBindings.cpp
         src/Scripting/Bindings/Components/TilesComponentBindings.cpp
-        src/main.cpp)
+        src/main.cpp
+        src/Replay.cpp)
 
 set(LUA_SOURCE_FILES
         extlibs/lua-5.4.1/src/lapi.c
