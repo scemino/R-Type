@@ -34,7 +34,7 @@ public:
   void onKeyDown(ngf::Scancode code);
   void onKeyUp(ngf::Scancode code);
 
-  void save(const fs::path &path);
+  const Replay& getReplay() const;
 
 private:
   std::uint32_t m_frames{0};
@@ -42,16 +42,23 @@ private:
   Replay m_replay;
 };
 
+class ReplaySerializer {
+public:
+  Replay load(const fs::path &path);
+  void save(const Replay &replay, const fs::path &path);
+};
+
 class RecordPlayer {
 public:
   using KeyHandler = std::function<void(ngf::Scancode code)>;
+
 public:
   void start();
   void stop();
 
   [[nodiscard]] bool isPlaying() const;
 
-  void load(const fs::path &path);
+  void setReplay(Replay Replay);
   void update(std::uint32_t currentFrame);
 
   void setKeyDownHandler(KeyHandler handler);

@@ -14,7 +14,7 @@ class RTypeApplication final : public ngf::Application {
 private:
   void onInit() final {
     RTYPE_LOG_INFO("Init {} game", GameName);
-    m_window.init({"R-Type", glm::ivec2{GameWidth, GameHeight}, true, false, true});
+    m_window.init({"R-Type", glm::ivec2{640, 480}, true, false, true});
     m_window.setVerticalSyncEnabled();
     restartGame();
   }
@@ -67,14 +67,17 @@ private:
     } else {
       RTYPE_LOG_INFO("Stop recording and save");
       m_recorder.stop();
-      m_recorder.save("record.txt");
+      ReplaySerializer serializer;
+      serializer.save(m_recorder.getReplay(), "replay.txt");
     }
   }
 
   void togglePlay() {
     if (!m_recordPlayer.isPlaying()) {
       RTYPE_LOG_INFO("Start playing...");
-      m_recordPlayer.load("record.txt");
+      ReplaySerializer serializer;
+      auto replay = serializer.load("replay.txt");
+      m_recordPlayer.setReplay(replay);
       restartGame();
       m_recordPlayer.start();
     } else {

@@ -67,6 +67,7 @@ ngf::Scancode toScanCode(const ReplayEntry &entry) {
 void ReplayRecorder::start() {
   m_recording = true;
   m_frames = 0;
+  m_replay.entries.clear();
 }
 
 void ReplayRecorder::stop() { m_recording = false; }
@@ -93,32 +94,13 @@ void ReplayRecorder::onKeyUp(ngf::Scancode code) {
   }
 }
 
-void ReplayRecorder::save(const fs::path &path) {
-  std::ofstream os(path);
-  for (const auto &entry : m_replay.entries) {
-    os << entry.frame << ':' << entry.state << '\n';
-  }
+const Replay &ReplayRecorder::getReplay() const {
+  return m_replay;
 }
 
 void RecordPlayer::setKeyDownHandler(KeyHandler handler) { m_keyDownHandler = handler; }
 
 void RecordPlayer::setKeyUpHandler(KeyHandler handler) { m_keyUpHandler = handler; }
-
-void RecordPlayer::load(const fs::path &path) {
-  m_replay.entries.clear();
-  std::ifstream is(path);
-  std::string line;
-  while (std::getline(is, line)) {
-    std::uint32_t f;
-    char c;
-    sscanf(line.c_str(), "%u:%c", &f, &c);
-    ReplayEntry entry;
-    entry.frame = f;
-    entry.state = static_cast<std::uint8_t>(c);
-    std::cout << entry.toString() << '\n';
-    m_replay.entries.push_back(entry);
-  }
-}
 
 void RecordPlayer::onEntry(const ReplayEntry &entry) {
   std::cout << "onEntry: " << entry.toString() << '\n';
@@ -155,4 +137,32 @@ void RecordPlayer::update(std::uint32_t currentFrame) {
   if (m_currentIndex == entries.size()) {
     m_playing = false;
   }
+}
+
+Replay ReplaySerializer::load(const fs::path &path) {
+  Replay replay;
+  std::ifstream is(path);
+  std::string line;
+  while (std::getline(is, line)) {
+    std::uint32_t f;
+    char c;
+    sscanf(line.c_str(), "%u:%c", &f, &c);
+    ReplayEntry entry;
+    entry.frame = f;
+    entry.state = static_cast<std::uint8_t>(c);
+    std::cout << entry.toString() << '\n';
+    replay.entries.push_back(entry);
+  }
+  return replay;
+}
+
+void ReplaySerializer::save(const Replay &replay, const fs::path &path) {
+  std::ofstream os(path);
+  for (const auto &entry : replay.entries) {
+    os << entry.frame << ':' << entry.state << '\n';
+  }
+}
+
+void RecordPlayer::setReplay(Replay replay) {
+  m_replay = std::move(replay);
 }
