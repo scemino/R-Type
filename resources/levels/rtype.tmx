@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.5" tiledversion="1.6.0" orientation="orthogonal" renderorder="right-down" width="526" height="30" tilewidth="8" tileheight="8" infinite="0" nextlayerid="3" nextobjectid="45">
+<map version="1.5" tiledversion="1.6.0" orientation="orthogonal" renderorder="right-down" width="526" height="30" tilewidth="8" tileheight="8" infinite="0" nextlayerid="4" nextobjectid="53">
  <editorsettings>
   <export target="rtype.json" format="json"/>
  </editorsettings>
@@ -39,9 +39,9 @@
 </data>
  </layer>
  <objectgroup id="2" name="EnemyLayer">
-  <object id="6" name="enemy1" x="646.461" y="101.602">
+  <object id="6" name="blaster" x="584" y="224">
    <properties>
-    <property name="Group" type="int" value="1"/>
+    <property name="Group" type="int" value="3"/>
    </properties>
    <point/>
   </object>
@@ -84,6 +84,54 @@
   <object id="44" name="enemy1" x="814.847" y="170.001">
    <properties>
     <property name="Group" type="int" value="2"/>
+   </properties>
+   <point/>
+  </object>
+  <object id="45" name="enemy1" x="644.382" y="93.5973">
+   <properties>
+    <property name="Group" type="int" value="1"/>
+   </properties>
+   <point/>
+  </object>
+  <object id="46" name="blaster" x="616" y="224">
+   <properties>
+    <property name="Group" type="int" value="3"/>
+   </properties>
+   <point/>
+  </object>
+  <object id="47" name="blaster" x="656" y="224">
+   <properties>
+    <property name="Group" type="int" value="3"/>
+   </properties>
+   <point/>
+  </object>
+  <object id="48" name="blaster" x="718.621" y="222.405">
+   <properties>
+    <property name="Group" type="int" value="3"/>
+   </properties>
+   <point/>
+  </object>
+  <object id="49" name="blaster" x="822.148" y="206.34">
+   <properties>
+    <property name="Group" type="int" value="3"/>
+   </properties>
+   <point/>
+  </object>
+  <object id="50" name="blaster" x="776.453" y="206.697">
+   <properties>
+    <property name="Group" type="int" value="3"/>
+   </properties>
+   <point/>
+  </object>
+  <object id="51" name="blaster" x="908.182" y="190.633">
+   <properties>
+    <property name="Group" type="int" value="3"/>
+   </properties>
+   <point/>
+  </object>
+  <object id="52" name="blaster" x="952.806" y="191.704">
+   <properties>
+    <property name="Group" type="int" value="3"/>
    </properties>
    <point/>
   </object>

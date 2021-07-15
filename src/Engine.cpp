@@ -85,19 +85,25 @@ void Engine::update() {
   if (!m_gameStarted)
     return;
 
+  // call all systems udate
   Systems::MotionSystem::update(m_reg);
   Systems::CollisionSystem::update(m_reg);
   Systems::AnimationSystem::update(m_reg);
 
+  // now send all events in queue
   m_eventManager->sendAll();
 
+  // call LUA update callback
   auto r = m_lua["update"].call();
   if (!r.valid()) {
     sol::error e = r;
     RTYPE_LOG_ERROR("[lua] failed to call update:\n{}", e.what());
   }
 
+  // remove all pending dead entities
   m_entityManager->removeDeadEntities();
+
+  // update sounds
   m_soundManager->update();
 }
 

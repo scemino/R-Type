@@ -273,22 +273,44 @@ EntityFactory = {
         return e
     end,
 
-    createEnemy = function(name, pos)
+    createBlaster = function(name, pos)
         local e = Entity()
         e:emplace('Name', { name = name })
         e:emplace('Position')
         e:emplace('Motion')
         e:emplace('Graphics')
         e:emplace('Collide', { size = vec(32, 32) })
-        e:emplace('Animation', { name = 'resources/anims/enemy1.json' })
+        e:emplace('Animation', { name = 'resources/anims/blaster.json' })
+        e:setFrame(0)
         e:setPosition(pos)
-        e:setVelocity(vec(-2, 0))
-        addComponent(e, StateMachineComponent('states.EnemyStateMachine'))
-        addComponent(e, EnemyPositionComponent(pos))
+        e:setVelocity(vec(-0.5, 0))
+        addComponent(e, StateMachineComponent('states.BlasterStateMachine'))
         addComponent(e, HealthComponent(20))
         StateManager.initState(e)
         print('Create', e:getName(), pos)
         return e
+    end,
+
+    createEnemy = function(name, pos)
+        if name == 'enemy1' then
+            local e = Entity()
+            e:emplace('Name', { name = name })
+            e:emplace('Position')
+            e:emplace('Motion')
+            e:emplace('Graphics')
+            e:emplace('Collide', { size = vec(32, 32) })
+            e:emplace('Animation', { name = 'resources/anims/enemy1.json' })
+            e:setPosition(pos)
+            e:setVelocity(vec(-2, 0))
+            addComponent(e, StateMachineComponent('states.EnemyStateMachine'))
+            addComponent(e, EnemyPositionComponent(pos))
+            addComponent(e, HealthComponent(20))
+            StateManager.initState(e)
+            print('Create', e:getName(), pos)
+            return e
+        elseif name == 'blaster' then
+            return EntityFactory.createBlaster(name, pos)
+        end
     end,
 
     createCamera = function()
