@@ -39,7 +39,7 @@
 </data>
  </layer>
  <objectgroup id="2" name="EnemyLayer">
-  <object id="6" name="blaster" x="584" y="224">
+  <object id="6" name="blaster" x="416" y="208">
    <properties>
     <property name="Group" type="int" value="3"/>
    </properties>

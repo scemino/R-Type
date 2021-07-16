@@ -279,14 +279,15 @@ EntityFactory = {
         e:emplace('Position')
         e:emplace('Motion')
         e:emplace('Graphics')
+        e:emplace('Hierarchy')
         e:emplace('Collide', { size = vec(32, 32) })
         e:emplace('Animation', { name = 'resources/anims/blaster.json' })
         e:setFrame(0)
         e:setPosition(pos)
-        e:setVelocity(vec(-0.5, 0))
         addComponent(e, StateMachineComponent('states.BlasterStateMachine'))
         addComponent(e, HealthComponent(20))
         StateManager.initState(e)
+        getEntity('level'):addChild(e)
         print('Create', e:getName(), pos)
         return e
     end,
@@ -315,6 +316,11 @@ EntityFactory = {
 
     createCamera = function()
         local e = Entity()
+        e:emplace('Name', { name = 'level' })
+        e:emplace('Position')
+        e:emplace('Hierarchy')
+
+        e = Entity()
         e:emplace('Name', { name = 'camera' })
         e:emplace('Position')
         e:emplace('Motion')

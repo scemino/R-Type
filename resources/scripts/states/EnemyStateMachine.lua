@@ -39,6 +39,7 @@ local EnemyStateMachine = {
         },
         ExplodingState = {
             init = function(e)
+                e:setVelocity(vec(-getEntity('camera'):getVelocity().x, 0))
                 playSound(Sounds.enemy1_explode)
                 e:setAnim('explode', 1)
             end,

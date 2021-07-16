@@ -5,7 +5,7 @@ local function shoot(pos)
 
     -- probability to shoot
     if math.random() > 0.994 then
-        EntityFactory.enemyShoot(pos)
+        EntityFactory.enemyShoot(pos+vec(0, -8))
     end
 end
 

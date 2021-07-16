@@ -13,14 +13,15 @@ function initEnemies()
 end
 
 function spawnEnemies()
-    local cx = camera:getPosition().x + gameWidth
+    local cx1 = camera:getPosition().x
+    local cx2 = cx1 + gameWidth * 2
     for i, o in pairs(objs) do
         if enemies[i] then
             local x = math.floor(o.pos.x)
             -- spawn enemies by wave (specified by a group id)
-            if x == cx or group == o.group then
+            if x == cx2 or group == o.group then
                 group = o.group
-                EntityFactory.createEnemy(o.name, o.pos)
+                EntityFactory.createEnemy(o.name, vec(o.pos.x - cx1, o.pos.y))
                 enemies[i] = false
             end
         end

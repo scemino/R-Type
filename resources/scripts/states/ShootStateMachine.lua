@@ -16,7 +16,7 @@ local ShootStateMachine = {
         },
         ExplodingState = {
             init = function(e)
-                e:setVelocity(vec(0, 0))
+                e:setVelocity(vec(-getEntity('camera'):getVelocity().x, 0))
                 playSound(Sounds.shoot_explode2)
                 if e.components.damage:getInitialDamage() == 20 then
                     e:setAnim('shoot_explode', 1)

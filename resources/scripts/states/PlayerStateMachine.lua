@@ -6,9 +6,7 @@ local PlayerStateMachine = {
         MoveState = {
             init = function(e)
                 e:setAnim('move', 1)
-                local vel = e:getVelocity()
-                vel.y = 0
-                e:setVelocity(vel)
+                e:setVelocity(vec(0, 0))
             end,
             onKeyDown = function(e, code)
                 if code == Keys.Up then
@@ -62,7 +60,7 @@ local PlayerStateMachine = {
         },
         ExplodingState = {
             init = function(e)
-                e:setVelocity(vec(0, 0))
+                e:setVelocity(vec(-getEntity('camera'):getVelocity().x, 0))
                 e:setAnim('explode', 1)
                 playSound(Sounds.player_explode)
                 e.components.lives:setLives(e.components.lives:getLives() - 1)

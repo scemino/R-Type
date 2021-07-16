@@ -29,7 +29,7 @@ local EnemyBulletStateMachine = {
         ExplodingState = {
             init = function(e)
                 -- wow I need to change this (we shouldn't know the camera velocity here)
-                e:setVelocity(vec(-1,0))
+                e:setVelocity(vec(-getEntity('camera'):getVelocity().x, 0))
                 e:setAnim('explode', 1)
             end,
             anim = function(e, event)

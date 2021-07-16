@@ -30,7 +30,7 @@ class RenderTarget;
 class Texture;
 }
 
-class Engine {
+class Engine final {
 public:
   explicit Engine(ngf::AudioSystem &audio);
   ~Engine();
