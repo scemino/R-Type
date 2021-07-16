@@ -10,7 +10,8 @@ local ScoreComponent = require 'components.ScoreComponent'
 local TagComponent = require 'components.TagComponent'
 local LaserComponent = require 'components.LaserComponent'
 local BitsComponent = require 'components.BitsComponent'
-
+local ShellComponent = require 'components.ShellComponent'
+local ShellMovementComponent = require 'components.ShellMovementComponent'
 require 'components.BeamType'
 require 'components.LaserDirection'
 local util = require 'util'
@@ -218,6 +219,7 @@ EntityFactory = {
         e:emplace('Animation', { name = 'resources/anims/spaceship.json' })
         e:setAnim('force1', -1)
         e:setPosition(vec(32, 2))
+        e:setZOrder(10)
         addComponent(e, ForceComponent())
         addComponent(e, DamageComponent(getDamageFromPower(1), true))
         addComponent(e, StateMachineComponent('states.ForceStateMachine'))
@@ -292,26 +294,62 @@ EntityFactory = {
         return e
     end,
 
+    createPataPataEnemy = function(name, pos)
+        local e = Entity()
+        e:emplace('Name', { name = name })
+        e:emplace('Position')
+        e:emplace('Motion')
+        e:emplace('Graphics')
+        e:emplace('Collide', { size = vec(32, 32) })
+        e:emplace('Animation', { name = 'resources/anims/enemy1.json' })
+        e:setPosition(pos)
+        e:setVelocity(vec(-2, 0))
+        addComponent(e, TagComponent('enemy'))
+        addComponent(e, StateMachineComponent('states.EnemyStateMachine'))
+        addComponent(e, EnemyPositionComponent(pos))
+        addComponent(e, HealthComponent(20))
+        StateManager.initState(e)
+        print('Create', e:getName(), pos)
+        return e
+    end,
+
     createEnemy = function(name, pos)
         if name == 'enemy1' then
-            local e = Entity()
-            e:emplace('Name', { name = name })
-            e:emplace('Position')
-            e:emplace('Motion')
-            e:emplace('Graphics')
-            e:emplace('Collide', { size = vec(32, 32) })
-            e:emplace('Animation', { name = 'resources/anims/enemy1.json' })
-            e:setPosition(pos)
-            e:setVelocity(vec(-2, 0))
-            addComponent(e, StateMachineComponent('states.EnemyStateMachine'))
-            addComponent(e, EnemyPositionComponent(pos))
-            addComponent(e, HealthComponent(20))
-            StateManager.initState(e)
-            print('Create', e:getName(), pos)
-            return e
+            return EntityFactory.createPataPataEnemy(name, pos)
         elseif name == 'blaster' then
             return EntityFactory.createBlaster(name, pos)
         end
+    end,
+
+    createEnemyShell = function(radius, pos)
+        local shell = Entity()
+        shell:emplace('Name', { name = 'shell' })
+        shell:emplace('Position')
+        shell:emplace('Hierarchy')
+        shell:setPosition(pos)
+        addComponent(shell, ShellComponent())
+        addComponent(shell, StateMachineComponent('states.ShellStateMachine'))
+        addComponent(shell, TagComponent('enemy'))
+        StateManager.initState(shell)
+        for i = 1, ShellMovementComponent.static.N - 2 do
+            local e = Entity()
+            e:emplace('Name', { name = 'shell' .. i })
+            e:emplace('Position')
+            e:emplace('Motion')
+            e:emplace('Graphics')
+            e:emplace('Hierarchy')
+            e:emplace('Collide', { size = vec(32, 32) })
+            e:emplace('Animation', { name = 'resources/anims/enemy_shell.json' })
+            e:setPosition(pos)
+            shell:addChild(e)
+            addComponent(e, TagComponent('enemy'))
+            addComponent(e, HealthComponent(200))
+            addComponent(e, ShellMovementComponent(radius, i))
+            addComponent(e, StateMachineComponent('states.ShellItemStateMachine'))
+            StateManager.initState(e)
+        end
+        getEntity('level'):addChild(shell)
+        return shell
     end,
 
     createCamera = function()

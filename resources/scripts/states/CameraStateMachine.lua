@@ -2,7 +2,8 @@ local CameraStateMachine = {
     states = {
         MoveState = {
             init = function(e)
-                e:setVelocity(vec(0.5, 0))
+                e:setVelocity(vec(0, 0))
+                e:setPosition(vec(2080, 0))
             end,
             update = function(e)
                 local pos = e:getPosition();

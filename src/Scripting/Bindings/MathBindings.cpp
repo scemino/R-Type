@@ -1,6 +1,13 @@
 #include <glm/vec2.hpp>
+#include <glm/gtx/vector_angle.hpp>
 #include <ngf/Graphics/Rect.h>
 #include "MathBindings.h"
+
+namespace {
+float dot(const glm::vec2 &v1, const glm::vec2 &v2) {
+  return glm::dot(v1, v2);
+}
+}
 
 namespace Bindings {
 void bindMath(sol::state &lua) {
@@ -28,6 +35,10 @@ void bindMath(sol::state &lua) {
                                 return "x: " + std::to_string(v1.x) + ", y: " + std::to_string(v1.y);
                               }
   );
+
+#define ADD_FUNCTION(x) lua.set_function(#x, x)
+  ADD_FUNCTION(dot);
+#undef ADD_FUNCTION
 
   lua.new_usertype<ngf::frect>("rect",
                                sol::call_constructor,
