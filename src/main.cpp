@@ -1,10 +1,13 @@
 #include <cstdlib>
+#include <fstream>
 #include <ngf/Application.h>
 #include <Debug/DebugTools.h>
 #include <Engine.h>
+#include <Graphics/DefaultShaders.h>
+#include <Replay.h>
 #include <System/Locator.h>
 #include <System/Log.h>
-#include <Replay.h>
+#include <System/Util.h>
 
 namespace {
 constexpr const char *GameName = "R-Type";
@@ -27,7 +30,9 @@ private:
   void onRender(ngf::RenderTarget &target) final {
     target.setView(ngf::View(ngf::frect::fromMinMax({0, 0}, {GameWidth, GameHeight})));
     target.clear();
-    locator::engine::ref().draw(target);
+    ngf::RenderStates s;
+    s.shader = &m_shader;
+    locator::engine::ref().draw(target, s);
     Application::onRender(target);
   }
 
@@ -88,11 +93,23 @@ private:
   void restartGame() {
     m_updates = 0;
     RTYPE_LOG_INFO("Start {} game", GameName);
+    reloadShaders();
     locator::engine::reset();
     locator::engine::set<Engine>(m_audioSystem);
     locator::engine::ref().startGame();
     m_recordPlayer.setKeyDownHandler([](auto code) { locator::engine::ref().onKeyDown(code); });
     m_recordPlayer.setKeyUpHandler([](auto code) { locator::engine::ref().onKeyUp(code); });
+  }
+
+  void reloadShaders() {
+    const auto vertexShader = readAllIfExists("resources/shaders/vertexShader.glsl", DefaultShaders::vertexShaderSource);
+    const auto fragmentShader = readAllIfExists("resources/shaders/fragmentShader.glsl", DefaultShaders::fragmentShaderSource);
+    try {
+      m_shader.load(vertexShader.c_str(), fragmentShader.c_str());
+    } catch (const std::runtime_error &err) {
+      RTYPE_LOG_ERROR("Invalid shader {}", err.what());
+      m_shader.load(DefaultShaders::vertexShaderSource, DefaultShaders::fragmentShaderSource);
+    }
   }
 
   void onUpdate(const ngf::TimeSpan &elapsed) final {
@@ -102,10 +119,19 @@ private:
     ++m_updates;
   }
 
+  static std::string readAllIfExists(const fs::path &path, const std::string &defaultContent) {
+    if (fs::exists(path)) {
+      RTYPE_LOG_INFO("Load shader {}", path.c_str());
+      return readAllText(path);
+    }
+    return defaultContent;
+  }
+
 private:
   ReplayRecorder m_recorder;
   RecordPlayer m_recordPlayer;
   std::uint32_t m_updates{0};
+  ngf::Shader m_shader;
 };
 
 int main([[maybe_unused]] int argc, [[maybe_unused]] char **argv) {

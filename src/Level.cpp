@@ -223,11 +223,11 @@ void Level::setPosition(int pos) {
   m_position = std::clamp(pos, 0, m_positionFinal);
 }
 
-void Level::draw(ngf::RenderTarget &target) const {
+void Level::draw(ngf::RenderTarget &target, const ngf::RenderStates& st) const {
   // move camera position
   ngf::Transform t;
   t.setPosition({-m_position, 0});
-  ngf::RenderStates states;
+  ngf::RenderStates states = st;
   states.transform = t.getTransform() * states.transform;
 
   // draw tiles

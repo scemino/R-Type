@@ -35,7 +35,7 @@ public:
   void setPosition(int pos);
   [[nodiscard]] int getPosition() const { return m_position; }
 
-  void draw(ngf::RenderTarget &target) const;
+  void draw(ngf::RenderTarget &target, const ngf::RenderStates& states) const;
 
   const std::vector<LevelObject> &getLevelObjects();
 private:

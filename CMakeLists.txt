@@ -45,6 +45,7 @@ add_executable(R-Type
         src/Scripting/Bindings/Components/NameComponentBindings.cpp
         src/Scripting/Bindings/Components/PositionComponentBindings.cpp
         src/Scripting/Bindings/Components/TilesComponentBindings.cpp
+        src/System/Util.cpp
         src/main.cpp
         src/Replay.cpp)
 

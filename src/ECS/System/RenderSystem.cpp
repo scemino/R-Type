@@ -16,7 +16,7 @@ ngf::frect getHitBox(const ngf::frect &rect, const glm::vec2 &pos) {
 
 namespace Systems::RenderSystem {
 
-void draw(entt::registry &registry, ngf::RenderTarget &target) {
+void draw(entt::registry &registry, ngf::RenderTarget &target, const ngf::RenderStates& states) {
   registry.sort<GraphicComponent>([](const auto &lhs, const auto &rhs) {
     return lhs.zOrder < rhs.zOrder;
   });
@@ -30,7 +30,7 @@ void draw(entt::registry &registry, ngf::RenderTarget &target) {
         s.setFlipX(gc.flipX);
         s.getTransform().setOrigin(gc.origin);
         s.getTransform().setPosition(pc.getPosition());
-        s.draw(target, {});
+        s.draw(target, states);
       });
   registry.view<TilesComponent, PositionComponent>()
       .each([&](const auto &tc, const auto &pc) {
@@ -45,7 +45,7 @@ void draw(entt::registry &registry, ngf::RenderTarget &target) {
               {x * tc.tilesInfo->tileSize.x, y * tc.tilesInfo->tileSize.y},
               tc.tilesInfo->tileSize));
           s.getTransform().setPosition(pos);
-          s.draw(target, {});
+          s.draw(target, states);
           pos.x += tc.tilesInfo->tileSize.x;
         }
       });
@@ -68,13 +68,13 @@ void draw(entt::registry &registry, ngf::RenderTarget &target) {
     hb.setOutlineThickness(1);
     hb.setColor(ngf::Color{0xff, 0x00, 0x00, 0x70});
     hb.setOutlineColor(ngf::Colors::Red);
-    hb.draw(target, {});
+    hb.draw(target, states);
 
     // draw pos
     ngf::CircleShape posShape(2);
     posShape.setColor(ngf::Color{0x00, 0x00, 0xFF, 0xFF});
     posShape.getTransform().setPosition(pc.getPosition());
-    posShape.draw(target, {});
+    posShape.draw(target, states);
   }
 }
 }

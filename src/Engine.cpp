@@ -107,10 +107,10 @@ void Engine::update() {
   m_soundManager->update();
 }
 
-void Engine::draw(ngf::RenderTarget &target) {
+void Engine::draw(ngf::RenderTarget &target, const ngf::RenderStates& states) {
   if (m_level)
-    m_level->draw(target);
+    m_level->draw(target, states);
 
-  Systems::RenderSystem::draw(m_reg, target);
-  m_fade->draw(target);
+  Systems::RenderSystem::draw(m_reg, target, states);
+  m_fade->draw(target, states);
 }

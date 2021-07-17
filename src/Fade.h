@@ -3,5 +3,5 @@
 struct Fade {
   float fade{0.f};
 
-  void draw(ngf::RenderTarget &target);
+  void draw(ngf::RenderTarget &target, const ngf::RenderStates& states);
 };

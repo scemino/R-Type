@@ -55,7 +55,7 @@ public:
 
   // update & draw
   void update();
-  void draw(ngf::RenderTarget &target);
+  void draw(ngf::RenderTarget &target, const ngf::RenderStates& states);
 
 private:
   void createVm();

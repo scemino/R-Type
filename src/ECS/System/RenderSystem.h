@@ -7,7 +7,7 @@
 class Engine;
 namespace Systems::RenderSystem {
 
-void draw(entt::registry &registry, ngf::RenderTarget &target);
+void draw(entt::registry &registry, ngf::RenderTarget &target, const ngf::RenderStates& states);
 
 }
 
