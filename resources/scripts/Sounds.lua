@@ -5,5 +5,6 @@ Sounds = {
     shoot1 = 'resources/audio/rtype-048.wav',
     shoot2 = 'resources/audio/rtype-049.wav',
     enemy1_explode = 'resources/audio/rtype-080.wav',
-    level_music = 'resources/audio/rtype-001.wav',
+    music_intro = 'resources/audio/rtype-031.wav',
+    music_level = 'resources/audio/rtype-001.wav',
 }

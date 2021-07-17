@@ -1,7 +1,9 @@
 local function intro_cutscene()
     tm:startThread(function()
-        playSound(Sounds.level_music, -1)
+        playSound(Sounds.music_intro, 1)
         fadeIn(3)
+        delay(13)
+        playSound(Sounds.music_level, -1)
     end)
 
     tm:startThread(function()
