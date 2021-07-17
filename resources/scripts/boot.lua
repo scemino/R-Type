@@ -21,7 +21,6 @@ EntityFactory.createCamera()
 EntityFactory.createHUD()
 EntityFactory.createPlayer()
 initEnemies()
-EntityFactory.createEnemyShell(80, vec(2334, 120))
 Cutscenes.intro()
 
 local levelState = LevelState()

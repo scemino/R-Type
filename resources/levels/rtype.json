@@ -186,8 +186,8 @@
                  "type":"",
                  "visible":true,
                  "width":0,
-                 "x":644.381589097454,
-                 "y":93.5973257906917
+                 "x":644.382,
+                 "y":93.5973
                 }, 
                 {
                  "height":0,
@@ -240,8 +240,8 @@
                  "type":"",
                  "visible":true,
                  "width":0,
-                 "x":718.620591175211,
-                 "y":222.404683706983
+                 "x":718.621,
+                 "y":222.405
                 }, 
                 {
                  "height":0,
@@ -258,8 +258,8 @@
                  "type":"",
                  "visible":true,
                  "width":0,
-                 "x":822.147651006711,
-                 "y":206.340139940026
+                 "x":822.148,
+                 "y":206.34
                 }, 
                 {
                  "height":0,
@@ -276,8 +276,8 @@
                  "type":"",
                  "visible":true,
                  "width":0,
-                 "x":776.452948736256,
-                 "y":206.697129801514
+                 "x":776.453,
+                 "y":206.697
                 }, 
                 {
                  "height":0,
@@ -294,8 +294,8 @@
                  "type":"",
                  "visible":true,
                  "width":0,
-                 "x":908.182207625303,
-                 "y":190.632586034557
+                 "x":908.182,
+                 "y":190.633
                 }, 
                 {
                  "height":0,
@@ -312,8 +312,98 @@
                  "type":"",
                  "visible":true,
                  "width":0,
-                 "x":952.805940311295,
-                 "y":191.70355561902
+                 "x":952.806,
+                 "y":191.704
+                }, 
+                {
+                 "height":0,
+                 "id":53,
+                 "name":"shell",
+                 "point":true,
+                 "properties":[
+                        {
+                         "name":"Group",
+                         "type":"int",
+                         "value":5
+                        }],
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":2336,
+                 "y":120
+                }, 
+                {
+                 "height":0,
+                 "id":54,
+                 "name":"bink",
+                 "point":true,
+                 "properties":[
+                        {
+                         "name":"Group",
+                         "type":"int",
+                         "value":4
+                        }],
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":501.997861444088,
+                 "y":72.5983454330576
+                }, 
+                {
+                 "height":0,
+                 "id":55,
+                 "name":"bink",
+                 "point":true,
+                 "properties":[
+                        {
+                         "name":"Group",
+                         "type":"int",
+                         "value":4
+                        }],
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":543.080646068997,
+                 "y":71.4727896899094
+                }, 
+                {
+                 "height":0,
+                 "id":56,
+                 "name":"bink",
+                 "point":true,
+                 "properties":[
+                        {
+                         "name":"Group",
+                         "type":"int",
+                         "value":4
+                        }],
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":580.786763464461,
+                 "y":71.4727896899094
+                }, 
+                {
+                 "height":0,
+                 "id":57,
+                 "name":"bink",
+                 "point":true,
+                 "properties":[
+                        {
+                         "name":"Group",
+                         "type":"int",
+                         "value":4
+                        }],
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":787.326242332151,
+                 "y":54.0266756711126
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -322,7 +412,7 @@
          "y":0
         }],
  "nextlayerid":4,
- "nextobjectid":53,
+ "nextobjectid":58,
  "orientation":"orthogonal",
  "renderorder":"right-down",
  "tiledversion":"1.6.0",

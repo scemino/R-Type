@@ -1,0 +1,48 @@
+{
+  "texture":  "resources/images/r-typesheet7.png",
+  "animations": {
+    "falling":
+    {
+      "frames": [
+        [0, 33, 33, 33]
+      ]
+    },
+    "walking":
+    {
+      "frames": [
+        [0, 0, 33, 33],
+        [33, 0, 33, 33],
+        [0, 0, 33, 33],
+        [66, 0, 33, 33]
+      ]
+    },
+    "standing":
+    {
+      "frames": [
+        [0, 0, 33, 33]
+      ],
+      "delay": 120
+    },
+    "jumping":
+    {
+      "frames": [
+        [0, 33, 33, 33],
+        [33, 33, 33, 33],
+        [66, 33, 33, 33]
+      ]
+    },
+    "explode":
+    {
+      "frames": [
+        [ 130, 2, 30, 28 ],
+        [ 162, 1, 31, 32 ],
+        [ 194, 1, 32, 32 ],
+        [ 228, 2, 31, 30 ],
+        [ 261, 2, 31, 30 ],
+        [ 295, 1, 31, 31 ]
+      ],
+      "texture": "resources/images/r-typesheet44.png"
+    }
+  },
+  "initialAnim": "falling"
+}

@@ -294,6 +294,24 @@ EntityFactory = {
         return e
     end,
 
+    createBink = function(name, pos)
+        local e = Entity()
+        e:emplace('Name', { name = name })
+        e:emplace('Position')
+        e:emplace('Motion')
+        e:emplace('Graphics')
+        e:emplace('Hierarchy')
+        e:emplace('Collide', { size = vec(32, 32) })
+        e:emplace('Animation', { name = 'resources/anims/bink.json' })
+        e:setPosition(pos)
+        addComponent(e, StateMachineComponent('states.BinkStateMachine'))
+        addComponent(e, HealthComponent(20))
+        StateManager.initState(e)
+        getEntity('level'):addChild(e)
+        print('Create', e:getName(), pos)
+        return e
+    end,
+
     createPataPataEnemy = function(name, pos)
         local e = Entity()
         e:emplace('Name', { name = name })
@@ -318,6 +336,10 @@ EntityFactory = {
             return EntityFactory.createPataPataEnemy(name, pos)
         elseif name == 'blaster' then
             return EntityFactory.createBlaster(name, pos)
+        elseif name == 'shell' then
+            return EntityFactory.createEnemyShell(80, pos)
+        elseif name == 'bink' then
+            return EntityFactory.createBink(name, pos)
         end
     end,
 
