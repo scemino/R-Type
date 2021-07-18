@@ -9,7 +9,23 @@ end
 
 local BitsStateMachine = {
     states = {
-        InitState = {
+        StandingState = {
+            init = function(e)
+                getEntity('level'):addChild(e)
+            end,
+            exit = function(e)
+                getEntity('level'):removeChild(e)
+            end,
+            hit = function(_, event)
+                if event.data.collisionType == 'entities' then
+                    local name = event.data.entity:getName()
+                    if name == 'player' then
+                        return 'MovingState'
+                    end
+                end
+            end
+        },
+        MovingState = {
             exit = function(e)
                 e:setVelocity(vec(0, 0))
             end,
@@ -42,6 +58,6 @@ local BitsStateMachine = {
             end
         }
     },
-    initialState = 'InitState'
+    initialState = 'StandingState'
 }
 return BitsStateMachine

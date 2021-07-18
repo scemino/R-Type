@@ -209,10 +209,10 @@ bool Level::collide(const ngf::irect &rect) const {
 
 [[nodiscard]] int Level::get(const glm::ivec2 &pos) const {
   const auto x = pos.x / TileWidth;
-  if (x < 0 || x > m_numTilesWidth)
+  if (x < 0 || x >= m_numTilesWidth)
     return -1;
   const auto y = pos.y / TileHeight;
-  if (y < 0 || y > m_numTilesHeight)
+  if (y < 0 || y >= m_numTilesHeight)
     return -1;
   const int index = y * m_numTilesWidth + x;
   const int tile = m_tilesMap.at(index);

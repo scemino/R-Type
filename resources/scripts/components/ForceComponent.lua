@@ -28,6 +28,12 @@ function ForceComponent:getForceLevel()
     return self.forceLevel
 end
 
+function ForceComponent:addForceLevel()
+    if self.forceLevel < 3 then
+        self:setForceLevel(self.forceLevel + 1)
+    end
+end
+
 function ForceComponent:setAttachment(forceAttachment)
     self.forceAttachment = forceAttachment
     if forceAttachment ~= ForceAttachment.None then

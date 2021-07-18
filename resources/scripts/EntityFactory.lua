@@ -12,6 +12,8 @@ local LaserComponent = require 'components.LaserComponent'
 local BitsComponent = require 'components.BitsComponent'
 local ShellComponent = require 'components.ShellComponent'
 local ShellMovementComponent = require 'components.ShellMovementComponent'
+local PowArmorComponent = require 'components.PowArmorComponent'
+local ItemComponent = require 'components.ItemComponent'
 require 'components.BeamType'
 require 'components.LaserDirection'
 local util = require 'util'
@@ -227,7 +229,7 @@ EntityFactory = {
         return e
     end,
 
-    createBitsUp = function()
+    createBitsUp = function(pos)
         print('Create bits')
         local e = Entity()
         e:emplace('Name', { name = 'bits_up' })
@@ -238,13 +240,14 @@ EntityFactory = {
         e:emplace('Collide', { size = vec(18, 18) })
         e:emplace('Animation', { name = 'resources/anims/spaceship.json' })
         e:setAnim('bits', -1)
+        e:setPosition(pos)
         addComponent(e, BitsComponent(BitsType.Up))
         addComponent(e, DamageComponent(getDamageFromPower(1), true))
         addComponent(e, StateMachineComponent('states.BitsStateMachine'))
         StateManager.initState(e)
     end,
 
-    createBitsDown = function()
+    createBitsDown = function(pos)
         print('Create bits')
         local e = Entity()
         e:emplace('Name', { name = 'bits_dn' })
@@ -255,6 +258,7 @@ EntityFactory = {
         e:emplace('Collide', { size = vec(18, 18) })
         e:emplace('Animation', { name = 'resources/anims/spaceship.json' })
         e:setAnim('bits', -1)
+        e:setPosition(pos)
         addComponent(e, BitsComponent(BitsType.Down))
         addComponent(e, DamageComponent(getDamageFromPower(1), true))
         addComponent(e, StateMachineComponent('states.BitsStateMachine'))
@@ -312,6 +316,45 @@ EntityFactory = {
         return e
     end,
 
+    createPowArmor = function(name, pos, itemType)
+        local e = Entity()
+        e:emplace('Name', { name = name })
+        e:emplace('Position')
+        e:emplace('Motion')
+        e:emplace('Graphics')
+        e:emplace('Hierarchy')
+        e:emplace('Collide', { size = vec(32, 32) })
+        e:emplace('Animation', { name = 'resources/anims/pow_armor.json' })
+        e:setPosition(pos)
+        addComponent(e, StateMachineComponent('states.PowArmorStateMachine'))
+        addComponent(e, HealthComponent(20))
+        addComponent(e, PowArmorComponent(pos))
+        addComponent(e, ItemComponent(itemType))
+        StateManager.initState(e)
+        getEntity('level'):addChild(e)
+        print('Create', e:getName(), pos, itemType)
+        return e
+    end,
+
+    createItem = function(pos, itemType)
+        local e = Entity()
+        e:emplace('Name', { name = 'item' })
+        e:emplace('Position')
+        e:emplace('Graphics')
+        e:emplace('Hierarchy')
+        e:emplace('Collide', { size = vec(32, 32) })
+        e:emplace('Animation', { name = 'resources/anims/pow_armor.json' })
+        e:setAnim('items', 1)
+        e:setFrame(0)
+        e:setPosition(pos)
+        addComponent(e, StateMachineComponent('states.ItemStateMachine'))
+        addComponent(e, ItemComponent(itemType))
+        StateManager.initState(e)
+        getEntity('level'):addChild(e)
+        print('Create', e:getName(), pos, itemType)
+        return e
+    end,
+
     createScant = function(name, pos)
         local e = Entity()
         e:emplace('Name', { name = name })
@@ -359,6 +402,8 @@ EntityFactory = {
             return EntityFactory.createBink(name, pos)
         elseif name == 'scant' then
             return EntityFactory.createScant(name, pos)
+        elseif name == 'pow' then
+            return EntityFactory.createPowArmor(name, pos)
         end
     end,
 

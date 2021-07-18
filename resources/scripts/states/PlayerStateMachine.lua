@@ -64,6 +64,9 @@ local PlayerStateMachine = {
                 e:setAnim('explode', 1)
                 playSound(Sounds.player_explode)
                 e.components.lives:setLives(e.components.lives:getLives() - 1)
+                if hasEntity('force') then
+                    getEntity('force'):die()
+                end
             end,
             anim = function(e, event)
                 if event.data.name == 'explode' then
