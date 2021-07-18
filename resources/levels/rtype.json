@@ -29,24 +29,6 @@
          "objects":[
                 {
                  "height":0,
-                 "id":6,
-                 "name":"blaster",
-                 "point":true,
-                 "properties":[
-                        {
-                         "name":"Group",
-                         "type":"int",
-                         "value":3
-                        }],
-                 "rotation":0,
-                 "type":"",
-                 "visible":true,
-                 "width":0,
-                 "x":416,
-                 "y":208
-                }, 
-                {
-                 "height":0,
                  "id":7,
                  "name":"enemy1",
                  "point":true,
@@ -191,60 +173,6 @@
                 }, 
                 {
                  "height":0,
-                 "id":46,
-                 "name":"blaster",
-                 "point":true,
-                 "properties":[
-                        {
-                         "name":"Group",
-                         "type":"int",
-                         "value":3
-                        }],
-                 "rotation":0,
-                 "type":"",
-                 "visible":true,
-                 "width":0,
-                 "x":616,
-                 "y":224
-                }, 
-                {
-                 "height":0,
-                 "id":47,
-                 "name":"blaster",
-                 "point":true,
-                 "properties":[
-                        {
-                         "name":"Group",
-                         "type":"int",
-                         "value":3
-                        }],
-                 "rotation":0,
-                 "type":"",
-                 "visible":true,
-                 "width":0,
-                 "x":656,
-                 "y":224
-                }, 
-                {
-                 "height":0,
-                 "id":48,
-                 "name":"blaster",
-                 "point":true,
-                 "properties":[
-                        {
-                         "name":"Group",
-                         "type":"int",
-                         "value":3
-                        }],
-                 "rotation":0,
-                 "type":"",
-                 "visible":true,
-                 "width":0,
-                 "x":718.621,
-                 "y":222.405
-                }, 
-                {
-                 "height":0,
                  "id":49,
                  "name":"blaster",
                  "point":true,
@@ -348,8 +276,8 @@
                  "type":"",
                  "visible":true,
                  "width":0,
-                 "x":501.997861444088,
-                 "y":72.5983454330576
+                 "x":825.59513759919,
+                 "y":54.5894535426867
                 }, 
                 {
                  "height":0,
@@ -366,8 +294,8 @@
                  "type":"",
                  "visible":true,
                  "width":0,
-                 "x":543.080646068997,
-                 "y":71.4727896899094
+                 "x":866.677922224098,
+                 "y":53.4638977995385
                 }, 
                 {
                  "height":0,
@@ -384,8 +312,8 @@
                  "type":"",
                  "visible":true,
                  "width":0,
-                 "x":580.786763464461,
-                 "y":71.4727896899094
+                 "x":904.384039619562,
+                 "y":53.4638977995385
                 }, 
                 {
                  "height":0,
@@ -404,6 +332,24 @@
                  "width":0,
                  "x":787.326242332151,
                  "y":54.0266756711126
+                }, 
+                {
+                 "height":0,
+                 "id":58,
+                 "name":"scant",
+                 "point":true,
+                 "properties":[
+                        {
+                         "name":"Group",
+                         "type":"int",
+                         "value":6
+                        }],
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":873.994034554561,
+                 "y":101.300016883336
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -412,7 +358,7 @@
          "y":0
         }],
  "nextlayerid":4,
- "nextobjectid":58,
+ "nextobjectid":59,
  "orientation":"orthogonal",
  "renderorder":"right-down",
  "tiledversion":"1.6.0",

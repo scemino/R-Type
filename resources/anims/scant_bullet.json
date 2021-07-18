@@ -1,0 +1,25 @@
+{
+  "texture":  "resources/images/r-typesheet9.png",
+  "animations": {
+    "move":
+    {
+      "frames": [
+        [36, 59, 63, 16],
+        [101, 62, 63, 11]
+      ],
+      "delay": 4
+    },
+    "explode":
+    {
+      "texture":  "resources/images/r-typesheet43.png",
+      "frames": [
+        [ 118, 22, 9, 8 ],
+        [ 135, 22, 9, 8 ],
+        [ 151, 21, 11, 10 ],
+        [ 167, 20, 13, 12 ],
+        [ 183, 19, 15, 14 ]
+      ]
+    }
+  },
+  "initialAnim": "move"
+}

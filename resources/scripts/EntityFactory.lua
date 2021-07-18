@@ -312,6 +312,23 @@ EntityFactory = {
         return e
     end,
 
+    createScant = function(name, pos)
+        local e = Entity()
+        e:emplace('Name', { name = name })
+        e:emplace('Position')
+        e:emplace('Motion')
+        e:emplace('Graphics')
+        e:emplace('Hierarchy')
+        e:emplace('Collide', { size = vec(48, 44) })
+        e:emplace('Animation', { name = 'resources/anims/scant.json' })
+        e:setPosition(pos)
+        addComponent(e, HealthComponent(120))
+        addComponent(e, StateMachineComponent('states.ScantStateMachine'))
+        StateManager.initState(e)
+        print('Create', e:getName(), pos)
+        return e
+    end,
+
     createPataPataEnemy = function(name, pos)
         local e = Entity()
         e:emplace('Name', { name = name })
@@ -340,6 +357,8 @@ EntityFactory = {
             return EntityFactory.createEnemyShell(80, pos)
         elseif name == 'bink' then
             return EntityFactory.createBink(name, pos)
+        elseif name == 'scant' then
+            return EntityFactory.createScant(name, pos)
         end
     end,
 
@@ -486,7 +505,7 @@ EntityFactory = {
         e:setPosition(pos)
         e:setVelocity(vec(2 * dX / d, 2 * dY / d))
         addComponent(e, HealthComponent(1))
-        addComponent(e, DamageComponent(1))
+        addComponent(e, DamageComponent(0))
         addComponent(e, StateMachineComponent('states.EnemyBulletStateMachine'))
         StateManager.initState(e)
     end,

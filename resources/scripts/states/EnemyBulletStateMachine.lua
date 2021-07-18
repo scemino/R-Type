@@ -14,9 +14,7 @@ local EnemyBulletStateMachine = {
             end,
             hit = function(e, event)
                 if event.data.collisionType == 'entities' then
-                    if event.data.entity:getName() == 'player' then
-                        return 'ExplodingState'
-                    elseif event.data.entity:getName() == 'force' then
+                    if event.data.entity:getName() == 'force' then
                         forceHitBullet(event.data.entity, e)
                     end
                 elseif event.data.collisionType == 'screen' then

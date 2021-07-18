@@ -7,7 +7,6 @@ end
 local function hitEntities(e, event)
     if event.data.collisionType == 'entities' then
         local name = event.data.entity:getName()
-        print('hit', name)
         if name == 'player' then
             return 'ExplodingState'
         elseif name == 'shoot' or name == 'force' or name == 'bits_up' or name == 'bits_dn' then
@@ -23,7 +22,6 @@ local BinkStateMachine = {
     states = {
         FallingState = {
             init = function(e)
-                print('falling')
                 e:setVelocity(vec(0, 1))
                 e:setAnim('falling', 1)
             end,
@@ -41,7 +39,6 @@ local BinkStateMachine = {
         },
         WalkingState = {
             init = function(e)
-                print('walking')
                 e:setAnim('walking', -1)
             end,
             update = function(e)
@@ -60,7 +57,6 @@ local BinkStateMachine = {
         },
         StandingState = {
             init = function(e)
-                print('standing')
                 e:setAnim('standing', 1)
                 e:setVelocity(vec(0, 0))
             end,
@@ -82,7 +78,6 @@ local BinkStateMachine = {
         },
         JumpingState = {
             init = function(e)
-                print('jumping')
                 e:setAnim('jumping', 1)
             end,
             anim = function(_, _)
