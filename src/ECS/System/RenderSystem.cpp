@@ -12,16 +12,10 @@ ngf::frect getHitBox(const ngf::frect &rect, const glm::vec2 &pos) {
   r.max += pos;
   return r;
 }
-}
 
-namespace Systems::RenderSystem {
-
-void draw(entt::registry &registry, ngf::RenderTarget &target, const ngf::RenderStates& states) {
-  registry.sort<GraphicComponent>([](const auto &lhs, const auto &rhs) {
-    return lhs.zOrder < rhs.zOrder;
-  });
-  registry.view<GraphicComponent, PositionComponent, NameComponent>()
-      .each([&](const auto &gc, const auto &pc, const auto &nc) {
+void drawGraphics(entt::registry &registry, ngf::RenderTarget &target, const ngf::RenderStates &states) {
+  registry.view<GraphicComponent, PositionComponent>()
+      .each([&](const auto &gc, const auto &pc) {
         if (!gc.texture)
           return;
         if (!gc.visible)
@@ -32,6 +26,9 @@ void draw(entt::registry &registry, ngf::RenderTarget &target, const ngf::Render
         s.getTransform().setPosition(pc.getPosition());
         s.draw(target, states);
       });
+}
+
+void drawTiles(entt::registry &registry, ngf::RenderTarget &target, const ngf::RenderStates &states) {
   registry.view<TilesComponent, PositionComponent>()
       .each([&](const auto &tc, const auto &pc) {
         if (!tc.tilesInfo->texture)
@@ -50,6 +47,9 @@ void draw(entt::registry &registry, ngf::RenderTarget &target, const ngf::Render
         }
       });
 
+}
+
+void drawHitBoxes(entt::registry &registry, ngf::RenderTarget &target, const ngf::RenderStates &states) {
   // debug collision hit boxes
   if (!locator::engine::ref().debugManager().showHitboxes)
     return;
@@ -76,5 +76,18 @@ void draw(entt::registry &registry, ngf::RenderTarget &target, const ngf::Render
     posShape.getTransform().setPosition(pc.getPosition());
     posShape.draw(target, states);
   }
+}
+}
+
+namespace Systems::RenderSystem {
+
+void draw(entt::registry &registry, ngf::RenderTarget &target, const ngf::RenderStates &states) {
+  registry.sort<GraphicComponent>([](const auto &lhs, const auto &rhs) {
+    return lhs.zOrder < rhs.zOrder;
+  });
+
+  drawGraphics(registry, target, states);
+  drawTiles(registry, target, states);
+  drawHitBoxes(registry, target, states);
 }
 }
