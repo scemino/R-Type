@@ -1,0 +1,28 @@
+{
+  "texture":  "resources/images/r-typesheet11.png",
+  "animations": {
+    "default":
+    {
+      "frames": [
+        [1, 0, 32, 32],
+        [33, 0, 32, 32],
+        [67, 0, 32, 32],
+        [33, 0, 32, 32]
+      ],
+      "delay": 12
+    },
+    "explode":
+    {
+      "frames": [
+        [ 130, 2, 30, 28 ],
+        [ 162, 1, 31, 32 ],
+        [ 194, 1, 32, 32 ],
+        [ 228, 2, 31, 30 ],
+        [ 261, 2, 31, 30 ],
+        [ 295, 1, 31, 31 ]
+      ],
+      "texture": "resources/images/r-typesheet44.png"
+    }
+  },
+  "initialAnim": "default"
+}

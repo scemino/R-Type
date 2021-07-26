@@ -372,6 +372,24 @@ EntityFactory = {
         return e
     end,
 
+    createCancer = function(name, pos)
+        local e = Entity()
+        e:emplace('Name', { name = name })
+        e:emplace('Position')
+        e:emplace('Motion')
+        e:emplace('Graphics')
+        e:emplace('Hierarchy')
+        e:emplace('Collide', { size = vec(48, 44) })
+        e:emplace('Animation', { name = 'resources/anims/cancer.json' })
+        e:setPosition(pos)
+        getEntity('level'):addChild(e)
+        addComponent(e, HealthComponent(20))
+        addComponent(e, StateMachineComponent('states.CancerStateMachine'))
+        StateManager.initState(e)
+        print('Create', e:getName(), pos)
+        return e
+    end,
+
     createPataPataEnemy = function(name, pos)
         local e = Entity()
         e:emplace('Name', { name = name })
@@ -404,6 +422,8 @@ EntityFactory = {
             return EntityFactory.createScant(name, pos)
         elseif name == 'pow' then
             return EntityFactory.createPowArmor(name, pos)
+        elseif name == 'cancer' then
+            return EntityFactory.createCancer(name, pos)
         end
     end,
 
