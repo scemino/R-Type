@@ -33,4 +33,10 @@ function util.entityDo(name, func)
     return func(getEntity(name))
 end
 
+function util.checkBounds(e)
+    if e:getPosition().x < -100 then
+        e:die()
+    end
+end
+
 return util

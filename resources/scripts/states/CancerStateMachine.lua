@@ -1,3 +1,5 @@
+local util = require 'util'
+
 local function bulletHitEnemy(bullet, enemy)
     local damage = bullet.components.damage:getDamage()
     bullet.components.damage:removeDamage(enemy.components.health:getHealth())
@@ -42,6 +44,9 @@ local CancerStateMachine = {
                     e:setVelocity(vel * (0.1 + 0.5 * math.random()))
                 end
                 return hitEntities(e, event)
+            end,
+            update = function(e)
+                util.checkBounds(e)
             end
         },
         ExplodingState = {
@@ -54,6 +59,9 @@ local CancerStateMachine = {
                 if event.data.name == 'explode' then
                     e:die()
                 end
+            end,
+            update = function(e)
+                util.checkBounds(e)
             end
         }
     },

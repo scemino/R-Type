@@ -1,3 +1,5 @@
+local util = require 'util'
+
 local function shoot(pos)
     if not hasEntity('player') then
         return
@@ -49,6 +51,7 @@ local BlasterStateMachine = {
                     local angle = math.atan(-d.y, d.x)
                     e:setFrame(getFrameFromAngle(angle * 180.0 / math.pi))
                     shoot(e:getPosition())
+                    util.checkBounds(e)
                 else
                     return 'ExplodingState'
                 end

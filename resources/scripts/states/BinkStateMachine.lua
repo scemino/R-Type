@@ -1,3 +1,5 @@
+local util = require 'util'
+
 local function bulletHitEnemy(bullet, enemy)
     local damage = bullet.components.damage:getDamage()
     bullet.components.damage:removeDamage(enemy.components.health:getHealth())
@@ -35,6 +37,9 @@ local BinkStateMachine = {
                     return 'WalkingState'
                 end
                 return hitEntities(e, event)
+            end,
+            update = function(e)
+                util.checkBounds(e)
             end
         },
         WalkingState = {
@@ -47,6 +52,7 @@ local BinkStateMachine = {
                 if tile == -1 then
                     return 'JumpingState'
                 end
+                util.checkBounds(e)
             end,
             hit = function(e, event)
                 if event.data.collisionType == 'tile' then
@@ -74,6 +80,9 @@ local BinkStateMachine = {
             end,
             hit = function(e, event)
                 return hitEntities(e, event)
+            end,
+            update = function(e)
+                util.checkBounds(e)
             end
         },
         JumpingState = {
@@ -85,6 +94,9 @@ local BinkStateMachine = {
             end,
             hit = function(e, event)
                 return hitEntities(e, event)
+            end,
+            update = function(e)
+                util.checkBounds(e)
             end
         },
         ExplodingState = {

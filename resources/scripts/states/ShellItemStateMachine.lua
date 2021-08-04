@@ -1,3 +1,5 @@
+local util = require 'util'
+
 local function bulletHitEnemy(bullet, enemy)
     local bp = bullet:getPosition()
     local ep = enemy:getPosition()
@@ -20,6 +22,7 @@ local ShellItemStateMachine = {
                 if not shell.components.shell:isAlive() and shell.components.shell:isDead(e.components.shellItem:getIndex()) then
                     return 'ExplodingState'
                 elseif e.components.health:isAlive() then
+                    util.checkBounds(e)
                     e.components.shellItem:update()
                 else
                     -- the main shell item has been hot ?

@@ -20,6 +20,9 @@ local EnemyStateMachine = {
         MoveState = {
             update = function(e)
                 if e.components.health:isAlive() then
+                    if e:getPosition().x < -100 then
+                        e:die()
+                    end
                     e.components.enemyPosition:updatePosition(e)
                     shoot(e:getPosition())
                 else
