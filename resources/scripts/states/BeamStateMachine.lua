@@ -43,14 +43,21 @@ local BeamStateMachine = {
             end,
             onKeyUp = function(e, code)
                 if code == Keys.Z then
-                    e:setVisible(false)
                     local beam = e.components.beam
                     EntityFactory.shoot(beam:getPower(), beam:getBeamType(), e:getPosition())
-                    beam:setEnabled(false)
+                    e:setAnim('beam_shot', 1)
                 elseif code == Keys.A then
                     if not hasEntity('force') then
                         EntityFactory.createForce()
                     end
+                end
+            end,
+            anim = function(e, event)
+                if event.data.name == 'beam_shot' then
+                    local beam = e.components.beam
+                    beam:setEnabled(false)
+                    e:setVisible(false)
+                    e:setAnim('beam', -1)
                 end
             end
         }
