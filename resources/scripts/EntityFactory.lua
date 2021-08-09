@@ -324,12 +324,29 @@ EntityFactory = {
         e:emplace('Graphics')
         e:emplace('Hierarchy')
         e:emplace('Collide', { box = { 0, -32, 32, 32 } })
-        --e:emplace('Collide', { size = vec(48, 44) })
         e:emplace('Animation', { name = 'resources/anims/p_staff.json' })
         e:setPosition(pos)
         addComponent(e, StateMachineComponent('states.PStaffStateMachine'))
         addComponent(e, HealthComponent(120))
         addComponent(e, PStaffComponent())
+        StateManager.initState(e)
+        getEntity('level'):addChild(e)
+        print('Create', e:getName(), pos)
+        return e
+    end,
+
+    createTabrok = function(name, pos)
+        local e = Entity()
+        e:emplace('Name', { name = name })
+        e:emplace('Position')
+        e:emplace('Motion')
+        e:emplace('Graphics')
+        e:emplace('Hierarchy')
+        e:emplace('Collide', { box = { -24, -49, 49, 49 } })
+        e:emplace('Animation', { name = 'resources/anims/tabrok.json' })
+        e:setPosition(pos)
+        addComponent(e, StateMachineComponent('states.TabrokStateMachine'))
+        addComponent(e, HealthComponent(220))
         StateManager.initState(e)
         getEntity('level'):addChild(e)
         print('Create', e:getName(), pos)
@@ -446,6 +463,8 @@ EntityFactory = {
             return EntityFactory.createCancer(name, pos)
         elseif name == 'p-staff' then
             return EntityFactory.createPStaff(name, pos)
+        elseif name == 'tabrok' then
+            return EntityFactory.createTabrok(name, pos)
         end
     end,
 

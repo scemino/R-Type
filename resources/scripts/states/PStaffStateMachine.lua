@@ -27,10 +27,8 @@ local function bulletHit(bullet, enemy)
 end
 
 local function hitEntities(e, event)
-    print('hit', event.data.collisionType)
     if event.data.collisionType == 'entities' then
         local name = event.data.entity:getName()
-        print('hit', name)
         if name == 'player' then
             return 'ExplodingState'
         elseif name == 'shoot' or name == 'force' or name == 'bits_up' or name == 'bits_dn' then
