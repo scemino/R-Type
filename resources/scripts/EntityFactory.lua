@@ -14,6 +14,7 @@ local ShellComponent = require 'components.ShellComponent'
 local ShellMovementComponent = require 'components.ShellMovementComponent'
 local PowArmorComponent = require 'components.PowArmorComponent'
 local ItemComponent = require 'components.ItemComponent'
+local PStaffComponent = require 'components.PStaffComponent'
 require 'components.BeamType'
 require 'components.LaserDirection'
 local util = require 'util'
@@ -89,7 +90,6 @@ local function shootNormal(power, pos)
 end
 
 local function shootRibbon(force, pos)
-    print('shootRibbon')
     local forceLevel = force.components.force:getForceLevel()
     local isRear = force.components.force:isRear()
     local vel = force.components.force:getVelocity()
@@ -316,6 +316,26 @@ EntityFactory = {
         return e
     end,
 
+    createPStaff = function(name, pos)
+        local e = Entity()
+        e:emplace('Name', { name = name })
+        e:emplace('Position')
+        e:emplace('Motion')
+        e:emplace('Graphics')
+        e:emplace('Hierarchy')
+        e:emplace('Collide', { box = { 0, -32, 32, 32 } })
+        --e:emplace('Collide', { size = vec(48, 44) })
+        e:emplace('Animation', { name = 'resources/anims/p_staff.json' })
+        e:setPosition(pos)
+        addComponent(e, StateMachineComponent('states.PStaffStateMachine'))
+        addComponent(e, HealthComponent(120))
+        addComponent(e, PStaffComponent())
+        StateManager.initState(e)
+        getEntity('level'):addChild(e)
+        print('Create', e:getName(), pos)
+        return e
+    end,
+
     createPowArmor = function(name, pos, itemType)
         local e = Entity()
         e:emplace('Name', { name = name })
@@ -365,7 +385,7 @@ EntityFactory = {
         e:emplace('Collide', { size = vec(48, 44) })
         e:emplace('Animation', { name = 'resources/anims/scant.json' })
         e:setPosition(pos)
-        addComponent(e, HealthComponent(120))
+        addComponent(e, HealthComponent(220))
         addComponent(e, StateMachineComponent('states.ScantStateMachine'))
         StateManager.initState(e)
         print('Create', e:getName(), pos)
@@ -424,6 +444,8 @@ EntityFactory = {
             return EntityFactory.createPowArmor(name, pos)
         elseif name == 'cancer' then
             return EntityFactory.createCancer(name, pos)
+        elseif name == 'p-staff' then
+            return EntityFactory.createPStaff(name, pos)
         end
     end,
 
@@ -445,7 +467,7 @@ EntityFactory = {
             e:emplace('Graphics')
             e:emplace('Hierarchy')
             e:emplace('Collide', { size = vec(32, 32) })
-            e:emplace('Animation', { name = 'resources/anims/enemy_shell.json' })
+            e:emplace('Animation', { name = 'resources/anims/shell.json' })
             e:setPosition(pos)
             shell:addChild(e)
             addComponent(e, TagComponent('enemy'))

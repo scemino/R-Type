@@ -49,7 +49,7 @@ local ShellItemStateMachine = {
                 explosion:emplace('Motion')
                 explosion:emplace('Hierarchy')
                 explosion:emplace('Graphics')
-                explosion:emplace('Animation', { name = 'resources/anims/enemy_shell.json' })
+                explosion:emplace('Animation', { name = 'resources/anims/shell.json' })
                 explosion:setAnim('explode', 1)
                 explosion:setPosition(e:getPosition())
                 explosion:setZOrder(10)

@@ -50,6 +50,7 @@ local PlayerStateMachine = {
                     e:setPosition(pos)
                 elseif event.data.collisionType == 'entities' then
                     if event.data.entity:getName() == 'enemy_bullet' or
+                            event.data.entity:getName() == 'enemy_missile' or
                             event.data.entity:getName() == 'enemy' then
                         if event.data.entity.components.health:isAlive() then
                             return "ExplodingState"

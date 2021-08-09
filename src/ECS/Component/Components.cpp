@@ -27,8 +27,13 @@ MotionComponent::MotionComponent(const sol::table &t) {
 }
 
 CollideComponent::CollideComponent(const sol::table &t) {
-  const auto size = t["size"].get<glm::vec2>();
-  hitbox = ngf::frect::fromPositionSize(-size / 2.0f, size);
+  if (t["size"].valid()) {
+    const auto size = t["size"].get<glm::vec2>();
+    hitbox = ngf::frect::fromPositionSize(-size / 2.0f, size);
+  } else if (t["box"].valid()) {
+    const auto box = t["box"].get<sol::table>();
+    hitbox = ngf::frect::fromPositionSize(glm::vec2(box[1], box[2]), glm::vec2(box[3], box[4]));
+  }
 }
 
 NameComponent::NameComponent(const sol::table &t) {

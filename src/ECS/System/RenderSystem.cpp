@@ -22,6 +22,7 @@ void drawGraphics(entt::registry &registry, ngf::RenderTarget &target, const ngf
           return;
         ngf::Sprite s(*gc.texture, gc.frame);
         s.setFlipX(gc.flipX);
+        s.setFlipY(gc.flipY);
         s.getTransform().setOrigin(gc.origin);
         s.getTransform().setPosition(pc.getPosition());
         s.draw(target, states);

@@ -26,6 +26,14 @@ void setFlipX(Entity &e, bool flipX) {
 bool getFlipX(const Entity &e) {
   return e.component<GraphicComponent>().flipX;
 }
+
+void setFlipY(Entity &e, bool flipY) {
+  e.component<GraphicComponent>().flipY = flipY;
+}
+
+bool getFlipY(const Entity &e) {
+  return e.component<GraphicComponent>().flipY;
+}
 }
 
 namespace Bindings {
@@ -38,6 +46,8 @@ void bindGraphicsComponent(sol::state &lua) {
   ADD_ENTITY_FUNCTION(getZOrder);
   ADD_ENTITY_FUNCTION(setFlipX);
   ADD_ENTITY_FUNCTION(getFlipX);
+  ADD_ENTITY_FUNCTION(setFlipY);
+  ADD_ENTITY_FUNCTION(getFlipY);
 #undef ADD_ENTITY_FUNCTION
 }
 }

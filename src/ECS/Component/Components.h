@@ -39,7 +39,7 @@ struct CollideComponent {
   ngf::frect hitbox{};
 
   CollideComponent() = default;
-  explicit CollideComponent(ngf::frect hb) : hitbox(std::move(hb)) {}
+  explicit CollideComponent(const ngf::frect& hb) : hitbox(hb) {}
   explicit CollideComponent(const sol::table &t);
 };
 
@@ -50,6 +50,7 @@ struct GraphicComponent {
   bool visible{true};
   float zOrder{0.f};
   bool flipX{false};
+  bool flipY{false};
 
   GraphicComponent() = default;
   explicit GraphicComponent(const sol::table &t);
