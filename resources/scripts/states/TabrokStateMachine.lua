@@ -1,3 +1,23 @@
+local function bulletHit(bullet, enemy)
+    local damage = bullet.components.damage:getDamage()
+    bullet.components.damage:removeDamage(enemy.components.health:getHealth())
+    enemy.components.health:setDamage(damage)
+end
+
+local function hitEntities(e, event)
+    if event.data.collisionType == 'entities' then
+        local name = event.data.entity:getName()
+        if name == 'player' then
+            return 'ExplodingState'
+        elseif name == 'shoot' or name == 'force' or name == 'bits_up' or name == 'bits_dn' then
+            bulletHit(event.data.entity, e)
+            if not e.components.health:isAlive() then
+                return 'ExplodingState'
+            end
+        end
+    end
+end
+
 local TabrokStateMachine = {
     states = {
         FallingState = {
@@ -13,6 +33,9 @@ local TabrokStateMachine = {
                     e:setVelocity(vec(0, 0))
                     return 'LandingState'
                 end
+            end,
+            hit = function(e, event)
+                return hitEntities(e, event)
             end
         },
         LandingState = {
@@ -22,6 +45,9 @@ local TabrokStateMachine = {
             anim = function(_, _)
                 return 'Waiting1State'
             end,
+            hit = function(e, event)
+                return hitEntities(e, event)
+            end
         },
         Waiting1State = {
             init = function(e)
@@ -31,6 +57,9 @@ local TabrokStateMachine = {
             anim = function(_, _)
                 return 'WalkingState'
             end,
+            hit = function(e, event)
+                return hitEntities(e, event)
+            end
         },
         WalkingState = {
             init = function(e)
@@ -48,9 +77,12 @@ local TabrokStateMachine = {
                 local nextPos = getEntity('camera'):getPosition() + e:getPosition() + e:getVelocity() + offset
                 local tile = map(nextPos)
                 if tile ~= -1 then
-                   return 'Waiting2State'
+                    return 'Waiting2State'
                 end
             end,
+            hit = function(e, event)
+                return hitEntities(e, event)
+            end
         },
         Waiting2State = {
             init = function(e)
@@ -60,6 +92,9 @@ local TabrokStateMachine = {
             anim = function(_, _)
                 return 'FlyingState'
             end,
+            hit = function(e, event)
+                return hitEntities(e, event)
+            end
         },
         FlyingState = {
             init = function(e)
@@ -67,9 +102,12 @@ local TabrokStateMachine = {
                 e:setFlipX(true)
                 e:setVelocity(vec(0.5, -1))
             end,
-            anim = function(e, _)
+            anim = function(_, _)
                 return 'FlyingHState'
             end,
+            hit = function(e, event)
+                return hitEntities(e, event)
+            end
         },
         FlyingHState = {
             init = function(e)
@@ -80,6 +118,9 @@ local TabrokStateMachine = {
             anim = function(e, _)
                 return 'FlyingHFastState'
             end,
+            hit = function(e, event)
+                return hitEntities(e, event)
+            end
         },
         FlyingHFastState = {
             init = function(e)
@@ -90,6 +131,9 @@ local TabrokStateMachine = {
             anim = function(_, _)
                 return 'FlyingH2State'
             end,
+            hit = function(e, event)
+                return hitEntities(e, event)
+            end
         },
         FlyingH2State = {
             init = function(e)
@@ -100,6 +144,9 @@ local TabrokStateMachine = {
             anim = function(_, _)
                 return 'Falling2State'
             end,
+            hit = function(e, event)
+                return hitEntities(e, event)
+            end
         },
         Falling2State = {
             init = function(e)
@@ -114,6 +161,9 @@ local TabrokStateMachine = {
                     e:setVelocity(vec(0, 0))
                     return 'Landing2State'
                 end
+            end,
+            hit = function(e, event)
+                return hitEntities(e, event)
             end
         },
         Landing2State = {
@@ -123,9 +173,26 @@ local TabrokStateMachine = {
             anim = function(_, _)
                 return 'StandingState'
             end,
+            hit = function(e, event)
+                return hitEntities(e, event)
+            end
         },
         StandingState = {
-
+            hit = function(e, event)
+                return hitEntities(e, event)
+            end
+        },
+        ExplodingState = {
+            init = function(e)
+                e:setVelocity(vec(0, 0))
+                playSound(Sounds.enemy1_explode)
+                e:setAnim('exploding', 1)
+            end,
+            anim = function(e, event)
+                if event.data.name == 'exploding' then
+                    e:die()
+                end
+            end
         }
     },
     initialState = 'FallingState'
