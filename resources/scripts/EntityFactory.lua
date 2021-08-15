@@ -2,6 +2,7 @@ local TimerComponent = require 'components.TimerComponent'
 local BeamComponent = require 'components.BeamComponent'
 local StateMachineComponent = require 'components.StateMachineComponent'
 local EnemyPositionComponent = require 'components.EnemyPositionComponent'
+local BugComponent = require 'components.BugComponent'
 local HealthComponent = require 'components.HealthComponent'
 local DamageComponent = require 'components.DamageComponent'
 local ForceComponent = require 'components.ForceComponent'
@@ -427,7 +428,7 @@ EntityFactory = {
         return e
     end,
 
-    createPataPataEnemy = function(name, pos)
+    createPataPata = function(name, pos)
         local e = Entity()
         e:emplace('Name', { name = name })
         e:emplace('Position')
@@ -446,9 +447,33 @@ EntityFactory = {
         return e
     end,
 
+    createBug = function(name, pos)
+        print('Create', name, pos)
+        for i = 1, 6 do
+            local e = Entity()
+            e:emplace('Name', { name = 'bug' .. i })
+            e:emplace('Position')
+            e:emplace('Motion')
+            e:emplace('Graphics')
+            e:emplace('Hierarchy')
+            e:emplace('Collide', { size = vec(32, 32) })
+            e:emplace('Animation', { name = 'resources/anims/bug.json' })
+            e:setPosition(pos)
+            e:setFrame(0)
+            e:setVelocity(vec(-1, 0))
+            addComponent(e, StateMachineComponent('states.BugStateMachine'))
+            addComponent(e, BugComponent(pos, i))
+            addComponent(e, HealthComponent(20))
+            StateManager.initState(e)
+            getEntity('level'):addChild(e)
+        end
+    end,
+
     createEnemy = function(name, pos)
         if name == 'enemy1' then
-            return EntityFactory.createPataPataEnemy(name, pos)
+            return EntityFactory.createPataPata(name, pos)
+        elseif name == 'bug' then
+            return EntityFactory.createBug(name, pos)
         elseif name == 'blaster' then
             return EntityFactory.createBlaster(name, pos)
         elseif name == 'shell' then

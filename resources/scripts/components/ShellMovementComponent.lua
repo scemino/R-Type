@@ -22,7 +22,6 @@ function ShellMovementComponent:initialize(radius, index)
 end
 
 function ShellMovementComponent:die()
-    print('die shell item', self.index)
     self.alive = false
     self.entity:setFrame(36)
 end
