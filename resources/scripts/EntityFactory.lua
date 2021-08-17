@@ -37,6 +37,220 @@ local function getDamageFromPower(power)
     return 20 + (power - 1) * 100
 end
 
+local function createPataPata(name, pos, o)
+    local e = Entity()
+    e:emplace('Name', { name = name })
+    e:emplace('Position')
+    e:emplace('Motion')
+    e:emplace('Graphics')
+    e:emplace('Collide', { size = vec(32, 32) })
+    e:emplace('Animation', { name = 'resources/anims/enemy1.json' })
+    e:setPosition(pos)
+    e:setVelocity(vec(-2, 0))
+    addComponent(e, TagComponent('enemy'))
+    addComponent(e, StateMachineComponent('states.EnemyStateMachine'))
+    addComponent(e, EnemyPositionComponent(pos))
+    addComponent(e, HealthComponent(20))
+    StateManager.initState(e)
+    print('Create', e:getName(), pos)
+    return e
+end
+
+local function createBug(name, pos, o)
+    print('Create ' .. name .. ' mode: ', o.properties.Mode)
+
+    for i = 1, 6 do
+        local e = Entity()
+        e:emplace('Name', { name = 'bug' .. i })
+        e:emplace('Position')
+        e:emplace('Motion')
+        e:emplace('Graphics')
+        e:emplace('Hierarchy')
+        e:emplace('Collide', { size = vec(32, 32) })
+        e:emplace('Animation', { name = 'resources/anims/bug.json' })
+        e:setPosition(pos)
+        e:setFrame(0)
+        addComponent(e, StateMachineComponent('states.BugStateMachine'))
+        addComponent(e, BugComponent(pos, i, o.properties.Mode))
+        addComponent(e, HealthComponent(20))
+        StateManager.initState(e)
+        getEntity('level'):addChild(e)
+    end
+end
+
+local function createBlaster(name, pos, o)
+    local e = Entity()
+    e:emplace('Name', { name = name })
+    e:emplace('Position')
+    e:emplace('Motion')
+    e:emplace('Graphics')
+    e:emplace('Hierarchy')
+    e:emplace('Collide', { size = vec(32, 32) })
+    e:emplace('Animation', { name = 'resources/anims/blaster.json' })
+    e:setFrame(0)
+    e:setPosition(pos)
+    addComponent(e, StateMachineComponent('states.BlasterStateMachine'))
+    addComponent(e, HealthComponent(20))
+    StateManager.initState(e)
+    getEntity('level'):addChild(e)
+    print('Create', e:getName(), pos)
+    return e
+end
+
+local function createBink(name, pos, o)
+    local e = Entity()
+    e:emplace('Name', { name = name })
+    e:emplace('Position')
+    e:emplace('Motion')
+    e:emplace('Graphics')
+    e:emplace('Hierarchy')
+    e:emplace('Collide', { size = vec(32, 32) })
+    e:emplace('Animation', { name = 'resources/anims/bink.json' })
+    e:setPosition(pos)
+    addComponent(e, StateMachineComponent('states.BinkStateMachine'))
+    addComponent(e, HealthComponent(20))
+    StateManager.initState(e)
+    getEntity('level'):addChild(e)
+    print('Create', e:getName(), pos)
+    return e
+end
+
+local function createPStaff(name, pos, o)
+    local e = Entity()
+    e:emplace('Name', { name = name })
+    e:emplace('Position')
+    e:emplace('Motion')
+    e:emplace('Graphics')
+    e:emplace('Hierarchy')
+    e:emplace('Collide', { box = { 0, -32, 32, 32 } })
+    e:emplace('Animation', { name = 'resources/anims/p_staff.json' })
+    e:setPosition(pos)
+    addComponent(e, StateMachineComponent('states.PStaffStateMachine'))
+    addComponent(e, HealthComponent(120))
+    addComponent(e, PStaffComponent())
+    StateManager.initState(e)
+    getEntity('level'):addChild(e)
+    print('Create', e:getName(), pos)
+    return e
+end
+
+local function createTabrok(name, pos, o)
+    local e = Entity()
+    e:emplace('Name', { name = name })
+    e:emplace('Position')
+    e:emplace('Motion')
+    e:emplace('Graphics')
+    e:emplace('Hierarchy')
+    e:emplace('Collide', { box = { -24, -49, 49, 49 } })
+    e:emplace('Animation', { name = 'resources/anims/tabrok.json' })
+    e:setPosition(pos)
+    addComponent(e, StateMachineComponent('states.TabrokStateMachine'))
+    addComponent(e, HealthComponent(220))
+    StateManager.initState(e)
+    getEntity('level'):addChild(e)
+    print('Create', e:getName(), pos)
+    return e
+end
+
+local function createPowArmor(name, pos, itemType)
+    local e = Entity()
+    e:emplace('Name', { name = name })
+    e:emplace('Position')
+    e:emplace('Motion')
+    e:emplace('Graphics')
+    e:emplace('Hierarchy')
+    e:emplace('Collide', { size = vec(32, 32) })
+    e:emplace('Animation', { name = 'resources/anims/pow_armor.json' })
+    e:setPosition(pos)
+    addComponent(e, StateMachineComponent('states.PowArmorStateMachine'))
+    addComponent(e, HealthComponent(20))
+    addComponent(e, PowArmorComponent(pos))
+    addComponent(e, ItemComponent(itemType))
+    StateManager.initState(e)
+    getEntity('level'):addChild(e)
+    print('Create', e:getName(), pos, itemType)
+    return e
+end
+
+local function createScant(name, pos, o)
+    local e = Entity()
+    e:emplace('Name', { name = name })
+    e:emplace('Position')
+    e:emplace('Motion')
+    e:emplace('Graphics')
+    e:emplace('Hierarchy')
+    e:emplace('Collide', { size = vec(48, 44) })
+    e:emplace('Animation', { name = 'resources/anims/scant.json' })
+    e:setPosition(pos)
+    addComponent(e, HealthComponent(220))
+    addComponent(e, StateMachineComponent('states.ScantStateMachine'))
+    StateManager.initState(e)
+    print('Create', e:getName(), pos)
+    return e
+end
+
+local function createCancer(name, pos, o)
+    local e = Entity()
+    e:emplace('Name', { name = name })
+    e:emplace('Position')
+    e:emplace('Motion')
+    e:emplace('Graphics')
+    e:emplace('Hierarchy')
+    e:emplace('Collide', { size = vec(48, 44) })
+    e:emplace('Animation', { name = 'resources/anims/cancer.json' })
+    e:setPosition(pos)
+    getEntity('level'):addChild(e)
+    addComponent(e, HealthComponent(20))
+    addComponent(e, StateMachineComponent('states.CancerStateMachine'))
+    StateManager.initState(e)
+    print('Create', e:getName(), pos)
+    return e
+end
+
+local function createEnemyShell(name, pos, o)
+    local shell = Entity()
+    shell:emplace('Name', { name = name })
+    shell:emplace('Position')
+    shell:emplace('Hierarchy')
+    shell:setPosition(pos)
+    addComponent(shell, ShellComponent())
+    addComponent(shell, StateMachineComponent('states.ShellStateMachine'))
+    addComponent(shell, TagComponent('enemy'))
+    StateManager.initState(shell)
+    for i = 1, ShellMovementComponent.static.N - 2 do
+        local e = Entity()
+        e:emplace('Name', { name = 'shell' .. i })
+        e:emplace('Position')
+        e:emplace('Motion')
+        e:emplace('Graphics')
+        e:emplace('Hierarchy')
+        e:emplace('Collide', { size = vec(32, 32) })
+        e:emplace('Animation', { name = 'resources/anims/shell.json' })
+        e:setPosition(pos)
+        shell:addChild(e)
+        addComponent(e, TagComponent('enemy'))
+        addComponent(e, HealthComponent(200))
+        addComponent(e, ShellMovementComponent(80, i))
+        addComponent(e, StateMachineComponent('states.ShellItemStateMachine'))
+        StateManager.initState(e)
+    end
+    getEntity('level'):addChild(shell)
+    return shell
+end
+
+local enemyFactory = {
+    ['pata'] = createPataPata,
+    ['bug'] = createBug,
+    ['blaster'] = createBlaster,
+    ['shell'] = createEnemyShell,
+    ['bink'] = createBink,
+    ['scant'] = createScant,
+    ['pow'] = createPowArmor,
+    ['cancer'] = createCancer,
+    ['p-staff'] = createPStaff,
+    ['tabrok'] = createTabrok,
+}
+
 local function createBeam()
     local beam = Entity()
     beam:emplace('Name', { name = 'beam' })
@@ -280,248 +494,8 @@ EntityFactory = {
         return e
     end,
 
-    createBlaster = function(name, pos)
-        local e = Entity()
-        e:emplace('Name', { name = name })
-        e:emplace('Position')
-        e:emplace('Motion')
-        e:emplace('Graphics')
-        e:emplace('Hierarchy')
-        e:emplace('Collide', { size = vec(32, 32) })
-        e:emplace('Animation', { name = 'resources/anims/blaster.json' })
-        e:setFrame(0)
-        e:setPosition(pos)
-        addComponent(e, StateMachineComponent('states.BlasterStateMachine'))
-        addComponent(e, HealthComponent(20))
-        StateManager.initState(e)
-        getEntity('level'):addChild(e)
-        print('Create', e:getName(), pos)
-        return e
-    end,
-
-    createBink = function(name, pos)
-        local e = Entity()
-        e:emplace('Name', { name = name })
-        e:emplace('Position')
-        e:emplace('Motion')
-        e:emplace('Graphics')
-        e:emplace('Hierarchy')
-        e:emplace('Collide', { size = vec(32, 32) })
-        e:emplace('Animation', { name = 'resources/anims/bink.json' })
-        e:setPosition(pos)
-        addComponent(e, StateMachineComponent('states.BinkStateMachine'))
-        addComponent(e, HealthComponent(20))
-        StateManager.initState(e)
-        getEntity('level'):addChild(e)
-        print('Create', e:getName(), pos)
-        return e
-    end,
-
-    createPStaff = function(name, pos)
-        local e = Entity()
-        e:emplace('Name', { name = name })
-        e:emplace('Position')
-        e:emplace('Motion')
-        e:emplace('Graphics')
-        e:emplace('Hierarchy')
-        e:emplace('Collide', { box = { 0, -32, 32, 32 } })
-        e:emplace('Animation', { name = 'resources/anims/p_staff.json' })
-        e:setPosition(pos)
-        addComponent(e, StateMachineComponent('states.PStaffStateMachine'))
-        addComponent(e, HealthComponent(120))
-        addComponent(e, PStaffComponent())
-        StateManager.initState(e)
-        getEntity('level'):addChild(e)
-        print('Create', e:getName(), pos)
-        return e
-    end,
-
-    createTabrok = function(name, pos)
-        local e = Entity()
-        e:emplace('Name', { name = name })
-        e:emplace('Position')
-        e:emplace('Motion')
-        e:emplace('Graphics')
-        e:emplace('Hierarchy')
-        e:emplace('Collide', { box = { -24, -49, 49, 49 } })
-        e:emplace('Animation', { name = 'resources/anims/tabrok.json' })
-        e:setPosition(pos)
-        addComponent(e, StateMachineComponent('states.TabrokStateMachine'))
-        addComponent(e, HealthComponent(220))
-        StateManager.initState(e)
-        getEntity('level'):addChild(e)
-        print('Create', e:getName(), pos)
-        return e
-    end,
-
-    createPowArmor = function(name, pos, itemType)
-        local e = Entity()
-        e:emplace('Name', { name = name })
-        e:emplace('Position')
-        e:emplace('Motion')
-        e:emplace('Graphics')
-        e:emplace('Hierarchy')
-        e:emplace('Collide', { size = vec(32, 32) })
-        e:emplace('Animation', { name = 'resources/anims/pow_armor.json' })
-        e:setPosition(pos)
-        addComponent(e, StateMachineComponent('states.PowArmorStateMachine'))
-        addComponent(e, HealthComponent(20))
-        addComponent(e, PowArmorComponent(pos))
-        addComponent(e, ItemComponent(itemType))
-        StateManager.initState(e)
-        getEntity('level'):addChild(e)
-        print('Create', e:getName(), pos, itemType)
-        return e
-    end,
-
-    createItem = function(pos, itemType)
-        local e = Entity()
-        e:emplace('Name', { name = 'item' })
-        e:emplace('Position')
-        e:emplace('Graphics')
-        e:emplace('Hierarchy')
-        e:emplace('Collide', { size = vec(32, 32) })
-        e:emplace('Animation', { name = 'resources/anims/pow_armor.json' })
-        e:setAnim('items', 1)
-        e:setFrame(0)
-        e:setPosition(pos)
-        addComponent(e, StateMachineComponent('states.ItemStateMachine'))
-        addComponent(e, ItemComponent(itemType))
-        StateManager.initState(e)
-        getEntity('level'):addChild(e)
-        print('Create', e:getName(), pos, itemType)
-        return e
-    end,
-
-    createScant = function(name, pos)
-        local e = Entity()
-        e:emplace('Name', { name = name })
-        e:emplace('Position')
-        e:emplace('Motion')
-        e:emplace('Graphics')
-        e:emplace('Hierarchy')
-        e:emplace('Collide', { size = vec(48, 44) })
-        e:emplace('Animation', { name = 'resources/anims/scant.json' })
-        e:setPosition(pos)
-        addComponent(e, HealthComponent(220))
-        addComponent(e, StateMachineComponent('states.ScantStateMachine'))
-        StateManager.initState(e)
-        print('Create', e:getName(), pos)
-        return e
-    end,
-
-    createCancer = function(name, pos)
-        local e = Entity()
-        e:emplace('Name', { name = name })
-        e:emplace('Position')
-        e:emplace('Motion')
-        e:emplace('Graphics')
-        e:emplace('Hierarchy')
-        e:emplace('Collide', { size = vec(48, 44) })
-        e:emplace('Animation', { name = 'resources/anims/cancer.json' })
-        e:setPosition(pos)
-        getEntity('level'):addChild(e)
-        addComponent(e, HealthComponent(20))
-        addComponent(e, StateMachineComponent('states.CancerStateMachine'))
-        StateManager.initState(e)
-        print('Create', e:getName(), pos)
-        return e
-    end,
-
-    createPataPata = function(name, pos)
-        local e = Entity()
-        e:emplace('Name', { name = name })
-        e:emplace('Position')
-        e:emplace('Motion')
-        e:emplace('Graphics')
-        e:emplace('Collide', { size = vec(32, 32) })
-        e:emplace('Animation', { name = 'resources/anims/enemy1.json' })
-        e:setPosition(pos)
-        e:setVelocity(vec(-2, 0))
-        addComponent(e, TagComponent('enemy'))
-        addComponent(e, StateMachineComponent('states.EnemyStateMachine'))
-        addComponent(e, EnemyPositionComponent(pos))
-        addComponent(e, HealthComponent(20))
-        StateManager.initState(e)
-        print('Create', e:getName(), pos)
-        return e
-    end,
-
-    createBug = function(name, pos)
-        print('Create', name, pos)
-        for i = 1, 6 do
-            local e = Entity()
-            e:emplace('Name', { name = 'bug' .. i })
-            e:emplace('Position')
-            e:emplace('Motion')
-            e:emplace('Graphics')
-            e:emplace('Hierarchy')
-            e:emplace('Collide', { size = vec(32, 32) })
-            e:emplace('Animation', { name = 'resources/anims/bug.json' })
-            e:setPosition(pos)
-            e:setFrame(0)
-            e:setVelocity(vec(-1, 0))
-            addComponent(e, StateMachineComponent('states.BugStateMachine'))
-            addComponent(e, BugComponent(pos, i))
-            addComponent(e, HealthComponent(20))
-            StateManager.initState(e)
-            getEntity('level'):addChild(e)
-        end
-    end,
-
-    createEnemy = function(name, pos)
-        if name == 'enemy1' then
-            return EntityFactory.createPataPata(name, pos)
-        elseif name == 'bug' then
-            return EntityFactory.createBug(name, pos)
-        elseif name == 'blaster' then
-            return EntityFactory.createBlaster(name, pos)
-        elseif name == 'shell' then
-            return EntityFactory.createEnemyShell(80, pos)
-        elseif name == 'bink' then
-            return EntityFactory.createBink(name, pos)
-        elseif name == 'scant' then
-            return EntityFactory.createScant(name, pos)
-        elseif name == 'pow' then
-            return EntityFactory.createPowArmor(name, pos)
-        elseif name == 'cancer' then
-            return EntityFactory.createCancer(name, pos)
-        elseif name == 'p-staff' then
-            return EntityFactory.createPStaff(name, pos)
-        elseif name == 'tabrok' then
-            return EntityFactory.createTabrok(name, pos)
-        end
-    end,
-
-    createEnemyShell = function(radius, pos)
-        local shell = Entity()
-        shell:emplace('Name', { name = 'shell' })
-        shell:emplace('Position')
-        shell:emplace('Hierarchy')
-        shell:setPosition(pos)
-        addComponent(shell, ShellComponent())
-        addComponent(shell, StateMachineComponent('states.ShellStateMachine'))
-        addComponent(shell, TagComponent('enemy'))
-        StateManager.initState(shell)
-        for i = 1, ShellMovementComponent.static.N - 2 do
-            local e = Entity()
-            e:emplace('Name', { name = 'shell' .. i })
-            e:emplace('Position')
-            e:emplace('Motion')
-            e:emplace('Graphics')
-            e:emplace('Hierarchy')
-            e:emplace('Collide', { size = vec(32, 32) })
-            e:emplace('Animation', { name = 'resources/anims/shell.json' })
-            e:setPosition(pos)
-            shell:addChild(e)
-            addComponent(e, TagComponent('enemy'))
-            addComponent(e, HealthComponent(200))
-            addComponent(e, ShellMovementComponent(radius, i))
-            addComponent(e, StateMachineComponent('states.ShellItemStateMachine'))
-            StateManager.initState(e)
-        end
-        getEntity('level'):addChild(shell)
-        return shell
+    createEnemy = function(name, pos, o)
+        enemyFactory[name](name, pos, o)
     end,
 
     createCamera = function()
@@ -702,6 +676,25 @@ EntityFactory = {
         e:emplace('Position')
         e:emplace('Tiles', { name = 'resources/tiles/hud.json' })
         addComponent(e, ScoreComponent(174500, vec(224, 248)))
+    end,
+
+    createItem = function(pos, itemType)
+        local e = Entity()
+        e:emplace('Name', { name = 'item' })
+        e:emplace('Position')
+        e:emplace('Graphics')
+        e:emplace('Hierarchy')
+        e:emplace('Collide', { size = vec(32, 32) })
+        e:emplace('Animation', { name = 'resources/anims/pow_armor.json' })
+        e:setAnim('items', 1)
+        e:setFrame(0)
+        e:setPosition(pos)
+        addComponent(e, StateMachineComponent('states.ItemStateMachine'))
+        addComponent(e, ItemComponent(itemType))
+        StateManager.initState(e)
+        getEntity('level'):addChild(e)
+        print('Create', e:getName(), pos, itemType)
+        return e
     end
 }
 

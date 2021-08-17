@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.5" tiledversion="1.6.0" orientation="orthogonal" renderorder="right-down" width="526" height="30" tilewidth="8" tileheight="8" infinite="0" nextlayerid="4" nextobjectid="59">
+<map version="1.5" tiledversion="1.6.0" orientation="orthogonal" renderorder="right-down" width="526" height="30" tilewidth="8" tileheight="8" infinite="0" nextlayerid="4" nextobjectid="107">
  <editorsettings>
   <export target="rtype.json" format="json"/>
  </editorsettings>
@@ -39,112 +39,214 @@
 </data>
  </layer>
  <objectgroup id="2" name="EnemyLayer">
-  <object id="7" name="enemy1" x="668.453" y="86.8972">
+  <object id="7" name="pata" x="668.453" y="86.8972">
    <properties>
     <property name="Group" type="int" value="1"/>
    </properties>
    <point/>
   </object>
-  <object id="8" name="enemy1" x="697.539" y="121.583">
+  <object id="8" name="pata" x="697.539" y="121.583">
    <properties>
     <property name="Group" type="int" value="1"/>
    </properties>
    <point/>
   </object>
-  <object id="9" name="enemy1" x="719.312" y="109.163">
+  <object id="9" name="pata" x="719.312" y="109.163">
    <properties>
     <property name="Group" type="int" value="1"/>
    </properties>
    <point/>
   </object>
-  <object id="41" name="enemy1" x="741.996" y="162.44">
+  <object id="41" name="pata" x="741.996" y="162.44">
    <properties>
     <property name="Group" type="int" value="2"/>
    </properties>
    <point/>
   </object>
-  <object id="42" name="enemy1" x="763.988" y="147.735">
+  <object id="42" name="pata" x="763.988" y="147.735">
    <properties>
     <property name="Group" type="int" value="2"/>
    </properties>
    <point/>
   </object>
-  <object id="43" name="enemy1" x="793.074" y="182.421">
+  <object id="43" name="pata" x="793.074" y="182.421">
    <properties>
     <property name="Group" type="int" value="2"/>
    </properties>
    <point/>
   </object>
-  <object id="44" name="enemy1" x="814.847" y="170.001">
+  <object id="44" name="pata" x="814.847" y="170.001">
    <properties>
     <property name="Group" type="int" value="2"/>
    </properties>
    <point/>
   </object>
-  <object id="45" name="enemy1" x="644.382" y="93.5973">
+  <object id="45" name="pata" x="644.382" y="93.5973">
    <properties>
     <property name="Group" type="int" value="1"/>
-   </properties>
-   <point/>
-  </object>
-  <object id="49" name="blaster" x="822.148" y="206.34">
-   <properties>
-    <property name="Group" type="int" value="3"/>
-   </properties>
-   <point/>
-  </object>
-  <object id="50" name="blaster" x="776.453" y="206.697">
-   <properties>
-    <property name="Group" type="int" value="3"/>
-   </properties>
-   <point/>
-  </object>
-  <object id="51" name="blaster" x="908.182" y="190.633">
-   <properties>
-    <property name="Group" type="int" value="3"/>
-   </properties>
-   <point/>
-  </object>
-  <object id="52" name="blaster" x="952.806" y="191.704">
-   <properties>
-    <property name="Group" type="int" value="3"/>
    </properties>
    <point/>
   </object>
   <object id="53" name="shell" x="2336" y="120">
+   <point/>
+  </object>
+  <object id="57" name="bink" x="776" y="184">
+   <point/>
+  </object>
+  <object id="59" name="bug" x="941.483" y="30.4171">
    <properties>
-    <property name="Group" type="int" value="5"/>
+    <property name="Mode" type="int" value="1"/>
    </properties>
    <point/>
   </object>
-  <object id="54" name="bink" x="825.595" y="54.5895">
+  <object id="60" name="bug" x="1018.97" y="31.1414">
    <properties>
-    <property name="Group" type="int" value="4"/>
+    <property name="Mode" type="int" value="1"/>
    </properties>
    <point/>
   </object>
-  <object id="55" name="bink" x="866.678" y="53.4639">
+  <object id="61" name="bug" x="2144" y="0">
    <properties>
-    <property name="Group" type="int" value="4"/>
+    <property name="Mode" type="int" value="2"/>
    </properties>
    <point/>
   </object>
-  <object id="56" name="bink" x="904.384" y="53.4639">
+  <object id="62" name="bug" x="2846" y="0">
    <properties>
-    <property name="Group" type="int" value="4"/>
+    <property name="Mode" type="int" value="2"/>
    </properties>
    <point/>
   </object>
-  <object id="57" name="bink" x="787.326" y="54.0267">
-   <properties>
-    <property name="Group" type="int" value="4"/>
-   </properties>
+  <object id="63" name="bink" x="1176" y="216">
    <point/>
   </object>
-  <object id="58" name="scant" x="873.994" y="101.3">
-   <properties>
-    <property name="Group" type="int" value="6"/>
-   </properties>
+  <object id="64" name="bink" x="1268" y="216">
+   <point/>
+  </object>
+  <object id="65" name="bink" x="1318" y="216">
+   <point/>
+  </object>
+  <object id="66" name="bink" x="1400" y="216">
+   <point/>
+  </object>
+  <object id="67" name="p-staff" x="1318" y="224">
+   <point/>
+  </object>
+  <object id="68" name="scant" x="1314" y="110">
+   <point/>
+  </object>
+  <object id="69" name="bink" x="1464" y="192">
+   <point/>
+  </object>
+  <object id="70" name="bink" x="1536" y="0">
+   <point/>
+  </object>
+  <object id="71" name="blaster" x="1872" y="208">
+   <point/>
+  </object>
+  <object id="72" name="blaster" x="1904" y="208">
+   <point/>
+  </object>
+  <object id="73" name="blaster" x="1904" y="32">
+   <point/>
+  </object>
+  <object id="74" name="blaster" x="1872" y="32">
+   <point/>
+  </object>
+  <object id="75" name="bink" x="1968" y="168">
+   <point/>
+  </object>
+  <object id="76" name="blaster" x="1936" y="192">
+   <point/>
+  </object>
+  <object id="77" name="blaster" x="1968" y="192">
+   <point/>
+  </object>
+  <object id="78" name="blaster" x="1968" y="48">
+   <point/>
+  </object>
+  <object id="79" name="blaster" x="1936" y="48">
+   <point/>
+  </object>
+  <object id="80" name="bink" x="1904" y="168">
+   <point/>
+  </object>
+  <object id="81" name="p-staff" x="2032" y="224">
+   <point/>
+  </object>
+  <object id="82" name="blaster" x="2224" y="16">
+   <point/>
+  </object>
+  <object id="83" name="blaster" x="2192" y="16">
+   <point/>
+  </object>
+  <object id="84" name="blaster" x="2608" y="32">
+   <point/>
+  </object>
+  <object id="85" name="blaster" x="2576" y="32">
+   <point/>
+  </object>
+  <object id="86" name="blaster" x="2640" y="16">
+   <point/>
+  </object>
+  <object id="87" name="blaster" x="2672" y="16">
+   <point/>
+  </object>
+  <object id="88" name="blaster" x="2704" y="16">
+   <point/>
+  </object>
+  <object id="89" name="blaster" x="2736" y="16">
+   <point/>
+  </object>
+  <object id="90" name="blaster" x="2768" y="16">
+   <point/>
+  </object>
+  <object id="91" name="blaster" x="2800" y="16">
+   <point/>
+  </object>
+  <object id="92" name="bink" x="2608" y="176">
+   <point/>
+  </object>
+  <object id="93" name="p-staff" x="2736" y="224">
+   <point/>
+  </object>
+  <object id="94" name="blaster" x="2896" y="192">
+   <point/>
+  </object>
+  <object id="95" name="blaster" x="2928" y="192">
+   <point/>
+  </object>
+  <object id="96" name="blaster" x="2896" y="48">
+   <point/>
+  </object>
+  <object id="97" name="blaster" x="2928" y="48">
+   <point/>
+  </object>
+  <object id="98" name="bink" x="2896" y="136">
+   <point/>
+  </object>
+  <object id="99" name="blaster" x="3216" y="16">
+   <point/>
+  </object>
+  <object id="100" name="blaster" x="3248" y="16">
+   <point/>
+  </object>
+  <object id="101" name="blaster" x="3280" y="16">
+   <point/>
+  </object>
+  <object id="102" name="blaster" x="3312" y="16">
+   <point/>
+  </object>
+  <object id="103" name="blaster" x="3344" y="32">
+   <point/>
+  </object>
+  <object id="104" name="blaster" x="3376" y="32">
+   <point/>
+  </object>
+  <object id="105" name="tabrok" x="3312" y="168">
+   <point/>
+  </object>
+  <object id="106" name="tabrok" x="3512" y="168">
    <point/>
   </object>
  </objectgroup>

@@ -1,7 +1,7 @@
 local enemies = {}
 local objs = getLevelObjs()
 local gameWidth = 384
-local group = 0
+local group
 local camera
 
 function initEnemies()
@@ -19,9 +19,12 @@ function spawnEnemies()
         if enemies[i] then
             local x = math.floor(o.pos.x)
             -- spawn enemies by wave (specified by a group id)
-            if x == cx2 or group == o.group then
-                group = o.group
-                EntityFactory.createEnemy(o.name, vec(o.pos.x - cx1, o.pos.y))
+            local grp = o.properties.Group
+            if x == cx2 or (group and group == grp) then
+                if grp then
+                    group = grp
+                end
+                EntityFactory.createEnemy(o.name, vec(o.pos.x - cx1, o.pos.y), o)
                 enemies[i] = false
             end
         end

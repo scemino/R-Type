@@ -30,13 +30,12 @@ void bindLevel(sol::state &lua) {
   lua.new_usertype<LevelObject>("lvlObj",
                                 "name", &LevelObject::name,
                                 "pos", &LevelObject::pos,
-                                "group", &LevelObject::group,
+                                "properties", &LevelObject::properties,
                                 sol::meta_function::to_string,
                                 [](const LevelObject &o) -> std::string {
                                   return "name: " + o.name + ", pos: (" + std::to_string(o.pos.x) + ','
                                       + std::to_string(o.pos.y)
-                                      + ','
-                                      + std::to_string(o.group) + ')';
+                                      + ')';
                                 });
 #define ADD_FUNCTION(x) lua.set_function(#x, x)
   ADD_FUNCTION(setLevelPosition);

@@ -20,7 +20,7 @@ local BugStateMachine = {
         MoveState = {
             update = function(e)
                 if e.components.health:isAlive() then
-                    e.components.bug:updatePosition()
+                    e.components.bug:update()
                     shoot(e:getPosition())
                 else
                     return 'ExplodingState'

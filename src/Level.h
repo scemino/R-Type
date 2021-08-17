@@ -20,7 +20,7 @@ struct LevelObject {
 public:
   std::string name{};
   glm::vec2 pos{};
-  int group{0};
+  std::map<std::string, int> properties;
 };
 
 class Level {

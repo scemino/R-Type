@@ -49,8 +49,11 @@ void Level::load(const fs::path &path) {
   m_objects.resize(jObjects.size());
   for (const auto &jObject : jObjects) {
     const glm::vec2 pos{jObject["x"].getDouble(), jObject["y"].getDouble()};
-    const auto group = jObject["properties"][0]["value"].getInt();
-    m_objects[i++] = {jObject["name"].getString(), pos, group};
+    std::map<std::string, int> properties;
+    for (const auto &jObj : jObject["properties"]) {
+      properties[jObj["name"].getString()] = jObj["value"].getInt();
+    }
+    m_objects[i++] = {jObject["name"].getString(), pos, properties};
   }
 }
 
@@ -223,7 +226,7 @@ void Level::setPosition(int pos) {
   m_position = std::clamp(pos, 0, m_positionFinal);
 }
 
-void Level::draw(ngf::RenderTarget &target, const ngf::RenderStates& st) const {
+void Level::draw(ngf::RenderTarget &target, const ngf::RenderStates &st) const {
   // move camera position
   ngf::Transform t;
   t.setPosition({-m_position, 0});

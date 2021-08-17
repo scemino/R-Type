@@ -30,7 +30,7 @@
                 {
                  "height":0,
                  "id":7,
-                 "name":"enemy1",
+                 "name":"pata",
                  "point":true,
                  "properties":[
                         {
@@ -48,7 +48,7 @@
                 {
                  "height":0,
                  "id":8,
-                 "name":"enemy1",
+                 "name":"pata",
                  "point":true,
                  "properties":[
                         {
@@ -66,7 +66,7 @@
                 {
                  "height":0,
                  "id":9,
-                 "name":"enemy1",
+                 "name":"pata",
                  "point":true,
                  "properties":[
                         {
@@ -84,7 +84,7 @@
                 {
                  "height":0,
                  "id":41,
-                 "name":"enemy1",
+                 "name":"pata",
                  "point":true,
                  "properties":[
                         {
@@ -102,7 +102,7 @@
                 {
                  "height":0,
                  "id":42,
-                 "name":"enemy1",
+                 "name":"pata",
                  "point":true,
                  "properties":[
                         {
@@ -120,7 +120,7 @@
                 {
                  "height":0,
                  "id":43,
-                 "name":"enemy1",
+                 "name":"pata",
                  "point":true,
                  "properties":[
                         {
@@ -138,7 +138,7 @@
                 {
                  "height":0,
                  "id":44,
-                 "name":"enemy1",
+                 "name":"pata",
                  "point":true,
                  "properties":[
                         {
@@ -156,7 +156,7 @@
                 {
                  "height":0,
                  "id":45,
-                 "name":"enemy1",
+                 "name":"pata",
                  "point":true,
                  "properties":[
                         {
@@ -173,87 +173,9 @@
                 }, 
                 {
                  "height":0,
-                 "id":49,
-                 "name":"blaster",
-                 "point":true,
-                 "properties":[
-                        {
-                         "name":"Group",
-                         "type":"int",
-                         "value":3
-                        }],
-                 "rotation":0,
-                 "type":"",
-                 "visible":true,
-                 "width":0,
-                 "x":822.148,
-                 "y":206.34
-                }, 
-                {
-                 "height":0,
-                 "id":50,
-                 "name":"blaster",
-                 "point":true,
-                 "properties":[
-                        {
-                         "name":"Group",
-                         "type":"int",
-                         "value":3
-                        }],
-                 "rotation":0,
-                 "type":"",
-                 "visible":true,
-                 "width":0,
-                 "x":776.453,
-                 "y":206.697
-                }, 
-                {
-                 "height":0,
-                 "id":51,
-                 "name":"blaster",
-                 "point":true,
-                 "properties":[
-                        {
-                         "name":"Group",
-                         "type":"int",
-                         "value":3
-                        }],
-                 "rotation":0,
-                 "type":"",
-                 "visible":true,
-                 "width":0,
-                 "x":908.182,
-                 "y":190.633
-                }, 
-                {
-                 "height":0,
-                 "id":52,
-                 "name":"blaster",
-                 "point":true,
-                 "properties":[
-                        {
-                         "name":"Group",
-                         "type":"int",
-                         "value":3
-                        }],
-                 "rotation":0,
-                 "type":"",
-                 "visible":true,
-                 "width":0,
-                 "x":952.806,
-                 "y":191.704
-                }, 
-                {
-                 "height":0,
                  "id":53,
                  "name":"shell",
                  "point":true,
-                 "properties":[
-                        {
-                         "name":"Group",
-                         "type":"int",
-                         "value":5
-                        }],
                  "rotation":0,
                  "type":"",
                  "visible":true,
@@ -263,93 +185,615 @@
                 }, 
                 {
                  "height":0,
-                 "id":54,
-                 "name":"bink",
-                 "point":true,
-                 "properties":[
-                        {
-                         "name":"Group",
-                         "type":"int",
-                         "value":4
-                        }],
-                 "rotation":0,
-                 "type":"",
-                 "visible":true,
-                 "width":0,
-                 "x":825.59513759919,
-                 "y":54.5894535426867
-                }, 
-                {
-                 "height":0,
-                 "id":55,
-                 "name":"bink",
-                 "point":true,
-                 "properties":[
-                        {
-                         "name":"Group",
-                         "type":"int",
-                         "value":4
-                        }],
-                 "rotation":0,
-                 "type":"",
-                 "visible":true,
-                 "width":0,
-                 "x":866.677922224098,
-                 "y":53.4638977995385
-                }, 
-                {
-                 "height":0,
-                 "id":56,
-                 "name":"bink",
-                 "point":true,
-                 "properties":[
-                        {
-                         "name":"Group",
-                         "type":"int",
-                         "value":4
-                        }],
-                 "rotation":0,
-                 "type":"",
-                 "visible":true,
-                 "width":0,
-                 "x":904.384039619562,
-                 "y":53.4638977995385
-                }, 
-                {
-                 "height":0,
                  "id":57,
                  "name":"bink",
                  "point":true,
-                 "properties":[
-                        {
-                         "name":"Group",
-                         "type":"int",
-                         "value":4
-                        }],
                  "rotation":0,
                  "type":"",
                  "visible":true,
                  "width":0,
-                 "x":787.326242332151,
-                 "y":54.0266756711126
+                 "x":776,
+                 "y":184
                 }, 
                 {
                  "height":0,
-                 "id":58,
-                 "name":"scant",
+                 "id":59,
+                 "name":"bug",
                  "point":true,
                  "properties":[
                         {
-                         "name":"Group",
+                         "name":"Mode",
                          "type":"int",
-                         "value":6
+                         "value":1
                         }],
                  "rotation":0,
                  "type":"",
                  "visible":true,
                  "width":0,
-                 "x":873.994034554561,
-                 "y":101.300016883336
+                 "x":941.483,
+                 "y":30.4171
+                }, 
+                {
+                 "height":0,
+                 "id":60,
+                 "name":"bug",
+                 "point":true,
+                 "properties":[
+                        {
+                         "name":"Mode",
+                         "type":"int",
+                         "value":1
+                        }],
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":1018.97,
+                 "y":31.1414
+                }, 
+                {
+                 "height":0,
+                 "id":61,
+                 "name":"bug",
+                 "point":true,
+                 "properties":[
+                        {
+                         "name":"Mode",
+                         "type":"int",
+                         "value":2
+                        }],
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":2144,
+                 "y":0
+                }, 
+                {
+                 "height":0,
+                 "id":62,
+                 "name":"bug",
+                 "point":true,
+                 "properties":[
+                        {
+                         "name":"Mode",
+                         "type":"int",
+                         "value":2
+                        }],
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":2846,
+                 "y":0
+                }, 
+                {
+                 "height":0,
+                 "id":63,
+                 "name":"bink",
+                 "point":true,
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":1176,
+                 "y":216
+                }, 
+                {
+                 "height":0,
+                 "id":64,
+                 "name":"bink",
+                 "point":true,
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":1268,
+                 "y":216
+                }, 
+                {
+                 "height":0,
+                 "id":65,
+                 "name":"bink",
+                 "point":true,
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":1318,
+                 "y":216
+                }, 
+                {
+                 "height":0,
+                 "id":66,
+                 "name":"bink",
+                 "point":true,
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":1400,
+                 "y":216
+                }, 
+                {
+                 "height":0,
+                 "id":67,
+                 "name":"p-staff",
+                 "point":true,
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":1318,
+                 "y":224
+                }, 
+                {
+                 "height":0,
+                 "id":68,
+                 "name":"scant",
+                 "point":true,
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":1314,
+                 "y":110
+                }, 
+                {
+                 "height":0,
+                 "id":69,
+                 "name":"bink",
+                 "point":true,
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":1464,
+                 "y":192
+                }, 
+                {
+                 "height":0,
+                 "id":70,
+                 "name":"bink",
+                 "point":true,
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":1536,
+                 "y":0
+                }, 
+                {
+                 "height":0,
+                 "id":71,
+                 "name":"blaster",
+                 "point":true,
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":1872,
+                 "y":208
+                }, 
+                {
+                 "height":0,
+                 "id":72,
+                 "name":"blaster",
+                 "point":true,
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":1904,
+                 "y":208
+                }, 
+                {
+                 "height":0,
+                 "id":73,
+                 "name":"blaster",
+                 "point":true,
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":1904,
+                 "y":32
+                }, 
+                {
+                 "height":0,
+                 "id":74,
+                 "name":"blaster",
+                 "point":true,
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":1872,
+                 "y":32
+                }, 
+                {
+                 "height":0,
+                 "id":75,
+                 "name":"bink",
+                 "point":true,
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":1968,
+                 "y":168
+                }, 
+                {
+                 "height":0,
+                 "id":76,
+                 "name":"blaster",
+                 "point":true,
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":1936,
+                 "y":192
+                }, 
+                {
+                 "height":0,
+                 "id":77,
+                 "name":"blaster",
+                 "point":true,
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":1968,
+                 "y":192
+                }, 
+                {
+                 "height":0,
+                 "id":78,
+                 "name":"blaster",
+                 "point":true,
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":1968,
+                 "y":48
+                }, 
+                {
+                 "height":0,
+                 "id":79,
+                 "name":"blaster",
+                 "point":true,
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":1936,
+                 "y":48
+                }, 
+                {
+                 "height":0,
+                 "id":80,
+                 "name":"bink",
+                 "point":true,
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":1904,
+                 "y":168
+                }, 
+                {
+                 "height":0,
+                 "id":81,
+                 "name":"p-staff",
+                 "point":true,
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":2032,
+                 "y":224
+                }, 
+                {
+                 "height":0,
+                 "id":82,
+                 "name":"blaster",
+                 "point":true,
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":2224,
+                 "y":16
+                }, 
+                {
+                 "height":0,
+                 "id":83,
+                 "name":"blaster",
+                 "point":true,
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":2192,
+                 "y":16
+                }, 
+                {
+                 "height":0,
+                 "id":84,
+                 "name":"blaster",
+                 "point":true,
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":2608,
+                 "y":32
+                }, 
+                {
+                 "height":0,
+                 "id":85,
+                 "name":"blaster",
+                 "point":true,
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":2576,
+                 "y":32
+                }, 
+                {
+                 "height":0,
+                 "id":86,
+                 "name":"blaster",
+                 "point":true,
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":2640,
+                 "y":16
+                }, 
+                {
+                 "height":0,
+                 "id":87,
+                 "name":"blaster",
+                 "point":true,
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":2672,
+                 "y":16
+                }, 
+                {
+                 "height":0,
+                 "id":88,
+                 "name":"blaster",
+                 "point":true,
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":2704,
+                 "y":16
+                }, 
+                {
+                 "height":0,
+                 "id":89,
+                 "name":"blaster",
+                 "point":true,
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":2736,
+                 "y":16
+                }, 
+                {
+                 "height":0,
+                 "id":90,
+                 "name":"blaster",
+                 "point":true,
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":2768,
+                 "y":16
+                }, 
+                {
+                 "height":0,
+                 "id":91,
+                 "name":"blaster",
+                 "point":true,
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":2800,
+                 "y":16
+                }, 
+                {
+                 "height":0,
+                 "id":92,
+                 "name":"bink",
+                 "point":true,
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":2608,
+                 "y":176
+                }, 
+                {
+                 "height":0,
+                 "id":93,
+                 "name":"p-staff",
+                 "point":true,
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":2736,
+                 "y":224
+                }, 
+                {
+                 "height":0,
+                 "id":94,
+                 "name":"blaster",
+                 "point":true,
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":2896,
+                 "y":192
+                }, 
+                {
+                 "height":0,
+                 "id":95,
+                 "name":"blaster",
+                 "point":true,
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":2928,
+                 "y":192
+                }, 
+                {
+                 "height":0,
+                 "id":96,
+                 "name":"blaster",
+                 "point":true,
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":2896,
+                 "y":48
+                }, 
+                {
+                 "height":0,
+                 "id":97,
+                 "name":"blaster",
+                 "point":true,
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":2928,
+                 "y":48
+                }, 
+                {
+                 "height":0,
+                 "id":98,
+                 "name":"bink",
+                 "point":true,
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":2896,
+                 "y":136
+                }, 
+                {
+                 "height":0,
+                 "id":99,
+                 "name":"blaster",
+                 "point":true,
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":3216,
+                 "y":16
+                }, 
+                {
+                 "height":0,
+                 "id":100,
+                 "name":"blaster",
+                 "point":true,
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":3248,
+                 "y":16
+                }, 
+                {
+                 "height":0,
+                 "id":101,
+                 "name":"blaster",
+                 "point":true,
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":3280,
+                 "y":16
+                }, 
+                {
+                 "height":0,
+                 "id":102,
+                 "name":"blaster",
+                 "point":true,
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":3312,
+                 "y":16
+                }, 
+                {
+                 "height":0,
+                 "id":103,
+                 "name":"blaster",
+                 "point":true,
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":3344,
+                 "y":32
+                }, 
+                {
+                 "height":0,
+                 "id":104,
+                 "name":"blaster",
+                 "point":true,
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":3376,
+                 "y":32
+                }, 
+                {
+                 "height":0,
+                 "id":105,
+                 "name":"tabrok",
+                 "point":true,
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":3312,
+                 "y":168
+                }, 
+                {
+                 "height":0,
+                 "id":106,
+                 "name":"tabrok",
+                 "point":true,
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":3512,
+                 "y":168
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -358,7 +802,7 @@
          "y":0
         }],
  "nextlayerid":4,
- "nextobjectid":59,
+ "nextobjectid":107,
  "orientation":"orthogonal",
  "renderorder":"right-down",
  "tiledversion":"1.6.0",
