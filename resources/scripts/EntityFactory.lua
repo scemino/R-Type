@@ -43,8 +43,8 @@ local function createPataPata(name, pos, o)
     e:emplace('Position')
     e:emplace('Motion')
     e:emplace('Graphics')
-    e:emplace('Collide', { size = vec(32, 32) })
-    e:emplace('Animation', { name = 'resources/anims/enemy1.json' })
+    e:emplace('Collide', { size = vec(28, 28) })
+    e:emplace('Animation', { name = 'resources/anims/pata_pata.json' })
     e:setPosition(pos)
     e:setVelocity(vec(-2, 0))
     addComponent(e, TagComponent('enemy'))
@@ -79,16 +79,21 @@ local function createBug(name, pos, o)
 end
 
 local function createBlaster(name, pos, o)
+    local flipY = pos.y < 110
+    if flipY then
+        pos = pos + vec(0, 16)
+    end
     local e = Entity()
     e:emplace('Name', { name = name })
     e:emplace('Position')
     e:emplace('Motion')
     e:emplace('Graphics')
     e:emplace('Hierarchy')
-    e:emplace('Collide', { size = vec(32, 32) })
+    e:emplace('Collide', { size = vec(16, 16) })
     e:emplace('Animation', { name = 'resources/anims/blaster.json' })
     e:setFrame(0)
     e:setPosition(pos)
+    e:setFlipY(flipY)
     addComponent(e, StateMachineComponent('states.BlasterStateMachine'))
     addComponent(e, HealthComponent(20))
     StateManager.initState(e)
@@ -104,7 +109,7 @@ local function createBink(name, pos, o)
     e:emplace('Motion')
     e:emplace('Graphics')
     e:emplace('Hierarchy')
-    e:emplace('Collide', { size = vec(32, 32) })
+    e:emplace('Collide', { box = { -16, -33, 33, 33 } })
     e:emplace('Animation', { name = 'resources/anims/bink.json' })
     e:setPosition(pos)
     addComponent(e, StateMachineComponent('states.BinkStateMachine'))
@@ -207,7 +212,7 @@ local function createCancer(name, pos, o)
     return e
 end
 
-local function createEnemyShell(name, pos, o)
+local function createShell(name, pos, o)
     local shell = Entity()
     shell:emplace('Name', { name = name })
     shell:emplace('Position')
@@ -242,7 +247,7 @@ local enemyFactory = {
     ['pata'] = createPataPata,
     ['bug'] = createBug,
     ['blaster'] = createBlaster,
-    ['shell'] = createEnemyShell,
+    ['shell'] = createShell,
     ['bink'] = createBink,
     ['scant'] = createScant,
     ['pow'] = createPowArmor,

@@ -1,12 +1,4 @@
 { "compressionlevel":-1,
- "editorsettings":
-    {
-     "export":
-        {
-         "format":"json",
-         "target":"rtype.json"
-        }
-    },
  "height":30,
  "infinite":false,
  "layers":[
@@ -29,6 +21,24 @@
          "objects":[
                 {
                  "height":0,
+                 "id":45,
+                 "name":"pata",
+                 "point":true,
+                 "properties":[
+                        {
+                         "name":"Group",
+                         "type":"int",
+                         "value":1
+                        }],
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":640,
+                 "y":96
+                }, 
+                {
+                 "height":0,
                  "id":7,
                  "name":"pata",
                  "point":true,
@@ -42,8 +52,8 @@
                  "type":"",
                  "visible":true,
                  "width":0,
-                 "x":668.453,
-                 "y":86.8972
+                 "x":664,
+                 "y":88
                 }, 
                 {
                  "height":0,
@@ -60,8 +70,8 @@
                  "type":"",
                  "visible":true,
                  "width":0,
-                 "x":697.539,
-                 "y":121.583
+                 "x":696,
+                 "y":120
                 }, 
                 {
                  "height":0,
@@ -78,8 +88,8 @@
                  "type":"",
                  "visible":true,
                  "width":0,
-                 "x":719.312,
-                 "y":109.163
+                 "x":720,
+                 "y":112
                 }, 
                 {
                  "height":0,
@@ -96,8 +106,8 @@
                  "type":"",
                  "visible":true,
                  "width":0,
-                 "x":741.996,
-                 "y":162.44
+                 "x":744,
+                 "y":184
                 }, 
                 {
                  "height":0,
@@ -114,8 +124,8 @@
                  "type":"",
                  "visible":true,
                  "width":0,
-                 "x":763.988,
-                 "y":147.735
+                 "x":768,
+                 "y":200
                 }, 
                 {
                  "height":0,
@@ -132,8 +142,8 @@
                  "type":"",
                  "visible":true,
                  "width":0,
-                 "x":793.074,
-                 "y":182.421
+                 "x":792,
+                 "y":184
                 }, 
                 {
                  "height":0,
@@ -150,26 +160,8 @@
                  "type":"",
                  "visible":true,
                  "width":0,
-                 "x":814.847,
-                 "y":170.001
-                }, 
-                {
-                 "height":0,
-                 "id":45,
-                 "name":"pata",
-                 "point":true,
-                 "properties":[
-                        {
-                         "name":"Group",
-                         "type":"int",
-                         "value":1
-                        }],
-                 "rotation":0,
-                 "type":"",
-                 "visible":true,
-                 "width":0,
-                 "x":644.382,
-                 "y":93.5973
+                 "x":816,
+                 "y":184
                 }, 
                 {
                  "height":0,
@@ -193,7 +185,7 @@
                  "visible":true,
                  "width":0,
                  "x":776,
-                 "y":184
+                 "y":136
                 }, 
                 {
                  "height":0,
@@ -210,8 +202,8 @@
                  "type":"",
                  "visible":true,
                  "width":0,
-                 "x":941.483,
-                 "y":30.4171
+                 "x":744,
+                 "y":120
                 }, 
                 {
                  "height":0,
@@ -228,8 +220,8 @@
                  "type":"",
                  "visible":true,
                  "width":0,
-                 "x":1018.97,
-                 "y":31.1414
+                 "x":816,
+                 "y":136
                 }, 
                 {
                  "height":0,
@@ -360,8 +352,8 @@
                  "type":"",
                  "visible":true,
                  "width":0,
-                 "x":1536,
-                 "y":0
+                 "x":1544,
+                 "y":-72
                 }, 
                 {
                  "height":0,
@@ -492,7 +484,7 @@
                  "type":"",
                  "visible":true,
                  "width":0,
-                 "x":2032,
+                 "x":2040,
                  "y":224
                 }, 
                 {
@@ -794,6 +786,870 @@
                  "width":0,
                  "x":3512,
                  "y":168
+                }, 
+                {
+                 "height":0,
+                 "id":107,
+                 "name":"pata",
+                 "point":true,
+                 "properties":[
+                        {
+                         "name":"Group",
+                         "type":"int",
+                         "value":3
+                        }],
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":880,
+                 "y":184
+                }, 
+                {
+                 "height":0,
+                 "id":108,
+                 "name":"pata",
+                 "point":true,
+                 "properties":[
+                        {
+                         "name":"Group",
+                         "type":"int",
+                         "value":3
+                        }],
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":904,
+                 "y":168
+                }, 
+                {
+                 "height":0,
+                 "id":109,
+                 "name":"pata",
+                 "point":true,
+                 "properties":[
+                        {
+                         "name":"Group",
+                         "type":"int",
+                         "value":3
+                        }],
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":928,
+                 "y":176
+                }, 
+                {
+                 "height":0,
+                 "id":110,
+                 "name":"pata",
+                 "point":true,
+                 "properties":[
+                        {
+                         "name":"Group",
+                         "type":"int",
+                         "value":3
+                        }],
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":920,
+                 "y":120
+                }, 
+                {
+                 "height":0,
+                 "id":111,
+                 "name":"pata",
+                 "point":true,
+                 "properties":[
+                        {
+                         "name":"Group",
+                         "type":"int",
+                         "value":3
+                        }],
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":944,
+                 "y":104
+                }, 
+                {
+                 "height":0,
+                 "id":112,
+                 "name":"pata",
+                 "point":true,
+                 "properties":[
+                        {
+                         "name":"Group",
+                         "type":"int",
+                         "value":3
+                        }],
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":968,
+                 "y":80
+                }, 
+                {
+                 "height":0,
+                 "id":113,
+                 "name":"pata",
+                 "point":true,
+                 "properties":[
+                        {
+                         "name":"Group",
+                         "type":"int",
+                         "value":3
+                        }],
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":992,
+                 "y":80
+                }, 
+                {
+                 "height":0,
+                 "id":114,
+                 "name":"pata",
+                 "point":true,
+                 "properties":[
+                        {
+                         "name":"Group",
+                         "type":"int",
+                         "value":3
+                        }],
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":1008,
+                 "y":144
+                }, 
+                {
+                 "height":0,
+                 "id":115,
+                 "name":"pata",
+                 "point":true,
+                 "properties":[
+                        {
+                         "name":"Group",
+                         "type":"int",
+                         "value":3
+                        }],
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":1024,
+                 "y":80
+                }, 
+                {
+                 "height":0,
+                 "id":116,
+                 "name":"pata",
+                 "point":true,
+                 "properties":[
+                        {
+                         "name":"Group",
+                         "type":"int",
+                         "value":3
+                        }],
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":1048,
+                 "y":88
+                }, 
+                {
+                 "height":0,
+                 "id":117,
+                 "name":"pata",
+                 "point":true,
+                 "properties":[
+                        {
+                         "name":"Group",
+                         "type":"int",
+                         "value":3
+                        }],
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":1088,
+                 "y":136
+                }, 
+                {
+                 "height":0,
+                 "id":118,
+                 "name":"pata",
+                 "point":true,
+                 "properties":[
+                        {
+                         "name":"Group",
+                         "type":"int",
+                         "value":3
+                        }],
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":1112,
+                 "y":80
+                }, 
+                {
+                 "height":0,
+                 "id":119,
+                 "name":"pata",
+                 "point":true,
+                 "properties":[
+                        {
+                         "name":"Group",
+                         "type":"int",
+                         "value":3
+                        }],
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":1136,
+                 "y":80
+                }, 
+                {
+                 "height":0,
+                 "id":120,
+                 "name":"pata",
+                 "point":true,
+                 "properties":[
+                        {
+                         "name":"Group",
+                         "type":"int",
+                         "value":3
+                        }],
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":1160,
+                 "y":136
+                }, 
+                {
+                 "height":0,
+                 "id":121,
+                 "name":"pata",
+                 "point":true,
+                 "properties":[
+                        {
+                         "name":"Group",
+                         "type":"int",
+                         "value":3
+                        }],
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":1184,
+                 "y":96
+                }, 
+                {
+                 "height":0,
+                 "id":122,
+                 "name":"pata",
+                 "point":true,
+                 "properties":[
+                        {
+                         "name":"Group",
+                         "type":"int",
+                         "value":3
+                        }],
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":1208,
+                 "y":80
+                }, 
+                {
+                 "height":0,
+                 "id":123,
+                 "name":"pata",
+                 "point":true,
+                 "properties":[
+                        {
+                         "name":"Group",
+                         "type":"int",
+                         "value":3
+                        }],
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":1232,
+                 "y":96
+                }, 
+                {
+                 "height":0,
+                 "id":124,
+                 "name":"pata",
+                 "point":true,
+                 "properties":[
+                        {
+                         "name":"Group",
+                         "type":"int",
+                         "value":3
+                        }],
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":1256,
+                 "y":72
+                }, 
+                {
+                 "height":0,
+                 "id":125,
+                 "name":"pata",
+                 "point":true,
+                 "properties":[
+                        {
+                         "name":"Group",
+                         "type":"int",
+                         "value":3
+                        }],
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":1296,
+                 "y":120
+                }, 
+                {
+                 "height":0,
+                 "id":126,
+                 "name":"pata",
+                 "point":true,
+                 "properties":[
+                        {
+                         "name":"Group",
+                         "type":"int",
+                         "value":3
+                        }],
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":1344,
+                 "y":144
+                }, 
+                {
+                 "height":0,
+                 "id":127,
+                 "name":"pata",
+                 "point":true,
+                 "properties":[
+                        {
+                         "name":"Group",
+                         "type":"int",
+                         "value":3
+                        }],
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":1368,
+                 "y":128
+                }, 
+                {
+                 "height":0,
+                 "id":128,
+                 "name":"pow",
+                 "point":true,
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":1088,
+                 "y":120
+                }, 
+                {
+                 "height":0,
+                 "id":129,
+                 "name":"bug",
+                 "point":true,
+                 "properties":[
+                        {
+                         "name":"Mode",
+                         "type":"int",
+                         "value":1
+                        }],
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":1488,
+                 "y":24
+                }, 
+                {
+                 "height":0,
+                 "id":130,
+                 "name":"bug",
+                 "point":true,
+                 "properties":[
+                        {
+                         "name":"Mode",
+                         "type":"int",
+                         "value":1
+                        }],
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":1576,
+                 "y":120
+                }, 
+                {
+                 "height":0,
+                 "id":131,
+                 "name":"cancer",
+                 "point":true,
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":1672,
+                 "y":120
+                }, 
+                {
+                 "height":0,
+                 "id":133,
+                 "name":"cancer",
+                 "point":true,
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":1696,
+                 "y":72
+                }, 
+                {
+                 "height":0,
+                 "id":134,
+                 "name":"cancer",
+                 "point":true,
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":1728,
+                 "y":176
+                }, 
+                {
+                 "height":0,
+                 "id":135,
+                 "name":"cancer",
+                 "point":true,
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":1736,
+                 "y":48
+                }, 
+                {
+                 "height":0,
+                 "id":136,
+                 "name":"cancer",
+                 "point":true,
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":1752,
+                 "y":120
+                }, 
+                {
+                 "height":0,
+                 "id":137,
+                 "name":"cancer",
+                 "point":true,
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":1768,
+                 "y":120
+                }, 
+                {
+                 "height":0,
+                 "id":138,
+                 "name":"cancer",
+                 "point":true,
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":1784,
+                 "y":32
+                }, 
+                {
+                 "height":0,
+                 "id":139,
+                 "name":"cancer",
+                 "point":true,
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":1800,
+                 "y":120
+                }, 
+                {
+                 "height":0,
+                 "id":140,
+                 "name":"cancer",
+                 "point":true,
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":1808,
+                 "y":112
+                }, 
+                {
+                 "height":0,
+                 "id":141,
+                 "name":"cancer",
+                 "point":true,
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":1816,
+                 "y":176
+                }, 
+                {
+                 "height":0,
+                 "id":142,
+                 "name":"cancer",
+                 "point":true,
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":1824,
+                 "y":24
+                }, 
+                {
+                 "height":0,
+                 "id":143,
+                 "name":"cancer",
+                 "point":true,
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":1832,
+                 "y":56
+                }, 
+                {
+                 "height":0,
+                 "id":144,
+                 "name":"cancer",
+                 "point":true,
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":1840,
+                 "y":184
+                }, 
+                {
+                 "height":0,
+                 "id":145,
+                 "name":"cancer",
+                 "point":true,
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":1848,
+                 "y":120
+                }, 
+                {
+                 "height":0,
+                 "id":146,
+                 "name":"cancer",
+                 "point":true,
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":1856,
+                 "y":40
+                }, 
+                {
+                 "height":0,
+                 "id":147,
+                 "name":"cancer",
+                 "point":true,
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":1864,
+                 "y":120
+                }, 
+                {
+                 "height":0,
+                 "id":148,
+                 "name":"cancer",
+                 "point":true,
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":1872,
+                 "y":40
+                }, 
+                {
+                 "height":0,
+                 "id":149,
+                 "name":"cancer",
+                 "point":true,
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":1880,
+                 "y":120
+                }, 
+                {
+                 "height":0,
+                 "id":150,
+                 "name":"cancer",
+                 "point":true,
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":1888,
+                 "y":40
+                }, 
+                {
+                 "height":0,
+                 "id":151,
+                 "name":"cancer",
+                 "point":true,
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":1896,
+                 "y":120
+                }, 
+                {
+                 "height":0,
+                 "id":152,
+                 "name":"cancer",
+                 "point":true,
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":1912,
+                 "y":40
+                }, 
+                {
+                 "height":0,
+                 "id":153,
+                 "name":"cancer",
+                 "point":true,
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":1928,
+                 "y":120
+                }, 
+                {
+                 "height":0,
+                 "id":154,
+                 "name":"cancer",
+                 "point":true,
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":1968,
+                 "y":64
+                }, 
+                {
+                 "height":0,
+                 "id":155,
+                 "name":"cancer",
+                 "point":true,
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":2048,
+                 "y":160
+                }, 
+                {
+                 "height":0,
+                 "id":156,
+                 "name":"pow",
+                 "point":true,
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":2112,
+                 "y":120
+                }, 
+                {
+                 "height":0,
+                 "id":157,
+                 "name":"pow",
+                 "point":true,
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":2192,
+                 "y":40
+                }, 
+                {
+                 "height":0,
+                 "id":158,
+                 "name":"pata",
+                 "point":true,
+                 "properties":[
+                        {
+                         "name":"Group",
+                         "type":"int",
+                         "value":4
+                        }],
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":2672,
+                 "y":168
+                }, 
+                {
+                 "height":0,
+                 "id":159,
+                 "name":"pata",
+                 "point":true,
+                 "properties":[
+                        {
+                         "name":"Group",
+                         "type":"int",
+                         "value":4
+                        }],
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":2696,
+                 "y":152
+                }, 
+                {
+                 "height":0,
+                 "id":160,
+                 "name":"pata",
+                 "point":true,
+                 "properties":[
+                        {
+                         "name":"Group",
+                         "type":"int",
+                         "value":4
+                        }],
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":2736,
+                 "y":168
+                }, 
+                {
+                 "height":0,
+                 "id":161,
+                 "name":"pata",
+                 "point":true,
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":2728,
+                 "y":56
+                }, 
+                {
+                 "height":0,
+                 "id":162,
+                 "name":"pow",
+                 "point":true,
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":2752,
+                 "y":176
+                }, 
+                {
+                 "height":0,
+                 "id":163,
+                 "name":"pata",
+                 "point":true,
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":2776,
+                 "y":144
+                }, 
+                {
+                 "height":0,
+                 "id":164,
+                 "name":"pow",
+                 "point":true,
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":2832,
+                 "y":176
+                }, 
+                {
+                 "height":0,
+                 "id":165,
+                 "name":"pow",
+                 "point":true,
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":3040,
+                 "y":120
+                }, 
+                {
+                 "height":0,
+                 "id":166,
+                 "name":"pow",
+                 "point":true,
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":3456,
+                 "y":56
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -802,10 +1658,10 @@
          "y":0
         }],
  "nextlayerid":4,
- "nextobjectid":107,
+ "nextobjectid":167,
  "orientation":"orthogonal",
  "renderorder":"right-down",
- "tiledversion":"1.6.0",
+ "tiledversion":"1.7.2",
  "tileheight":8,
  "tilesets":[
         {

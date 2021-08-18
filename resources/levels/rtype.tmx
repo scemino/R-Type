@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.5" tiledversion="1.6.0" orientation="orthogonal" renderorder="right-down" width="526" height="30" tilewidth="8" tileheight="8" infinite="0" nextlayerid="4" nextobjectid="107">
+<map version="1.5" tiledversion="1.7.2" orientation="orthogonal" renderorder="right-down" width="526" height="30" tilewidth="8" tileheight="8" infinite="0" nextlayerid="4" nextobjectid="167">
  <editorsettings>
   <export target="rtype.json" format="json"/>
  </editorsettings>
@@ -39,67 +39,67 @@
 </data>
  </layer>
  <objectgroup id="2" name="EnemyLayer">
-  <object id="7" name="pata" x="668.453" y="86.8972">
+  <object id="45" name="pata" x="640" y="96">
    <properties>
     <property name="Group" type="int" value="1"/>
    </properties>
    <point/>
   </object>
-  <object id="8" name="pata" x="697.539" y="121.583">
+  <object id="7" name="pata" x="664" y="88">
    <properties>
     <property name="Group" type="int" value="1"/>
    </properties>
    <point/>
   </object>
-  <object id="9" name="pata" x="719.312" y="109.163">
+  <object id="8" name="pata" x="696" y="120">
    <properties>
     <property name="Group" type="int" value="1"/>
    </properties>
    <point/>
   </object>
-  <object id="41" name="pata" x="741.996" y="162.44">
-   <properties>
-    <property name="Group" type="int" value="2"/>
-   </properties>
-   <point/>
-  </object>
-  <object id="42" name="pata" x="763.988" y="147.735">
-   <properties>
-    <property name="Group" type="int" value="2"/>
-   </properties>
-   <point/>
-  </object>
-  <object id="43" name="pata" x="793.074" y="182.421">
-   <properties>
-    <property name="Group" type="int" value="2"/>
-   </properties>
-   <point/>
-  </object>
-  <object id="44" name="pata" x="814.847" y="170.001">
-   <properties>
-    <property name="Group" type="int" value="2"/>
-   </properties>
-   <point/>
-  </object>
-  <object id="45" name="pata" x="644.382" y="93.5973">
+  <object id="9" name="pata" x="720" y="112">
    <properties>
     <property name="Group" type="int" value="1"/>
+   </properties>
+   <point/>
+  </object>
+  <object id="41" name="pata" x="744" y="184">
+   <properties>
+    <property name="Group" type="int" value="2"/>
+   </properties>
+   <point/>
+  </object>
+  <object id="42" name="pata" x="768" y="200">
+   <properties>
+    <property name="Group" type="int" value="2"/>
+   </properties>
+   <point/>
+  </object>
+  <object id="43" name="pata" x="792" y="184">
+   <properties>
+    <property name="Group" type="int" value="2"/>
+   </properties>
+   <point/>
+  </object>
+  <object id="44" name="pata" x="816" y="184">
+   <properties>
+    <property name="Group" type="int" value="2"/>
    </properties>
    <point/>
   </object>
   <object id="53" name="shell" x="2336" y="120">
    <point/>
   </object>
-  <object id="57" name="bink" x="776" y="184">
+  <object id="57" name="bink" x="776" y="136">
    <point/>
   </object>
-  <object id="59" name="bug" x="941.483" y="30.4171">
+  <object id="59" name="bug" x="744" y="120">
    <properties>
     <property name="Mode" type="int" value="1"/>
    </properties>
    <point/>
   </object>
-  <object id="60" name="bug" x="1018.97" y="31.1414">
+  <object id="60" name="bug" x="816" y="136">
    <properties>
     <property name="Mode" type="int" value="1"/>
    </properties>
@@ -138,7 +138,7 @@
   <object id="69" name="bink" x="1464" y="192">
    <point/>
   </object>
-  <object id="70" name="bink" x="1536" y="0">
+  <object id="70" name="bink" x="1544" y="-72">
    <point/>
   </object>
   <object id="71" name="blaster" x="1872" y="208">
@@ -171,7 +171,7 @@
   <object id="80" name="bink" x="1904" y="168">
    <point/>
   </object>
-  <object id="81" name="p-staff" x="2032" y="224">
+  <object id="81" name="p-staff" x="2040" y="224">
    <point/>
   </object>
   <object id="82" name="blaster" x="2224" y="16">
@@ -247,6 +247,261 @@
    <point/>
   </object>
   <object id="106" name="tabrok" x="3512" y="168">
+   <point/>
+  </object>
+  <object id="107" name="pata" x="880" y="184">
+   <properties>
+    <property name="Group" type="int" value="3"/>
+   </properties>
+   <point/>
+  </object>
+  <object id="108" name="pata" x="904" y="168">
+   <properties>
+    <property name="Group" type="int" value="3"/>
+   </properties>
+   <point/>
+  </object>
+  <object id="109" name="pata" x="928" y="176">
+   <properties>
+    <property name="Group" type="int" value="3"/>
+   </properties>
+   <point/>
+  </object>
+  <object id="110" name="pata" x="920" y="120">
+   <properties>
+    <property name="Group" type="int" value="3"/>
+   </properties>
+   <point/>
+  </object>
+  <object id="111" name="pata" x="944" y="104">
+   <properties>
+    <property name="Group" type="int" value="3"/>
+   </properties>
+   <point/>
+  </object>
+  <object id="112" name="pata" x="968" y="80">
+   <properties>
+    <property name="Group" type="int" value="3"/>
+   </properties>
+   <point/>
+  </object>
+  <object id="113" name="pata" x="992" y="80">
+   <properties>
+    <property name="Group" type="int" value="3"/>
+   </properties>
+   <point/>
+  </object>
+  <object id="114" name="pata" x="1008" y="144">
+   <properties>
+    <property name="Group" type="int" value="3"/>
+   </properties>
+   <point/>
+  </object>
+  <object id="115" name="pata" x="1024" y="80">
+   <properties>
+    <property name="Group" type="int" value="3"/>
+   </properties>
+   <point/>
+  </object>
+  <object id="116" name="pata" x="1048" y="88">
+   <properties>
+    <property name="Group" type="int" value="3"/>
+   </properties>
+   <point/>
+  </object>
+  <object id="117" name="pata" x="1088" y="136">
+   <properties>
+    <property name="Group" type="int" value="3"/>
+   </properties>
+   <point/>
+  </object>
+  <object id="118" name="pata" x="1112" y="80">
+   <properties>
+    <property name="Group" type="int" value="3"/>
+   </properties>
+   <point/>
+  </object>
+  <object id="119" name="pata" x="1136" y="80">
+   <properties>
+    <property name="Group" type="int" value="3"/>
+   </properties>
+   <point/>
+  </object>
+  <object id="120" name="pata" x="1160" y="136">
+   <properties>
+    <property name="Group" type="int" value="3"/>
+   </properties>
+   <point/>
+  </object>
+  <object id="121" name="pata" x="1184" y="96">
+   <properties>
+    <property name="Group" type="int" value="3"/>
+   </properties>
+   <point/>
+  </object>
+  <object id="122" name="pata" x="1208" y="80">
+   <properties>
+    <property name="Group" type="int" value="3"/>
+   </properties>
+   <point/>
+  </object>
+  <object id="123" name="pata" x="1232" y="96">
+   <properties>
+    <property name="Group" type="int" value="3"/>
+   </properties>
+   <point/>
+  </object>
+  <object id="124" name="pata" x="1256" y="72">
+   <properties>
+    <property name="Group" type="int" value="3"/>
+   </properties>
+   <point/>
+  </object>
+  <object id="125" name="pata" x="1296" y="120">
+   <properties>
+    <property name="Group" type="int" value="3"/>
+   </properties>
+   <point/>
+  </object>
+  <object id="126" name="pata" x="1344" y="144">
+   <properties>
+    <property name="Group" type="int" value="3"/>
+   </properties>
+   <point/>
+  </object>
+  <object id="127" name="pata" x="1368" y="128">
+   <properties>
+    <property name="Group" type="int" value="3"/>
+   </properties>
+   <point/>
+  </object>
+  <object id="128" name="pow" x="1088" y="120">
+   <point/>
+  </object>
+  <object id="129" name="bug" x="1488" y="24">
+   <properties>
+    <property name="Mode" type="int" value="1"/>
+   </properties>
+   <point/>
+  </object>
+  <object id="130" name="bug" x="1576" y="120">
+   <properties>
+    <property name="Mode" type="int" value="1"/>
+   </properties>
+   <point/>
+  </object>
+  <object id="131" name="cancer" x="1672" y="120">
+   <point/>
+  </object>
+  <object id="133" name="cancer" x="1696" y="72">
+   <point/>
+  </object>
+  <object id="134" name="cancer" x="1728" y="176">
+   <point/>
+  </object>
+  <object id="135" name="cancer" x="1736" y="48">
+   <point/>
+  </object>
+  <object id="136" name="cancer" x="1752" y="120">
+   <point/>
+  </object>
+  <object id="137" name="cancer" x="1768" y="120">
+   <point/>
+  </object>
+  <object id="138" name="cancer" x="1784" y="32">
+   <point/>
+  </object>
+  <object id="139" name="cancer" x="1800" y="120">
+   <point/>
+  </object>
+  <object id="140" name="cancer" x="1808" y="112">
+   <point/>
+  </object>
+  <object id="141" name="cancer" x="1816" y="176">
+   <point/>
+  </object>
+  <object id="142" name="cancer" x="1824" y="24">
+   <point/>
+  </object>
+  <object id="143" name="cancer" x="1832" y="56">
+   <point/>
+  </object>
+  <object id="144" name="cancer" x="1840" y="184">
+   <point/>
+  </object>
+  <object id="145" name="cancer" x="1848" y="120">
+   <point/>
+  </object>
+  <object id="146" name="cancer" x="1856" y="40">
+   <point/>
+  </object>
+  <object id="147" name="cancer" x="1864" y="120">
+   <point/>
+  </object>
+  <object id="148" name="cancer" x="1872" y="40">
+   <point/>
+  </object>
+  <object id="149" name="cancer" x="1880" y="120">
+   <point/>
+  </object>
+  <object id="150" name="cancer" x="1888" y="40">
+   <point/>
+  </object>
+  <object id="151" name="cancer" x="1896" y="120">
+   <point/>
+  </object>
+  <object id="152" name="cancer" x="1912" y="40">
+   <point/>
+  </object>
+  <object id="153" name="cancer" x="1928" y="120">
+   <point/>
+  </object>
+  <object id="154" name="cancer" x="1968" y="64">
+   <point/>
+  </object>
+  <object id="155" name="cancer" x="2048" y="160">
+   <point/>
+  </object>
+  <object id="156" name="pow" x="2112" y="120">
+   <point/>
+  </object>
+  <object id="157" name="pow" x="2192" y="40">
+   <point/>
+  </object>
+  <object id="158" name="pata" x="2672" y="168">
+   <properties>
+    <property name="Group" type="int" value="4"/>
+   </properties>
+   <point/>
+  </object>
+  <object id="159" name="pata" x="2696" y="152">
+   <properties>
+    <property name="Group" type="int" value="4"/>
+   </properties>
+   <point/>
+  </object>
+  <object id="160" name="pata" x="2736" y="168">
+   <properties>
+    <property name="Group" type="int" value="4"/>
+   </properties>
+   <point/>
+  </object>
+  <object id="161" name="pata" x="2728" y="56">
+   <point/>
+  </object>
+  <object id="162" name="pow" x="2752" y="176">
+   <point/>
+  </object>
+  <object id="163" name="pata" x="2776" y="144">
+   <point/>
+  </object>
+  <object id="164" name="pow" x="2832" y="176">
+   <point/>
+  </object>
+  <object id="165" name="pow" x="3040" y="120">
+   <point/>
+  </object>
+  <object id="166" name="pow" x="3456" y="56">
    <point/>
   </object>
  </objectgroup>

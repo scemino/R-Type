@@ -7,7 +7,7 @@ local function shoot(pos)
 
     -- probability to shoot
     if math.random() > 0.994 then
-        EntityFactory.enemyShoot(pos+vec(0, -8))
+        EntityFactory.enemyShoot(pos + vec(0, -8))
     end
 end
 
@@ -49,6 +49,9 @@ local BlasterStateMachine = {
                     local pos = e:getPosition()
                     local d = playerPos - pos
                     local angle = math.atan(-d.y, d.x)
+                    if angle < 0 or angle > 180 then
+                        angle = -angle
+                    end
                     e:setFrame(getFrameFromAngle(angle * 180.0 / math.pi))
                     shoot(e:getPosition())
                     util.checkBounds(e)

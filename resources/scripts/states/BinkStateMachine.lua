@@ -24,13 +24,14 @@ local BinkStateMachine = {
     states = {
         FallingState = {
             init = function(e)
+                e:setFlipX(true)
                 e:setVelocity(vec(0, 1))
                 e:setAnim('falling', 1)
             end,
             exit = function(e)
                 e:setPosition(e:getPosition() + vec(0, -1))
                 e:setAnim('falling', 1)
-                e:setVelocity(vec(1, 0))
+                e:setVelocity(vec(-1, 0))
             end,
             hit = function(e, event)
                 if event.data.collisionType == 'tile' then
@@ -47,7 +48,7 @@ local BinkStateMachine = {
                 e:setAnim('walking', -1)
             end,
             update = function(e)
-                local nextPos = getEntity('camera'):getPosition() + e:getPosition() + e:getVelocity() + vec(0, 18)
+                local nextPos = getEntity('camera'):getPosition() + e:getPosition() + e:getVelocity() + vec(0, 8)
                 local tile = map(nextPos)
                 if tile == -1 then
                     return 'JumpingState'
